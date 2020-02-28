@@ -1,0 +1,15 @@
+  1 MFC1_Status Alicat_HK Status
+  1 MFC1_Stale  Alicat_HK Stale
+  1 MFC1_T      Alicat_HK T
+  1 MFC1_P      Alicat_HK mbar
+  1 MFC1_Set    Alicat slm
+  1 MFC1_VolFlow   Alicat slm
+  1 MFC1_MassFlow   Alicat gps
+  1 MFC2_Status Alicat_HK Status
+  1 MFC2_Stale  Alicat_HK Stale
+  1 MFC2_T      Alicat_HK T
+  1 MFC2_P      Alicat_HK Torr
+  1 MFC2_Set    Alicat ccm
+  1 MFC2_VolFlow   Alicat ccm
+  1 MFC2_MassFlow   Alicat kgs
+  1 Alicat_Stale Alicat_HK Stale

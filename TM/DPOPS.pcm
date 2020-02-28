@@ -1,23 +1,39 @@
 
 --------Frame Statistics-----------
 Major Frame: 1 minor frames, 1 Hz
-Minor Frame: 15 bytes, 1 Hz
+Minor Frame: 62 bytes, 1 Hz
 Effective Frame Dimensions:
-  1 Rows 15 Columns
+  1 Rows 62 Columns
   1 rows/sec
-  120 bits/sec
-  Data:  88 bits/sec  73 %
-  Synch: 32 bits/sec  27 %
+  496 bits/sec
+  Data:  464 bits/sec  94 %
+  Synch: 32 bits/sec  6 %
   Empty: 0 bits/sec  0 %
 -------End of Frame Statistics-----
 
 
 --------PCM Definition-------------
 1/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
-1/1 Hz 4 bytes Datum freemem (1,0,2,4)
-1/1 Hz 4 bytes Datum SysTDrift (1,0,6,4)
-1/1 Hz 2 bytes Datum Disk (1,0,10,2)
-1/1 Hz 1 bytes Datum CPU_Pct (1,0,12,1)
-1/1 Hz 2 bytes Datum Synch (1,0,13,2)
+1/1 Hz 47 bytes Group Alicat (1,0,2,47)
+1/1 Hz 1 bytes Member MFC2_Stale (1,0,2,1)
+1/1 Hz 2 bytes Member MFC2_Status (1,0,3,2)
+1/1 Hz 4 bytes Member MFC2_P (1,0,5,4)
+1/1 Hz 4 bytes Member MFC2_T (1,0,9,4)
+1/1 Hz 4 bytes Member MFC2_MassFlow (1,0,13,4)
+1/1 Hz 4 bytes Member MFC2_VolFlow (1,0,17,4)
+1/1 Hz 4 bytes Member MFC2_Set (1,0,21,4)
+1/1 Hz 1 bytes Member MFC1_Stale (1,0,25,1)
+1/1 Hz 2 bytes Member MFC1_Status (1,0,26,2)
+1/1 Hz 4 bytes Member MFC1_P (1,0,28,4)
+1/1 Hz 4 bytes Member MFC1_T (1,0,32,4)
+1/1 Hz 4 bytes Member MFC1_MassFlow (1,0,36,4)
+1/1 Hz 4 bytes Member MFC1_VolFlow (1,0,40,4)
+1/1 Hz 4 bytes Member MFC1_Set (1,0,44,4)
+1/1 Hz 1 bytes Member Alicat_Stale (1,0,48,1)
+1/1 Hz 4 bytes Datum freemem (1,0,49,4)
+1/1 Hz 4 bytes Datum SysTDrift (1,0,53,4)
+1/1 Hz 2 bytes Datum Disk (1,0,57,2)
+1/1 Hz 1 bytes Datum CPU_Pct (1,0,59,1)
+1/1 Hz 2 bytes Datum Synch (1,0,60,2)
 -------End of PCM Definition-------
 
