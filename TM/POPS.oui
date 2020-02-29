@@ -1,0 +1,13 @@
+<package> POPS
+<include> msg
+<follow> msg
+<unsort>
+<blank>
+Driver to collect data arriving via UDP packets.
+Currently configured to handle:
+  packet POPS on port 7079
+
+
+<package> msghdr_init
+<init>
+  msg_hdr_default = "POPS";
