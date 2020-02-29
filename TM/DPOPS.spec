@@ -5,7 +5,8 @@ Module alicat src=alicat.txt
 
 TGTDIR = /home/DPOPS
 IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
-DISTRIB = services
+DISTRIB = services interact
+IDISTRIB = doit
 
 DPOPSdisp : DPOPS.tbl
 DPOPSalgo : DPOPS.tma

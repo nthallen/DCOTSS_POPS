@@ -5,6 +5,7 @@
   Launch      -TMC-  lgr -N `mlf_find LOG` -n lgr
   Launch      tm_gen DPOPScol -v
   Launch      cmd    DPOPSsrvr -s Both -v
-# Launch      -      driver -v
   Launch      -      tmdf
+  Launch      -      alicat -a 1:MFC1 -p /dev/ttyUSB0 -v
+# Launch      -      alicat -a 1:MFC1,2:MFC2 -p /dev/ttyUSB0 -v
   Launch      -      DPOPSalgo -v

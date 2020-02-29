@@ -13,7 +13,7 @@
     // DD are the register values
     // All values are in hex
     if_Alicat.Turf("W%X:%X:%X:2:%X:%X\n",
-      ID, 16, 1010, ((rawset>>16) & 0xFFFF),
+      ID, 16, 1009, ((rawset>>16) & 0xFFFF),
       (rawset & 0xFFFF));
   }
   #endif
