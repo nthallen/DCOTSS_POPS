@@ -1,5 +1,6 @@
 <package> POPS
 <include> cmd_reader
+<include> msg oui
 
 <package> appid_default
 <include> "dasio/appid.h"

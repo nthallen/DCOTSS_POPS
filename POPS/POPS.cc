@@ -22,9 +22,11 @@ int main(int argc, char **argv) {
   UserPkts_UDP *Pkts = new UserPkts_UDP(7079); // constructor generated
   ELoop.add_child(Pkts);
   DAS_IO::Quit *Q = new DAS_IO::Quit();
+  Q->connect();
   ELoop.add_child(Q);
   DAS_IO::TM_data_sndr *TM =
     new DAS_IO::TM_data_sndr("POPS", 0, "POPS", &POPS, sizeof(POPS));
+  TM->connect();
   ELoop.add_child(TM);
   msg(0, "Starting: V3.0");
   ELoop.event_loop();
