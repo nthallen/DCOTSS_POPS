@@ -34,9 +34,9 @@ int main(int argc, char **argv) {
 }
 
 UserPkts_UDP::UserPkts_UDP(int udp_port)
-    : DAS_IO::Interface("UDP", 512) {
+    : DAS_IO::Interface("UDP", 512),
+      udp_port(udp_port) {
   Bind(udp_port);
-  flags = DAS_IO::Interface::Fl_Read;
   // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()
 }
@@ -146,6 +146,13 @@ bool UserPkts_UDP::protocol_input() {
   return false;
 }
 
+bool UserPkts_UDP::process_eof() {
+  msg(0, "%s: process_eof(): Re-binding UDP port %d",
+    iname, udp_port);
+  Bind(udp_port);
+  return false;
+}
+
 //  int UserPkts_UDP::not_KW(char *KWbuf) {
 //    int KWi = 0;
 //    while (cp < nc && isspace(buf[cp]))
@@ -205,6 +212,7 @@ void UserPkts_UDP::Bind(int port) {
   if (ioflags == -1)
     msg( 3, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
+  flags = DAS_IO::Interface::Fl_Read;
 }
 
 //  int UserPkts_UDP::fillbuf() {

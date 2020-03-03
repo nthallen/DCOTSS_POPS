@@ -22,10 +22,12 @@ class UserPkts_UDP : public DAS_IO::Interface {
   public:
     UserPkts_UDP(int udp_port);
     bool protocol_input();
+    bool process_eof();
   private:
     void Bind(int port);
     int fillbuf();
     int not_KW(char *KWbuf);
+    int udp_port;
 };
 
 #endif // __cplusplus
