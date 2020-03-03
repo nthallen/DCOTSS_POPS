@@ -2,7 +2,6 @@ tmcbase = base.tmc
 
 Module TMbase
 Module alicat src=alicat.txt
-# Module UserPkts3 src=POPS_UDP_7079.txt name=POPS
 Module POPS
 
 TGTDIR = /home/DPOPS

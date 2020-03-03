@@ -42,7 +42,7 @@ UserPkts_UDP::UserPkts_UDP(int udp_port)
 }
 
 bool UserPkts_UDP::protocol_input() {
-  double Time;
+  // double Time;
   uint32_t Part_Num;
   float    PartCon_num_cc;
   uint32_t Baseline;
@@ -68,7 +68,7 @@ bool UserPkts_UDP::protocol_input() {
   uint32_t Bin14;
   uint32_t Bin15;
   uint32_t Bin16;
-  int year, month, day hour, minute, second;
+  int year, month, day, hour, minute, second;
   struct tm buft;
   le_time_t ltime;
 
