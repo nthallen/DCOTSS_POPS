@@ -1,4 +1,6 @@
+POPS.tbl
 DPOPStblnc.tmc
+POPStblnc.tmc
 DPOPSdispnc.cc
 DPOPSdispncoui.cc
 DPOPSdispnc.o
@@ -31,7 +33,9 @@ DPOPSengextoui.cc
 DPOPSengext.o
 DPOPSengextoui.o
 DPOPStblnc.tmc.dep
+POPStblnc.tmc.dep
 *.err
+POPS.tbl
 *.o
 *.exe
 *.stackdump

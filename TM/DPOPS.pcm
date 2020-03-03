@@ -1,39 +1,67 @@
 
 --------Frame Statistics-----------
-Major Frame: 1 minor frames, 1 Hz
-Minor Frame: 62 bytes, 1 Hz
+Major Frame: 3 minor frames, 1 Hz
+Minor Frame: 60 bytes, 3 Hz
 Effective Frame Dimensions:
-  1 Rows 62 Columns
-  1 rows/sec
-  496 bits/sec
-  Data:  464 bits/sec  94 %
-  Synch: 32 bits/sec  6 %
-  Empty: 0 bits/sec  0 %
+  3 Rows 60 Columns
+  3 rows/sec
+  1440 bits/sec
+  Data:  1336 bits/sec  93 %
+  Synch: 96 bits/sec  7 %
+  Empty: 8 bits/sec  1 %
 -------End of Frame Statistics-----
 
 
 --------PCM Definition-------------
-1/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
-1/1 Hz 47 bytes Group Alicat (1,0,2,47)
-1/1 Hz 1 bytes Member MFC2_Stale (1,0,2,1)
-1/1 Hz 2 bytes Member MFC2_Status (1,0,3,2)
-1/1 Hz 4 bytes Member MFC2_P (1,0,5,4)
-1/1 Hz 4 bytes Member MFC2_T (1,0,9,4)
-1/1 Hz 4 bytes Member MFC2_MassFlow (1,0,13,4)
-1/1 Hz 4 bytes Member MFC2_VolFlow (1,0,17,4)
-1/1 Hz 4 bytes Member MFC2_Set (1,0,21,4)
-1/1 Hz 1 bytes Member MFC1_Stale (1,0,25,1)
-1/1 Hz 2 bytes Member MFC1_Status (1,0,26,2)
-1/1 Hz 4 bytes Member MFC1_P (1,0,28,4)
-1/1 Hz 4 bytes Member MFC1_T (1,0,32,4)
-1/1 Hz 4 bytes Member MFC1_MassFlow (1,0,36,4)
-1/1 Hz 4 bytes Member MFC1_VolFlow (1,0,40,4)
-1/1 Hz 4 bytes Member MFC1_Set (1,0,44,4)
-1/1 Hz 1 bytes Member Alicat_Stale (1,0,48,1)
-1/1 Hz 4 bytes Datum freemem (1,0,49,4)
-1/1 Hz 4 bytes Datum SysTDrift (1,0,53,4)
-1/1 Hz 2 bytes Datum Disk (1,0,57,2)
-1/1 Hz 1 bytes Datum CPU_Pct (1,0,59,1)
-1/1 Hz 2 bytes Datum Synch (1,0,60,2)
+3/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
+3/1 Hz 2 bytes Datum Synch (1,0,58,2)
+1/1 Hz 109 bytes Group POPSgrp (3,0,2,56) (3,1,2,53)
+1/1 Hz 1 bytes Member POPS_Stale (3,0,2,1)
+1/1 Hz 4 bytes Member POPS_Bin16 (3,0,3,4)
+1/1 Hz 4 bytes Member POPS_Bin15 (3,0,7,4)
+1/1 Hz 4 bytes Member POPS_Bin14 (3,0,11,4)
+1/1 Hz 4 bytes Member POPS_Bin13 (3,0,15,4)
+1/1 Hz 4 bytes Member POPS_Bin12 (3,0,19,4)
+1/1 Hz 4 bytes Member POPS_Bin11 (3,0,23,4)
+1/1 Hz 4 bytes Member POPS_Bin10 (3,0,27,4)
+1/1 Hz 4 bytes Member POPS_Bin09 (3,0,31,4)
+1/1 Hz 4 bytes Member POPS_Bin08 (3,0,35,4)
+1/1 Hz 4 bytes Member POPS_Bin07 (3,0,39,4)
+1/1 Hz 4 bytes Member POPS_Bin06 (3,0,43,4)
+1/1 Hz 4 bytes Member POPS_Bin05 (3,0,47,4)
+1/1 Hz 4 bytes Member POPS_Bin04 (3,0,51,4)
+1/1 Hz 4 bytes Member POPS_Bin03 (3,0,55,3) (3,1,2,1)
+1/1 Hz 4 bytes Member POPS_Bin02 (3,1,3,4)
+1/1 Hz 4 bytes Member POPS_Bin01 (3,1,7,4)
+1/1 Hz 4 bytes Member POPS_Temp (3,1,11,4)
+1/1 Hz 4 bytes Member POPS_LD_Mon (3,1,15,4)
+1/1 Hz 4 bytes Member POPS_LDTemp (3,1,19,4)
+1/1 Hz 4 bytes Member POPS_Flow (3,1,23,4)
+1/1 Hz 4 bytes Member POPS_P_mbar (3,1,27,4)
+1/1 Hz 4 bytes Member POPS_STD (3,1,31,4)
+1/1 Hz 4 bytes Member POPS_Baseline (3,1,35,4)
+1/1 Hz 4 bytes Member POPS_num_cc (3,1,39,4)
+1/1 Hz 4 bytes Member POPS_Part_Num (3,1,43,4)
+1/1 Hz 8 bytes Member POPS_Tdrift (3,1,47,8)
+1/1 Hz 2 bytes Datum Disk (3,1,55,2)
+1/1 Hz 1 bytes Datum CPU_Pct (3,1,57,1)
+1/1 Hz 47 bytes Group Alicat (3,2,2,47)
+1/1 Hz 1 bytes Member MFC2_Stale (3,2,2,1)
+1/1 Hz 2 bytes Member MFC2_Status (3,2,3,2)
+1/1 Hz 4 bytes Member MFC2_P (3,2,5,4)
+1/1 Hz 4 bytes Member MFC2_T (3,2,9,4)
+1/1 Hz 4 bytes Member MFC2_MassFlow (3,2,13,4)
+1/1 Hz 4 bytes Member MFC2_VolFlow (3,2,17,4)
+1/1 Hz 4 bytes Member MFC2_Set (3,2,21,4)
+1/1 Hz 1 bytes Member MFC1_Stale (3,2,25,1)
+1/1 Hz 2 bytes Member MFC1_Status (3,2,26,2)
+1/1 Hz 4 bytes Member MFC1_P (3,2,28,4)
+1/1 Hz 4 bytes Member MFC1_T (3,2,32,4)
+1/1 Hz 4 bytes Member MFC1_MassFlow (3,2,36,4)
+1/1 Hz 4 bytes Member MFC1_VolFlow (3,2,40,4)
+1/1 Hz 4 bytes Member MFC1_Set (3,2,44,4)
+1/1 Hz 1 bytes Member Alicat_Stale (3,2,48,1)
+1/1 Hz 4 bytes Datum freemem (3,2,49,4)
+1/1 Hz 4 bytes Datum SysTDrift (3,2,53,4)
 -------End of PCM Definition-------
 
