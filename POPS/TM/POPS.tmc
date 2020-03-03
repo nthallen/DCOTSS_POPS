@@ -1,4 +1,4 @@
-TM "Receive" POPS 0;
+TM "Receive" POPS 1;
 
 TM typedef double POPS_Tdrift_t { text "%8.2lf"; }
 TM typedef uint8_t POPS_Stale_t { text "%3u"; }
@@ -70,5 +70,6 @@ Group POPSgrp (
     POPS_Bin15 = POPS.Bin15;
     POPS_Bin16 = POPS.Bin16;
   }
+  POPS_obj->synch();
 }
 
