@@ -68,10 +68,15 @@ bool UserPkts_UDP::protocol_input() {
   uint32_t Bin14;
   uint32_t Bin15;
   uint32_t Bin16;
+  int year, month, day hour, minute, second;
+  struct tm buft;
+  le_time_t ltime;
 
   cp = 0;
   if (not_str("POPS,") ||
-      not_ISO8601(Time) || not_str(",", 1) ||
+      not_ndigits(4,year) || not_ndigits(2, month) || not_ndigits(2,day) ||
+      not_str("T") || not_ndigits(2,hour) || not_ndigits(2,minute) ||
+      not_ndigits(2,second) || not_str(",", 1) ||
       not_uint32(Part_Num) || not_str(",", 1) ||
       not_nfloat(&PartCon_num_cc) || not_str(",", 1) ||
       not_uint32(Baseline) || not_str(",", 1) ||
@@ -102,7 +107,16 @@ bool UserPkts_UDP::protocol_input() {
     }
     return false;
   }
-  POPS.Time = Time;
+  buft.tm_year = year - 1900;
+  buft.tm_mon = month - 1;
+  buft.tm_mday = day;
+  buft.tm_hour = hour;
+  buft.tm_min = minute;
+  buft.tm_sec = second;
+  ltime = mktime(&buft);
+  if (ltime == (le_time_t)(-1))
+    report_err("%s: mktime returned error", iname);
+  else POPS.Time = ltime;
   POPS.Part_Num = Part_Num;
   POPS.PartCon_num_cc = PartCon_num_cc;
   POPS.Baseline = Baseline;
