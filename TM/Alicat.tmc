@@ -15,18 +15,18 @@ TM typedef float Alicat_Temp_t { text "%7.2f"; }
 TM typedef float Alicat_Press_t { text "%7.2f"; }
 
 TM 1 Hz Alicat_Stale_t Alicat_Stale;
-TM 1 Hz Alicat_Flow4_t MFC1_Set;
-TM 1 Hz Alicat_Flow4_t MFC1_VolFlow;
-TM 1 Hz Alicat_Flow3_t MFC1_MassFlow;
+TM 1 Hz Alicat_Flow1_t MFC1_Set;
+TM 1 Hz Alicat_Flow1_t MFC1_VolFlow;
+TM 1 Hz Alicat_Flow1_t MFC1_MassFlow;
 TM 1 Hz Alicat_Temp_t MFC1_T;
 TM 1 Hz Alicat_Flow1_t MFC1_P;
 TM 1 Hz Alicat_Status_t MFC1_Status;
 TM 1 Hz Alicat_Stale_t MFC1_Stale;
-TM 1 Hz Alicat_Flow4_t MFC2_Set;
-TM 1 Hz Alicat_Flow4_t MFC2_VolFlow;
-TM 1 Hz Alicat_Flow2_t MFC2_MassFlow;
+TM 1 Hz Alicat_Flow1_t MFC2_Set;
+TM 1 Hz Alicat_Flow1_t MFC2_VolFlow;
+TM 1 Hz Alicat_Flow1_t MFC2_MassFlow;
 TM 1 Hz Alicat_Temp_t MFC2_T;
-TM 1 Hz Alicat_Flow2_t MFC2_P;
+TM 1 Hz Alicat_Flow1_t MFC2_P;
 TM 1 Hz Alicat_Status_t MFC2_Status;
 TM 1 Hz Alicat_Stale_t MFC2_Stale;
 TM "Receive" Alicat 1;

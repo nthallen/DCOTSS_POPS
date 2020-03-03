@@ -20,6 +20,6 @@
 %}
 
 &command
-  : Cal 1 Flow SetPoint %f (slm) slm * { Alicat_set(1, $5); }
-  : Cal 2 Flow SetPoint %f (ccm) ccm * { Alicat_set(2, $5); }
+  : MFC 1 Flow SetPoint %f (ccm) ccm * { Alicat_set(1, $5); }
+  : MFC 2 Flow SetPoint %f (ccm) ccm * { Alicat_set(2, $5); }
   ;

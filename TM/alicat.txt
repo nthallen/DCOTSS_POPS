@@ -2,5 +2,5 @@
 Name Alicat
 Rate 1 Hz
 Port /dev/ser3
-Digital MFC1 1 MFC 5 slm 20 gps 1050 mbar "Cal 1"
-Digital MFC2 2 MFC 2 ccm 100 kgs 800 Torr "Cal 2"
+Digital MFC1 1 MFC 5000 ccm 5000 sccm 1050 mbar "MFC 1"
+Digital MFC2 2 MFC 2000 ccm 2000 sccm 1050 mbar "MFC 2"

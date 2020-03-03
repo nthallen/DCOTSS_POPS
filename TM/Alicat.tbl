@@ -1,8 +1,8 @@
 MFC1_v {
   HBox { +-; Title: MFC1; -+ };
-  Set:    (MFC1_Set,7)     slm;
-  VFlow:  (MFC1_VolFlow,7) slm;
-  MFlow:  (MFC1_VolFlow,7) gps;
+  Set:    (MFC1_Set,7)     ccm;
+  VFlow:  (MFC1_VolFlow,7) ccm;
+  MFlow:  (MFC1_VolFlow,7) sccm;
   T:      (MFC1_T,7)       C;
   P:      (MFC1_P,7)       mbar;
   Status: (MFC1_Status,4);
@@ -13,9 +13,9 @@ MFC2_v {
   HBox { +-; Title: MFC2; -+ };
   Set:    (MFC2_Set,7)     ccm;
   VFlow:  (MFC2_VolFlow,7) ccm;
-  MFlow:  (MFC2_VolFlow,7) kgs;
+  MFlow:  (MFC2_VolFlow,7) sccm;
   T:      (MFC2_T,7)       C;
-  P:      (MFC2_P,7)       Torr;
+  P:      (MFC2_P,7)       mbar;
   Status: (MFC2_Status,4);
   Stale:  (MFC2_Stale,3);
 }
@@ -23,7 +23,7 @@ MFC2_v {
 Alicat_flows {
   HBox { +-; Title: Alicat; -+ };
   ""    >Set<        >Flow<;
-  MFC1: (MFC1_Set,7) (MFC1_VolFlow,7) slm;
+  MFC1: (MFC1_Set,7) (MFC1_VolFlow,7) ccm;
   MFC2: (MFC2_Set,7) (MFC2_VolFlow,7) ccm;
   { HGlue 0+1 Stale: (Alicat_Stale,3) }
 }
@@ -33,6 +33,6 @@ Alicat_hk {
   ""    >Temp<    "" >Status<        >ACK<   ""     >Stale<;
   MFC1: (MFC1_T,7) C (MFC1_P,7) mbar
 (MFC1_Status,4) (MFC1_Stale,3);
-  MFC2: (MFC2_T,7) C (MFC2_P,7) Torr
+  MFC2: (MFC2_T,7) C (MFC2_P,7) mbar
 (MFC2_Status,4) (MFC2_Stale,3);
 }
