@@ -1,5 +1,5 @@
-function pengtmcpu(varargin);
-% pengtmcpu( [...] );
+function pdpopstmcpu(varargin);
+% pdpopstmcpu( [...] );
 % T Mbase CPU
 h = timeplot({'CPU_Pct'}, ...
       'T Mbase CPU', ...

@@ -1,5 +1,5 @@
-function pengasccm(varargin);
-% pengasccm( [...] );
+function pdpopsasccm(varargin);
+% pdpopsasccm( [...] );
 % Alicat sccm
 h = timeplot({'MFC1_MassFlow','MFC2_MassFlow'}, ...
       'Alicat sccm', ...

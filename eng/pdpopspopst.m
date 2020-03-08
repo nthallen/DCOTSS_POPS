@@ -1,5 +1,5 @@
-function pengpopst(varargin);
-% pengpopst( [...] );
+function pdpopspopst(varargin);
+% pdpopspopst( [...] );
 % POPS T
 h = timeplot({'POPS_Temp'}, ...
       'POPS T', ...

@@ -1,5 +1,5 @@
-function pengahkt(varargin);
-% pengahkt( [...] );
+function pdpopsahkt(varargin);
+% pdpopsahkt( [...] );
 % Alicat HK T
 h = timeplot({'MFC1_T','MFC2_T'}, ...
       'Alicat HK T', ...

@@ -1,5 +1,5 @@
-function pengpopsf(varargin);
-% pengpopsf( [...] );
+function pdpopspopsf(varargin);
+% pdpopspopsf( [...] );
 % POPS Flow
 h = timeplot({'POPS_Flow'}, ...
       'POPS Flow', ...

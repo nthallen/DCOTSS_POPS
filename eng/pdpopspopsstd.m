@@ -1,5 +1,5 @@
-function pengpopsstd(varargin);
-% pengpopsstd( [...] );
+function pdpopspopsstd(varargin);
+% pdpopspopsstd( [...] );
 % POPS STD
 h = timeplot({'POPS_STD'}, ...
       'POPS STD', ...

@@ -1,5 +1,5 @@
-function pengahkmbar(varargin);
-% pengahkmbar( [...] );
+function pdpopsahkmbar(varargin);
+% pdpopsahkmbar( [...] );
 % Alicat HK mbar
 h = timeplot({'MFC1_P','MFC2_P'}, ...
       'Alicat HK mbar', ...

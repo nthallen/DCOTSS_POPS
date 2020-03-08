@@ -1,4 +1,5 @@
 tmcbase = base.tmc
+genuibase = DPOPS.genui
 
 Module TMbase
 Module alicat src=alicat.txt
@@ -12,3 +13,5 @@ IDISTRIB = doit
 DPOPSdisp : DPOPS.tbl POPS.tbl
 DPOPSalgo : DPOPS.tma
 madedoit : DPOPS.doit
+%%
+CXXFLAGS=-Wall -g

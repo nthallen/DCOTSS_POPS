@@ -1,5 +1,5 @@
-function pengahks(varargin);
-% pengahks( [...] );
+function pdpopsahks(varargin);
+% pdpopsahks( [...] );
 % Alicat HK Status
 h = timeplot({'MFC1_Status','MFC2_Status'}, ...
       'Alicat HK Status', ...
