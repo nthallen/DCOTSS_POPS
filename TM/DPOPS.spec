@@ -1,5 +1,6 @@
 tmcbase = base.tmc
 genuibase = DPOPS.genui
+cmdbase = playback.cmd
 
 Module TMbase
 Module alicat src=alicat.txt

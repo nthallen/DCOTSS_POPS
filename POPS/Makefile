@@ -1,4 +1,4 @@
-CXXFLAGS = -Wall -g -std=c++11
+CXXFLAGS = -Wall -g -std=c++11 -D_DEFAULT_SOURCE
 LDFLAGS = -L/usr/local/lib -ltm -ldasio -lnl -lpthread
 .PHONY : clean
 

@@ -1,3 +1,4 @@
 POPS
-*.o
 POPSoui.cc
+*.o
+*.exe
