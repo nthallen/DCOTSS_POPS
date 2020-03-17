@@ -1,5 +1,11 @@
 function ui_dpops
 f = ne_dialg('DCOTSS POPS',1);
+f = ne_dialg(f, 'add', 0, 1, 'gdpopsdacsa', 'uDACS A' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsadac', 'DAC' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsas', 'Status' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsav', 'V' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsah', 'Hdrs' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsan', 'N' );
 f = ne_dialg(f, 'add', 0, 1, 'gdpopstm', 'T Mbase' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopstmtd', 'T Drift' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopstmcpu', 'CPU' );

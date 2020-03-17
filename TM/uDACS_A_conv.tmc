@@ -1,0 +1,72 @@
+AD7770_AI_t uDACS_A_AIN0; Invalidate uDACS_A_AIN0;
+{ uDACS_A_AIN0 = (uDACS_A_Raw0 & 0xFFFFFF) |
+    ((uDACS_A_Raw0 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN0;
+}
+AD7770_AI_stat_t uDACS_A_stat0; Invalidate uDACS_A_stat0;
+{ uDACS_A_stat0 = (uDACS_A_Raw0 >> 24) & 0xFF;
+  Validate uDACS_A_stat0;
+}
+AD7770_AI_t uDACS_A_AIN1; Invalidate uDACS_A_AIN1;
+{ uDACS_A_AIN1 = (uDACS_A_Raw1 & 0xFFFFFF) |
+    ((uDACS_A_Raw1 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN1;
+}
+AD7770_AI_stat_t uDACS_A_stat1; Invalidate uDACS_A_stat1;
+{ uDACS_A_stat1 = (uDACS_A_Raw1 >> 24) & 0xFF;
+  Validate uDACS_A_stat1;
+}
+AD7770_AI_t uDACS_A_AIN2; Invalidate uDACS_A_AIN2;
+{ uDACS_A_AIN2 = (uDACS_A_Raw2 & 0xFFFFFF) |
+    ((uDACS_A_Raw2 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN2;
+}
+AD7770_AI_stat_t uDACS_A_stat2; Invalidate uDACS_A_stat2;
+{ uDACS_A_stat2 = (uDACS_A_Raw2 >> 24) & 0xFF;
+  Validate uDACS_A_stat2;
+}
+AD7770_AI_t uDACS_A_AIN3; Invalidate uDACS_A_AIN3;
+{ uDACS_A_AIN3 = (uDACS_A_Raw3 & 0xFFFFFF) |
+    ((uDACS_A_Raw3 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN3;
+}
+AD7770_AI_stat_t uDACS_A_stat3; Invalidate uDACS_A_stat3;
+{ uDACS_A_stat3 = (uDACS_A_Raw3 >> 24) & 0xFF;
+  Validate uDACS_A_stat3;
+}
+AD7770_AI_t uDACS_A_AIN4; Invalidate uDACS_A_AIN4;
+{ uDACS_A_AIN4 = (uDACS_A_Raw4 & 0xFFFFFF) |
+    ((uDACS_A_Raw4 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN4;
+}
+AD7770_AI_stat_t uDACS_A_stat4; Invalidate uDACS_A_stat4;
+{ uDACS_A_stat4 = (uDACS_A_Raw4 >> 24) & 0xFF;
+  Validate uDACS_A_stat4;
+}
+AD7770_AI_t uDACS_A_AIN5; Invalidate uDACS_A_AIN5;
+{ uDACS_A_AIN5 = (uDACS_A_Raw5 & 0xFFFFFF) |
+    ((uDACS_A_Raw5 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN5;
+}
+AD7770_AI_stat_t uDACS_A_stat5; Invalidate uDACS_A_stat5;
+{ uDACS_A_stat5 = (uDACS_A_Raw5 >> 24) & 0xFF;
+  Validate uDACS_A_stat5;
+}
+AD7770_AI_t uDACS_A_AIN6; Invalidate uDACS_A_AIN6;
+{ uDACS_A_AIN6 = (uDACS_A_Raw6 & 0xFFFFFF) |
+    ((uDACS_A_Raw6 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN6;
+}
+AD7770_AI_stat_t uDACS_A_stat6; Invalidate uDACS_A_stat6;
+{ uDACS_A_stat6 = (uDACS_A_Raw6 >> 24) & 0xFF;
+  Validate uDACS_A_stat6;
+}
+AD7770_AI_t uDACS_A_AIN7; Invalidate uDACS_A_AIN7;
+{ uDACS_A_AIN7 = (uDACS_A_Raw7 & 0xFFFFFF) |
+    ((uDACS_A_Raw7 & 0x800000) ? 0xFF000000 : 0);
+  Validate uDACS_A_AIN7;
+}
+AD7770_AI_stat_t uDACS_A_stat7; Invalidate uDACS_A_stat7;
+{ uDACS_A_stat7 = (uDACS_A_Raw7 >> 24) & 0xFF;
+  Validate uDACS_A_stat7;
+}
