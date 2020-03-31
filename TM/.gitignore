@@ -11,6 +11,10 @@ DPOPSdispnc.cc
 DPOPSdispncoui.cc
 DPOPSdispnc.o
 DPOPSdispncoui.o
+uDACSdispnc.cc
+uDACSdispncoui.cc
+uDACSdispnc.o
+uDACSdispncoui.o
 DPOPSalgoa.tmc
 DPOPSalgo.cc
 DPOPSalgooui.cc
@@ -44,6 +48,7 @@ POPS.tbl
 Makefile
 DPOPScol
 DPOPSdispnc
+uDACSdispnc
 DPOPSalgo
 madedoit
 DPOPScltnc

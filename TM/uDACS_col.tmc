@@ -22,11 +22,12 @@
       return false;
     }
     if (nwords != mreq.mreq->n_reads) {
-      msg(2, "mread_subbus_nw(%s) returned %d words, expected %d", mreq.name, nwords, mreq.mreq->n_reads);
+      msg(2, "mread_subbus_nw(%s) returned %d words, expected %d",
+            mreq.name, nwords, mreq.mreq->n_reads);
       return false;
     }
     switch (rv) {
-      case SBS_ACK:
+      case SBS_OK:
         if (mreq.saw_nack) {
           msg(0, "%s recovered from NACK", mreq.name);
           mreq.saw_nack = false;
@@ -54,7 +55,7 @@
     subbus_mread_req *mreq = SB->pack_mread_request(0x2D, "2:1:5,8|28@9");
     int rv = SB->mread_subbus_nw(mreq, values, &nread);
     free_memory(mreq);
-    if (rv == SBS_ACK) {
+    if (rv == SBS_OK) {
       const char *desc = (const char *)&values[5];
       msg(0, "  Board ID:%d Build:%d S/N:%d Instrument:%d",
         values[0], values[1], values[2], values[3]);
@@ -68,7 +69,7 @@
   
   void uDACS_init() {
     msg(0, "uDACS_init()");
-    uDACS_A.SB = new subbuspp("uDACS_A", 0);
+    uDACS_A.SB = new subbuspp("uDACS_A", "serusb");
     uDACS_A.name = "uDACS_A";
     uDACS_A.rvals = &uDACS_A_rvals[0];
     uDACS_A.saw_nack = false;

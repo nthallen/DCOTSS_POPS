@@ -1,7 +1,7 @@
 Input "TMbase.tbl";
 
 DAC_A {
-  HBox { -; Title: DAC; - };
+  HBox { +-; Title: DAC; -+ };
   "0:"  (uDACS_A_Vset0,6) V;
   "1:"  (uDACS_A_Vset1,6) V;
   "2:"  (uDACS_A_Vset2,6) V;
@@ -9,6 +9,7 @@ DAC_A {
 }
  
 ADC_A {
+  HBox { +-; Title: ADC; -+ };
   "0:" (uDACS_A_stat0,2) (uDACS_A_AIN0,9) V;
   "1:" (uDACS_A_stat1,2) (uDACS_A_AIN1,9) V;
   "2:" (uDACS_A_stat2,2) (uDACS_A_AIN2,9) V;
@@ -21,10 +22,10 @@ ADC_A {
 }
 
 { HBox {
-    |; [ADC_A]; |; {
+    |+; [ADC_A]; |+; {
       [DAC_A];
       [TMbaseB];
-    }; |
+    }; |+
   };
   -;
 }
