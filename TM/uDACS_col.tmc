@@ -13,9 +13,11 @@
   
   uDACS_mreq uDACS_A;
   uint16_t uDACS_A_rvals[0x16];
+  bool uDACS_A_present = false;
   
   bool uDACS_mread(uDACS_mreq &mreq) {
     uint16_t nwords;
+    if (!uDACS_A_present) return false;
     int rv = mreq.SB->mread_subbus_nw(mreq.mreq, mreq.rvals, &nwords);
     if (rv < 0) {
       msg(2, "mread_subbus_nw(%s) returned error %d", mreq.name, rv);
@@ -75,11 +77,16 @@
     uDACS_A.saw_nack = false;
     msg(0, "uDACS_A->load()");
     int subfunc = uDACS_A.SB->load();
-    if (subfunc != 9)
-      msg(2, "Expected Subfunction 9 for uDACS, was %d", subfunc);
-    msg(0, "uDACS_A->identify_board();");
-    identify_board(uDACS_A.SB, "uDACS_A");
-    uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x16, "10:1:25");
+    if (subfunc == 0) {
+      msg(2, "subbus load() failed");
+    } else {
+      uDACS_A_present = true;
+      if (subfunc != 9)
+        msg(2, "Expected Subfunction 9 for uDACS, was %d", subfunc);
+      msg(0, "uDACS_A->identify_board();");
+      identify_board(uDACS_A.SB, "uDACS_A");
+      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x16, "10:1:25");
+    }
   }
 %}
 TM INITFUNC uDACS_init();

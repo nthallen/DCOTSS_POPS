@@ -1,6 +1,6 @@
 @tbl_name@ {
   HBox { -+; Title: POPS; +- };
-  HBox { |;
+  HBox { +|+;
     {
       Stale:  (POPS_Stale,3);
       Tdrift: (POPS_Tdrift,8) sec;
@@ -13,7 +13,7 @@
       LDTemp: (POPS_LDTemp,8) C;
       LD_Mon: (POPS_LD_Mon,8);
       Temp:   (POPS_Temp,8)   C;
-    }; |; {
+    }; +|+; {
       HBox {
         {
 	  Bin01:  (POPS_Bin01,8);
@@ -24,7 +24,7 @@
 	  Bin06:  (POPS_Bin06,8);
 	  Bin07:  (POPS_Bin07,8);
 	  Bin08:  (POPS_Bin08,8);
-	}; |; {
+	}; +|+; {
 	  Bin09:  (POPS_Bin09,8);
 	  Bin10:  (POPS_Bin10,8);
 	  Bin11:  (POPS_Bin11,8);
@@ -35,9 +35,9 @@
 	  Bin16:  (POPS_Bin16,8);
 	}
       };
-      -;
+      +-+;
       HBox { HGlue 0+1; { (flttime,9) MFCtr: (MFCtr,5) } }
-    }; |
+    }; +|+
   };
   -;
 }
