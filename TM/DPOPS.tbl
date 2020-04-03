@@ -2,10 +2,10 @@ Input "TMbase.tbl";
 Input "Alicat.tbl";
 
 { HBox {
-    |;
+    |+;
     { HBox { [MFC1_v]; |; [MFC2_v] };
       [Alicat_flows];
       [Alicat_hk];
-    }; |; [TMbaseB]; | };
+    }; |+; [TMbaseB]; |+ };
   -
 }

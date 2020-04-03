@@ -18,6 +18,7 @@ IDISTRIB = doit
 
 DPOPScol : -lsubbuspp
 DPOPSdisp : uDACS_A_conv.tmc DPOPS.tbl POPS.tbl uDACS.tbl
+uDACSdisp : uDACS_A_conv.tmc uDACS.tbl
 DPOPSalgo : DPOPS.tma
 madedoit : DPOPS.doit
 %%
