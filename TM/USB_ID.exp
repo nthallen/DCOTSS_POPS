@@ -1,0 +1,47 @@
+#! /usr/bin/expect -f
+set port /dev/ttyS8
+if {$argc>0} { set port [lindex $argv 0]}
+
+log_user 0
+spawn ser_chk -V -p $port
+set timeout 1
+set board_id ""
+while 1 {
+  # send_user "Requesting identification\r\n"
+  send "V\r"
+  expect {
+    -re "U\[0-9]" {
+      # send_user "\r\nSaw an error\r\n"
+      continue
+    }
+    -re "V(9|14):0:DPOPS uDACS A" {
+      # send_user "Identified uDACS A\n"
+      send_user "uDACS_A=$port\n"
+      break
+    }
+    -re "V(9|14):0:DPOPS uDACS B" {
+      # send_user "Identified uDACS A\n"
+      # send_user "uDACS_B=$port\n"
+      set board_id uDACS_A
+      break
+    }
+    timeout {
+      send_user "\r\nTimed out waiting\r\n"
+      break
+    }
+  }
+  send_user "\r\nEnd of the loop\r\n"
+}
+send "\x01"
+expect {
+  eof {set saw_eof yes}
+  timeout {set saw_eof no}
+}
+
+if { [string compare $board_id ""] == 0 } {
+  spawn ser_chk -V -b 19200 -p $port
+}
+
+if { [string compare $board_id ""] } {
+  send_user "$board_id=$port\n"
+}
