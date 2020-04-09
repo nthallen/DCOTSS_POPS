@@ -1,7 +1,6 @@
 %{
   #include "subbuspp.h"
   #define disarm_sic()
-  #define tick_sic()
 
   typedef struct {
     subbuspp *SB;
@@ -10,6 +9,9 @@
     uint16_t *rvals;
     bool saw_nack;
   } uDACS_mreq;
+
+  #define tick_sic() uDACS_A.SB->tick_sic()
+  // #define tick_sic()
   
   uDACS_mreq uDACS_A;
   uint16_t uDACS_A_rvals[0x16];
@@ -81,8 +83,8 @@
       msg(2, "subbus load() failed");
     } else {
       uDACS_A_present = true;
-      if (subfunc != 9)
-        msg(2, "Expected Subfunction 9 for uDACS, was %d", subfunc);
+      if (subfunc != 9 && subfunc != 14)
+        msg(2, "Expected Subfunction 9 or 14 for uDACS, was %d", subfunc);
       msg(0, "uDACS_A->identify_board();");
       identify_board(uDACS_A.SB, "uDACS_A");
       uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x16, "10:1:25");
