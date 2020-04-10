@@ -14,7 +14,7 @@
   // #define tick_sic()
   
   uDACS_mreq uDACS_A;
-  uint16_t uDACS_A_rvals[0x16];
+  uint16_t uDACS_A_rvals[0x17];
   bool uDACS_A_present = false;
   
   bool uDACS_mread(uDACS_mreq &mreq) {
@@ -87,7 +87,7 @@
         msg(2, "Expected Subfunction 9 or 14 for uDACS, was %d", subfunc);
       msg(0, "uDACS_A->identify_board();");
       identify_board(uDACS_A.SB, "uDACS_A");
-      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x16, "10:1:25");
+      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x17, "10:1:25,6");
     }
   }
 %}

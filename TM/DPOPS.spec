@@ -6,6 +6,7 @@ genuibase = DPOPS.genui
 genuibase = uDACS.genui
 extbase = uDACS_A_conv.tmc
 cmdbase = playback.cmd
+cmdbase = uDACS.cmd
 
 Module TMbase
 Module alicat src=alicat.txt
@@ -17,6 +18,7 @@ DISTRIB = services interact
 IDISTRIB = doit
 
 DPOPScol : -lsubbuspp
+DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
 DPOPSdisp : uDACS_A_conv.tmc DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS_A_conv.tmc uDACS.tbl
 DPOPSalgo : DPOPS.tma

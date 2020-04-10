@@ -24,7 +24,9 @@ ADC_A {
 { HBox {
     |+; [ADC_A]; |+; {
       [DAC_A];
-      [TMbaseB];
+      { [TMbaseB];
+        Fail: (Fail,2);
+      }
     }; |+
   };
   -;

@@ -1,2 +1,3 @@
 TM typedef uint16_t MFCtr_t { text "%5u"; }
 TM 1 Hz MFCtr_T MFCtr, Synch;
+TM MAXCOLS = 200;

@@ -20,3 +20,4 @@
  1 uDACS_A_stat6 uDACS_A Hdrs %.0lf
  1 uDACS_A_stat7 uDACS_A Hdrs %.0lf
  1 uDACS_A_N uDACS_A N
+ 1 Fail:0:Fail uDACS_A Fail

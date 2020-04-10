@@ -1,4 +1,6 @@
 /* uDACS_A */
+TM typedef uint8_t Fail_t { text "%02X"; }
+TM 1 Hz Fail_t Fail;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet0;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet1;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet2;
@@ -14,7 +16,7 @@ TM 1 Hz AD7770_rawAI_t uDACS_A_Raw6;
 TM 1 Hz AD7770_rawAI_t uDACS_A_Raw7;
 TM 1 Hz AD7770_count_t uDACS_A_N;
 
-group uDACS_A (uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3,
+group uDACS_A (Fail, uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3,
     uDACS_A_status, uDACS_A_Raw0, uDACS_A_Raw1, uDACS_A_Raw2, uDACS_A_Raw3,
     uDACS_A_Raw4, uDACS_A_Raw5, uDACS_A_Raw6, uDACS_A_Raw7, uDACS_A_N) {
   if (uDACS_mread(uDACS_A)) {
@@ -32,5 +34,6 @@ group uDACS_A (uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3,
     uDACS_A_Raw6 = (uDACS_A_rvals[18] << 16) | uDACS_A_rvals[17];
     uDACS_A_Raw7 = (uDACS_A_rvals[20] << 16) | uDACS_A_rvals[19];
     uDACS_A_N = uDACS_A_rvals[21];
+    Fail = uDACS_A_rvals[22] & 0xFF;
   }
 }
