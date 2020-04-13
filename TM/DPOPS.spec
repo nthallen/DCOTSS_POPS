@@ -1,7 +1,10 @@
 tmcbase = base.tmc
 tmcbase = uDACS.tmc
 tmcbase = uDACS_A.tmc
+tmcbase = uDACS_B.tmc
 colbase = uDACS_col.tmc
+colbase = uDACS_A_col.tmc
+colbase = uDACS_B_col.tmc
 genuibase = DPOPS.genui
 genuibase = uDACS.genui
 extbase = uDACS_A_conv.tmc

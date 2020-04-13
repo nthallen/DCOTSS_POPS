@@ -8,18 +8,12 @@
     subbus_mread_req *mreq;
     uint16_t *rvals;
     bool saw_nack;
+    bool present;
   } uDACS_mreq;
-
-  #define tick_sic() uDACS_A.SB->tick_sic()
-  // #define tick_sic()
-  
-  uDACS_mreq uDACS_A;
-  uint16_t uDACS_A_rvals[0x17];
-  bool uDACS_A_present = false;
   
   bool uDACS_mread(uDACS_mreq &mreq) {
     uint16_t nwords;
-    if (!uDACS_A_present) return false;
+    if (!mreq.present) return false;
     int rv = mreq.SB->mread_subbus_nw(mreq.mreq, mreq.rvals, &nwords);
     if (rv < 0) {
       msg(2, "mread_subbus_nw(%s) returned error %d", mreq.name, rv);
@@ -71,24 +65,25 @@
     }
   }
   
-  void uDACS_init() {
+  void uDACS_init(uDACS_mreq &mreq, const char *name) {
     msg(0, "uDACS_init()");
-    uDACS_A.SB = new subbuspp("uDACS_A", "serusb");
-    uDACS_A.name = "uDACS_A";
-    uDACS_A.rvals = &uDACS_A_rvals[0];
-    uDACS_A.saw_nack = false;
-    msg(0, "uDACS_A->load()");
-    int subfunc = uDACS_A.SB->load();
+    mreq.SB = new subbuspp(name, "serusb");
+    mreq.name = name;
+    mreq.rvals = 0;
+    mreq.saw_nack = false;
+    mreq.present = false;
+    msg(0, "%s->load()", name);
+    int subfunc = mreq.SB->load();
     if (subfunc == 0) {
       msg(2, "subbus load() failed");
     } else {
-      uDACS_A_present = true;
-      if (subfunc != 9 && subfunc != 14)
+      mreq.present = true;
+      if (subfunc != 9 && subfunc != 14) {
         msg(2, "Expected Subfunction 9 or 14 for uDACS, was %d", subfunc);
-      msg(0, "uDACS_A->identify_board();");
-      identify_board(uDACS_A.SB, "uDACS_A");
-      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x17, "10:1:25,6");
+      }
+      msg(0, "%s->identify_board();", name);
+      identify_board(mreq.SB, name);
+      mreq.mreq = 0;
     }
   }
 %}
-TM INITFUNC uDACS_init();

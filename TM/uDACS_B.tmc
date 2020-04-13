@@ -1,0 +1,36 @@
+/* uDACS_B */
+TM 1 Hz uDACS_DAC_t uDACS_B_VSet0;
+TM 1 Hz uDACS_DAC_t uDACS_B_VSet1;
+TM 1 Hz uDACS_DAC_t uDACS_B_VSet2;
+TM 1 Hz uDACS_DAC_t uDACS_B_VSet3;
+TM 1 Hz AD7770_status_t uDACS_B_status;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw0;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw1;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw2;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw3;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw4;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw5;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw6;
+TM 1 Hz AD7770_rawAI_t uDACS_B_Raw7;
+TM 1 Hz AD7770_count_t uDACS_B_N;
+
+group uDACS_B (uDACS_B_VSet0, uDACS_B_VSet1, uDACS_B_VSet2, uDACS_B_VSet3,
+    uDACS_B_status, uDACS_B_Raw0, uDACS_B_Raw1, uDACS_B_Raw2, uDACS_B_Raw3,
+    uDACS_B_Raw4, uDACS_B_Raw5, uDACS_B_Raw6, uDACS_B_Raw7, uDACS_B_N) {
+  if (uDACS_mread(uDACS_B)) {
+    uDACS_B_Vset0 = uDACS_B_rvals[0];
+    uDACS_B_Vset1 = uDACS_B_rvals[1];
+    uDACS_B_Vset2 = uDACS_B_rvals[2];
+    uDACS_B_Vset3 = uDACS_B_rvals[3];
+    uDACS_B_status = uDACS_B_rvals[4];
+    uDACS_B_Raw0 = (uDACS_B_rvals[6] << 16) | uDACS_B_rvals[5];
+    uDACS_B_Raw1 = (uDACS_B_rvals[8] << 16) | uDACS_B_rvals[7];
+    uDACS_B_Raw2 = (uDACS_B_rvals[10] << 16) | uDACS_B_rvals[9];
+    uDACS_B_Raw3 = (uDACS_B_rvals[12] << 16) | uDACS_B_rvals[11];
+    uDACS_B_Raw4 = (uDACS_B_rvals[14] << 16) | uDACS_B_rvals[13];
+    uDACS_B_Raw5 = (uDACS_B_rvals[16] << 16) | uDACS_B_rvals[15];
+    uDACS_B_Raw6 = (uDACS_B_rvals[18] << 16) | uDACS_B_rvals[17];
+    uDACS_B_Raw7 = (uDACS_B_rvals[20] << 16) | uDACS_B_rvals[19];
+    uDACS_B_N = uDACS_B_rvals[21];
+  }
+}
