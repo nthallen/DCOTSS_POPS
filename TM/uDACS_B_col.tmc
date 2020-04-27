@@ -1,11 +1,11 @@
 %{
   uDACS_mreq uDACS_B;
-  uint16_t uDACS_B_rvals[0x17];
+  uint16_t uDACS_B_rvals[0x1A];
   
   void uDACS_B_init() {
     uDACS_init(uDACS_B, "uDACS_B");
     if (uDACS_B.present) {
-      uDACS_B.mreq = uDACS_B.SB->pack_mread_request(0x17, "10:1:25,6");
+      uDACS_B.mreq = uDACS_B.SB->pack_mread_request(0x1A, "11,14:1:1C,25,26,30,40:1:43,50:1:58");
     }
   }
 %}

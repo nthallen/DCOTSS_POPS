@@ -1,4 +1,13 @@
 /* uDACS_B */
+%{
+#define rvals_to_float(x) (*(float*)&x)
+%}
+
+TM typedef uint8_t PumpStat_t { text "%02X"; }
+TM typedef float HPS_Temp_t { text "%6.2f"; }
+TM typedef float HPS_P_t { text "%6.1f"; }
+TM typedef float HPS_dP_t { text "%6.4f"; }
+
 /* TM 1 Hz uDACS_DAC_t uDACS_B_VSet0; */
 TM 1 Hz uDACS_DAC_t uDACS_B_VSet1;
 /* TM 1 Hz uDACS_DAC_t uDACS_B_VSet2; */
@@ -13,26 +22,57 @@ TM 1 Hz AD7770_rawAI_t uDACS_B_Raw5;
 TM 1 Hz AD7770_rawAI_t uDACS_B_Raw6;
 TM 1 Hz AD7770_rawAI_t uDACS_B_Raw7;
 TM 1 Hz AD7770_count_t uDACS_B_N;
+TM 1 Hz AD7770_status_t uDACS_B_errors;
+TM 1 Hz PumpStat_t PumpsStat;
+TM 1 Hz RTC_elapsed_t uDACS_B_elapsed;
+TM 1 Hz RTC_loopdur_t uDACS_B_curloopdur;
+TM 1 Hz RTC_loopdur_t uDACS_B_maxloopdur;
+TM 1 Hz PumpStat_t HPS_Stat;
+TM 1 Hz HPS_Temp_t HPS1_Temp;
+TM 1 Hz HPS_Temp_t HPS2_Temp;
+TM 1 Hz HPS_P_t HPS_P;
+TM 1 Hz HPS_dP_t HPS_dP;
 
 group uDACS_B (/* uDACS_B_VSet0, uDACS_B_VSet1, uDACS_B_VSet2, uDACS_B_VSet3, */
     uDACS_B_status, uDACS_B_Raw0, uDACS_B_Raw1, uDACS_B_Raw2, uDACS_B_Raw3,
-    uDACS_B_Raw4, uDACS_B_Raw5, uDACS_B_Raw6, uDACS_B_Raw7, uDACS_B_N) {
+    uDACS_B_Raw4, uDACS_B_Raw5, uDACS_B_Raw6, uDACS_B_Raw7, uDACS_B_N, uDACS_B_errors,
+    PumpsStat, uDACS_B_elapsed, uDACS_B_curloopdur, uDACS_B_maxloopdur,
+    HPS_Stat, HPS1_Temp, HPS2_Temp, HPS_P, HPS_dP) {
   if (uDACS_mread(uDACS_B)) {
+  
     /*
     uDACS_B_Vset0 = uDACS_B_rvals[0];
     uDACS_B_Vset1 = uDACS_B_rvals[1];
     uDACS_B_Vset2 = uDACS_B_rvals[2];
     uDACS_B_Vset3 = uDACS_B_rvals[3];
     */
-    uDACS_B_status = uDACS_B_rvals[4];
-    uDACS_B_Raw0 = (uDACS_B_rvals[6] << 16) | uDACS_B_rvals[5];
-    uDACS_B_Raw1 = (uDACS_B_rvals[8] << 16) | uDACS_B_rvals[7];
-    uDACS_B_Raw2 = (uDACS_B_rvals[10] << 16) | uDACS_B_rvals[9];
-    uDACS_B_Raw3 = (uDACS_B_rvals[12] << 16) | uDACS_B_rvals[11];
+    
+    uDACS_B_Vset1 = uDACS_B_rvals[0];
+    uDACS_B_status = uDACS_B_rvals[1];
+    uDACS_B_Raw0 = (uDACS_B_rvals[3] << 16) | uDACS_B_rvals[2];
+    uDACS_B_Raw1 = (uDACS_B_rvals[5] << 16) | uDACS_B_rvals[4];
+    uDACS_B_Raw2 = (uDACS_B_rvals[7] << 16) | uDACS_B_rvals[6];
+    uDACS_B_Raw3 = (uDACS_B_rvals[9] << 16) | uDACS_B_rvals[8];
+    
+    /* 
     uDACS_B_Raw4 = (uDACS_B_rvals[14] << 16) | uDACS_B_rvals[13];
     uDACS_B_Raw5 = (uDACS_B_rvals[16] << 16) | uDACS_B_rvals[15];
     uDACS_B_Raw6 = (uDACS_B_rvals[18] << 16) | uDACS_B_rvals[17];
     uDACS_B_Raw7 = (uDACS_B_rvals[20] << 16) | uDACS_B_rvals[19];
-    uDACS_B_N = uDACS_B_rvals[21];
+    */
+    
+    uDACS_B_N = uDACS_B_rvals[10];
+    uDACS_B_errors = uDACS_B_rvals[11];
+    PumpsStat = uDACS_B_rvals[12];
+    
+    uDACS_B_elapsed = (uDACS_B_rvals[14] << 16) | uDACS_B_rvals[13];
+    uDACS_B_curloopdur = uDACS_B_rvals[15];
+    uDACS_B_maxloopdur = uDACS_B_rvals[16];
+    
+    HPS_Stat = uDACS_B_rvals[17];
+    HPS1_Temp = rvals_to_float(uDACS_B_rvals[18]);
+    HPS_P = rvals_to_float(uDACS_B_rvals[20]);
+    HPS2_Temp = rvals_to_float(uDACS_B_rvals[22]);
+    HPS_dP = rvals_to_float(uDACS_B_rvals[24]);
   }
 }

@@ -21,12 +21,19 @@ ADC_A {
   { Status: (uDACS_A_status,4) N: (uDACS_A_N,5) };
 }
 
+RTC_A {
+  HBox { +-; Title: RTC; -+ };
+  Elapsed: (uDACS_A_elapsed,13) sec;
+  Loop:    (uDACS_A_curloopdur,6) msec;
+  Max:     (uDACS_A_maxloopdur,6) msec;
+}
+
 { HBox {
     |+; [ADC_A]; |+; {
-      [DAC_A];
-      { [TMbaseB];
-        Fail: (Fail,2);
-      }
+      #[DAC_A];
+      [RTC_A];
+      [TMbaseB];
+      Fail: (Fail,2);
     }; |+
   };
   -;

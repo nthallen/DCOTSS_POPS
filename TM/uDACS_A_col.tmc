@@ -3,12 +3,12 @@
   // #define tick_sic()
   
   uDACS_mreq uDACS_A;
-  uint16_t uDACS_A_rvals[0x17];
+  uint16_t uDACS_A_rvals[0x18];
   
   void uDACS_A_init() {
     uDACS_init(uDACS_A, "uDACS_A");
     if (uDACS_A.present) {
-      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x17, "10:1:25,6");
+      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x18, "14:1:26,6,40:1:43");
     }
   }
 %}
