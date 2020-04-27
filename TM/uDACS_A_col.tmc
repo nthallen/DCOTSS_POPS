@@ -9,6 +9,7 @@
     uDACS_init(uDACS_A, "uDACS_A");
     if (uDACS_A.present) {
       uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x18, "14:1:26,6,40:1:43");
+      uDACS_A.rvals = uDACS_A_rvals;
     }
   }
 %}
