@@ -11,10 +11,14 @@ TM typedef uint32_t AD7770_rawAI_t;
 /* Error header (high byte of AD7770_rawAI_t) */
 TM typedef uint8_t AD7770_AI_stat_t { text "%02X"; }
 /* 24-bit AD7770 AIN reading */
-TM typedef int32_t AD7770_AI_t { text "%9.6lf"; convert uDACS_Volts_t; }
+TM typedef int32_t AD7770_AI_t { text "%9.5lf"; convert uDACS_Volts_t; }
   Calibration (AD7770_AI_t, uDACS_Volts_t) {
-    0, 0,
-    8388608, 2.5
+    -8388610, -9999,
+    -8388609, -9999,
+    -8388608, -2.5,
+    8388608, 2.5,
+    8388609, 9999,
+    8388610, 9999
   }
 TM typedef uint16_t AD7770_count_t { text "%5u"; }
 
