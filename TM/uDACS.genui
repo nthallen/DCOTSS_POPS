@@ -21,3 +21,18 @@
  1 uDACS_A_stat7 uDACS_A Hdrs %.0lf
  1 uDACS_A_N uDACS_A N
  1 Fail:0:Fail uDACS_A Fail
+
+#1 uDACS_B_VSet0 uDACS_B DAC
+ 1 uDACS_B_VSet1 uDACS_B DAC
+#1 uDACS_B_VSet2 uDACS_B DAC
+#1 uDACS_B_VSet3 uDACS_B DAC
+ 1 uDACS_B_status uDACS_B Status %.0lf
+ 1 InltBP uDACS_B V
+ 1 Ring1T uDACS_B V
+ 1 Ring2T uDACS_B V
+ 1 Ring3T uDACS_B V
+ 1 uDACS_B_stat0 uDACS_B Hdrs %.0lf
+ 1 uDACS_B_stat1 uDACS_B Hdrs %.0lf
+ 1 uDACS_B_stat2 uDACS_B Hdrs %.0lf
+ 1 uDACS_B_stat3 uDACS_B Hdrs %.0lf
+ 1 uDACS_B_N uDACS_B N

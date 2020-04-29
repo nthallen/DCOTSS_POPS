@@ -1,15 +1,20 @@
 Input "TMbase.tbl";
 
 DAC_A {
-  HBox { +-; Title: DAC; -+ };
+  HBox { +-; Title: DAC_A; -+ };
   #"0:"  (uDACS_A_Vset0,6) V;
   #"1:"  (uDACS_A_Vset1,6) V;
   #"2:"  (uDACS_A_Vset2,6) V;
   #"3:"  (uDACS_A_Vset3,6) V;
 }
- 
+
+DAC_B {
+  HBox { +-; Title: DAC_B; -+ };
+  "1:"   (uDACS_B_Vset1,6) V;
+}
+
 ADC_A {
-  HBox { +-; Title: ADC; -+ };
+  HBox { +-; Title: ADC_A; -+ };
   "0:" (uDACS_A_stat0,2) (POPST,9) V;
   "1:" (uDACS_A_stat1,2) (Pmp1T,9) V;
   "2:" (uDACS_A_stat2,2) (Pmp2T,9) V;
@@ -21,17 +26,33 @@ ADC_A {
   { Status: (uDACS_A_status,4) N: (uDACS_A_N,5) };
 }
 
+ADC_B {
+  HBox { +-; Title: ADC_B; -+ };
+  "0:" (uDACS_B_stat0,2) (InltBP,9) V;
+  "1:" (uDACS_B_stat1,2) (Ring1T,9) V;
+  "2:" (uDACS_B_stat2,2) (Ring2T,9) V;
+  "3:" (uDACS_B_stat3,2) (Ring3T,9) V;
+  { Status: (uDACS_B_status,4) N: (uDACS_B_N,5) };
+}
+
 RTC_A {
-  HBox { +-; Title: RTC; -+ };
+  HBox { +-; Title: RTC_A; -+ };
   { (uDACS_A_elapsed_d,11) sec };
   Loop:    (uDACS_A_curloopdur,6) msec;
   Max:     (uDACS_A_maxloopdur,6) msec;
 }
 
+RTC_B {
+  HBox { +-; Title: RTC_B; -+ };
+  { (uDACS_B_elapsed_d,11) sec };
+  Loop:    (uDACS_B_curloopdur,6) msec;
+  Max:     (uDACS_B_maxloopdur,6) msec;
+}
+
 { HBox {
-    |+; [ADC_A]; |+; {
+    |+; { [ADC_A]; [ADC_B]; [DAC_B]; }; |+; {
       #[DAC_A];
-      [RTC_A];
+      { [RTC_A]; [RTC_B]; };
       [TMbaseB];
       Fail: (Fail,2);
     }; |+

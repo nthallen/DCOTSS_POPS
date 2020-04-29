@@ -42,7 +42,6 @@ group uDACS_B (/* uDACS_B_VSet0, uDACS_B_VSet1, uDACS_B_VSet2, uDACS_B_VSet3, */
   
     /*
     uDACS_B_Vset0 = uDACS_B_rvals[0];
-    uDACS_B_Vset1 = uDACS_B_rvals[1];
     uDACS_B_Vset2 = uDACS_B_rvals[2];
     uDACS_B_Vset3 = uDACS_B_rvals[3];
     */
