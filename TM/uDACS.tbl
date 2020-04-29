@@ -23,7 +23,7 @@ ADC_A {
 
 RTC_A {
   HBox { +-; Title: RTC; -+ };
-  { (uDACS_A_elapsed,13) sec };
+  { (uDACS_A_elapsed_d,11) sec };
   Loop:    (uDACS_A_curloopdur,6) msec;
   Max:     (uDACS_A_maxloopdur,6) msec;
 }

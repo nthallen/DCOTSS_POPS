@@ -70,3 +70,9 @@ AD7770_AI_stat_t uDACS_A_stat7; Invalidate uDACS_A_stat7;
 { uDACS_A_stat7 = (uDACS_A_Raw7 >> 24) & 0xFF;
   Validate uDACS_A_stat7;
 }
+
+uDACS_sec uDACS_A_elapsed_d; Invalidate uDACS_A_elapsed_d;
+{ uDACS_A_elapsed_d = uDACS_A_elapsed/100;
+  Validate uDACS_A_elapsed_d;
+}
+
