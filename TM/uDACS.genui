@@ -104,12 +104,17 @@
   1 uDACS_B_curloopdur RTC loop
   1 uDACS_B_maxloopdur RTC loop
 
-  1 PPmpCmd:HPS_Stat:0 Pumps Status %.0lf
-  1 PPmpS:HPS_Stat:1 Pumps Status %.0lf
-  1 BPmpCmd:HPS_Stat:2 Pumps Status %.0lf
-  1 BPmpS:HPS_Stat:0 Pumps Status %.0lf
+  1 PPmpCmd:PumpsStat:0 Pumps Status %.0lf
+  1 PPmpS:PumpsStat:1 Pumps Status %.0lf
+  1 BPmpCmd:PumpsStat:2 Pumps Status %.0lf
+  1 BPmpS:PumpsStat:0 Pumps Status %.0lf
+
+  1 PS1_Init:HPS_Stat:0 Honeywell Status %.0lf
+  1 PS1_CRC_OK:HPS_Stat:1 Honeywell Status %.0lf
+  1 PS2_Init:HPS_Stat:2 Honeywell Status %.0lf
+  1 PS2_CRC_OK:HPS_Stat:0 Honeywell Status %.0lf
   
-  1 HPS1_Temp uDACS_B HPS_T
-  1 HPS2_Temp uDACS_B HPS_T
-  1 HPS_P uDACS_B HPS_P
-  1 HPS_dP uDACS_B HPS_dP
+  1 HPS1_Temp Honeywell HPS_T
+  1 HPS2_Temp Honeywell HPS_T
+  1 HPS_P Honeywell HPS_P
+  1 HPS_dP Honeywell HPS_dP
