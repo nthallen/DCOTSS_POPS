@@ -37,22 +37,44 @@ ADC_B {
 
 RTC_A {
   HBox { +-; Title: RTC_A; -+ };
-  { (uDACS_A_elapsed_d,11) sec };
+  { (uDACS_A_elapsed,13) sec };
   Loop:    (uDACS_A_curloopdur,6) msec;
   Max:     (uDACS_A_maxloopdur,6) msec;
 }
 
 RTC_B {
   HBox { +-; Title: RTC_B; -+ };
-  { (uDACS_B_elapsed_d,11) sec };
+  { (uDACS_B_elapsed,13) sec };
   Loop:    (uDACS_B_curloopdur,6) msec;
   Max:     (uDACS_B_maxloopdur,6) msec;
 }
 
+Pumps {
+  HBox { +-; Title: Pumps; -+ };
+  Stat: (PumpsStat,2);
+}
+
+Honey {
+  HBox { +-; Title: Honeywell; -+ };
+  Stat: (HPS_Stat,2);
+  T1:   (HPS1_Temp,6) C;
+  AP:   (HPS_P,6)     Torr;
+  T2:   (HPS2_Temp,6) C;
+  dP:   (HPS_dP,6)    Torr;
+}
+
 { HBox {
-    |+; { [ADC_A]; [ADC_B]; [DAC_B]; }; |+; {
-      #[DAC_A];
-      { [RTC_A]; [RTC_B]; };
+    |+; {
+      [ADC_A];
+      [ADC_B]
+    }; |+; {
+  #   [DAC_A];
+      [DAC_B];
+      [RTC_A];
+      [RTC_B];
+      [Honey];
+    }; |+; {
+      [Pumps];
       [TMbaseB];
       Fail: (Fail,2);
     }; |+

@@ -3,10 +3,13 @@
 #define rvals_to_float(x) (*(float*)&x)
 %}
 
+TM typedef double HPS_TORR;
 TM typedef uint8_t PumpStat_t { text "%02X"; }
 TM typedef float HPS_Temp_t { text "%6.2f"; }
-TM typedef float HPS_P_t { text "%6.1f"; }
-TM typedef float HPS_dP_t { text "%6.4f"; }
+TM typedef float HPS_P_t { text "%6.2f"; convert HPS_TORR; }
+  calibration (HPS_P_t, HPS_TORR) { 0, 0, 1, 52.7149 }
+TM typedef float HPS_dP_t { text "%6.4f"; convert HPS_TORR; }
+  calibration (HPS_dP_t, HPS_TORR) { 0, 0, 1, 1.86645 }
 
 /* TM 1 Hz uDACS_DAC_t uDACS_B_VSet0; */
 TM 1 Hz uDACS_DAC_t uDACS_B_VSet1;

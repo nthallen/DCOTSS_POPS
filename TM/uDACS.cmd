@@ -13,6 +13,12 @@
       uDA->write_ack(0x6, on);
     }
   }
+
+  void uDACS_B_cmd(uint16_t cmd) {
+    if (uDACS_B_present) {
+      uDB->write_ack(0x30, cmd);
+    }
+  }
   
   /**
    * @param A true for uDACS A, false for uDACS B
@@ -43,9 +49,16 @@
 
 &command
   : Fail Light &fail_on_off * { uDACS_fail($3); }
+  : Pump Both &pumps_on_off * { uDACS_B_cmd($3); }
+  : Pump POPS &pumps_on_off * { uDACS_B_cmd(2+$3); }
+  : Pump Bypass &pumps_on_off * { uDACS_B_cmd(4+$3); }
   ;
 &fail_on_off <bool>
   : on { $0 = true; }
   : off { $0 = false; }
+  ;
+&pumps_on_off <uint16_t>
+  : on { $0 = 1; }
+  : off { $0 = 0; }
   ;
 

@@ -3,7 +3,8 @@
                 msg "Running script interact"
   Launch      tm_bfr   bfr -s Both
   Launch      -TMC-    lgr -N `mlf_find LOG` -n lgr
-  Launch      uDACS_A  subbusd_serusb -q -p /dev/ttyUSB0 -s uDACS_A -n uDACS_A
+# Launch      uDACS_A  subbusd_serusb -q -p /dev/ttyUSB0 -s uDACS_A -n uDACS_A
+  Launch      uDACS_B  subbusd_serusb -q -p /dev/ttyUSB0 -s uDACS_B -n uDACS_B
   Launch      tm_gen   DPOPScol
   Launch      cmd      DPOPSsrvr -s Both
   Launch      -        tmdf

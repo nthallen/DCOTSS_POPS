@@ -48,7 +48,7 @@
   1 OUV7:uDACS_A_stat7:0 uDACS_A AIChS %.0lf
   1 uDACS_A_N uDACS_A AI_N
   1 uDACS_A_errors uDACS_A AI_errs
-  1 uDACS_A_elapsed_d RTC elapsed
+  1 uDACS_A_elapsed RTC elapsed
   1 uDACS_A_curloopdur RTC loop
   1 uDACS_A_maxloopdur RTC loop
 
@@ -100,7 +100,7 @@
 # 1 OUV7:uDACS_B_stat7:0 uDACS_B AIChS %.0lf
   1 uDACS_B_N uDACS_B AI_N
   1 uDACS_B_errors uDACS_B AI_errs
-  1 uDACS_B_elapsed_d RTC elapsed
+  1 uDACS_B_elapsed RTC elapsed
   1 uDACS_B_curloopdur RTC loop
   1 uDACS_B_maxloopdur RTC loop
 

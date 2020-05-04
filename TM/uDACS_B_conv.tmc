@@ -35,10 +35,12 @@ AD7770_AI_stat_t uDACS_B_stat3; Invalidate uDACS_B_stat3;
   Validate uDACS_B_stat3;
 }
 
+/*
 uDACS_sec uDACS_B_elapsed_d; Invalidate uDACS_B_elapsed_d;
 { uDACS_B_elapsed_d = uDACS_B_elapsed/100;
   Validate uDACS_B_elapsed_d;
 }
+*/
 
 %{
   /*
