@@ -14,9 +14,23 @@
     }
   }
 
+#if 0
+  void uDACS_A_wr(uint16_t addr, uint16_t val) {
+    if (uDACS_A_present) {
+      uDA->write_ack(addr, val);
+    }
+  }
+#endif
+
   void uDACS_B_cmd(uint16_t cmd) {
     if (uDACS_B_present) {
       uDB->write_ack(0x30, cmd);
+    }
+  }
+
+  void uDACS_B_wr(uint16_t addr, uint16_t val) {
+    if (uDACS_B_present) {
+      uDB->write_ack(addr, val);
     }
   }
   
@@ -52,6 +66,19 @@
   : Pump Both &pumps_on_off * { uDACS_B_cmd($3); }
   : Pump POPS &pumps_on_off * { uDACS_B_cmd(2+$3); }
   : Pump Bypass &pumps_on_off * { uDACS_B_cmd(4+$3); }
+# : Set uDACS_A Vout %d (0-3) %d (bits) bits * {
+#     if ($4 >= 0 && $4 < 4) {
+#       uDACS_A_wr(0x10 + $4, $5);
+#     }
+#   }
+  : Set Baratron Vrtn %f (Volts) Volts * {
+      double counts = $4 * 65536./5.;
+      uint16_t icounts;
+      if (counts < 0) icounts = 0;
+      else if (counts > 65535) icounts = 65535;
+      else icounts = (uint16_t)counts;
+      uDACS_B_wr(0x11, icounts);
+    }
   ;
 &fail_on_off <bool>
   : on { $0 = true; }
