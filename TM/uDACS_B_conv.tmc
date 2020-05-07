@@ -1,7 +1,7 @@
-AD7770_AI_t InltBP; Invalidate InltBP;
-{ InltBP = (uDACS_B_Raw0 & 0xFFFFFF) |
+AD7770_AI_t uDACS_B_AIN0; Invalidate uDACS_B_AIN0;
+{ uDACS_B_AIN0 = (uDACS_B_Raw0 & 0xFFFFFF) |
     ((uDACS_B_Raw0 & 0x800000) ? 0xFF000000 : 0);
-  Validate InltBP;
+  Validate uDACS_B_AIN0;
 }
 AD7770_AI_stat_t uDACS_B_stat0; Invalidate uDACS_B_stat0;
 { uDACS_B_stat0 = (uDACS_B_Raw0 >> 24) & 0xFF;
@@ -33,6 +33,15 @@ AD7770_AI_t Ring3T; Invalidate Ring3T;
 AD7770_AI_stat_t uDACS_B_stat3; Invalidate uDACS_B_stat3;
 { uDACS_B_stat3 = (uDACS_B_Raw3 >> 24) & 0xFF;
   Validate uDACS_B_stat3;
+}
+
+TM typedef double InltBP_t { text "%8.4lf"; }
+InltBP_t InltBP; Invalidate InltBP;
+{ InltBP = (convert(uDACS_B_AIN0)
+            + convert(uDACS_B_VSet1)
+            - convert(InltBPZV))
+           * 1000. / (10. * 0.3875);
+  Validate InltBP;
 }
 
 /*

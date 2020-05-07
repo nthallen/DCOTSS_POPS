@@ -11,6 +11,8 @@ TM typedef float HPS_P_t { text "%6.2f"; convert HPS_TORR; }
 TM typedef float HPS_dP_t { text "%6.4f"; convert HPS_TORR; }
   calibration (HPS_dP_t, HPS_TORR) { 0, 0, 1, 1.86645 }
 
+TM typedef uint16_t InltBPZV_t { text "%6.4lf"; }
+
 /* TM 1 Hz uDACS_DAC_t uDACS_B_VSet0; */
 TM 1 Hz uDACS_DAC_t uDACS_B_VSet1;
 /* TM 1 Hz uDACS_DAC_t uDACS_B_VSet2; */

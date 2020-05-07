@@ -15,24 +15,32 @@ DAC_B {
 
 ADC_A {
   HBox { +-; Title: ADC_A; -+ };
-  "0:" (uDACS_A_stat0,2) (POPST,9) V;
-  "1:" (uDACS_A_stat1,2) (Pmp1T,9) V;
-  "2:" (uDACS_A_stat2,2) (Pmp2T,9) V;
-  "3:" (uDACS_A_stat3,2) (RPi_T,9) V;
-  "4:" (uDACS_A_stat4,2) (Amb_T,9) V;
-  "5:" (uDACS_A_stat5,2) (Rov1T,9) V;
-  "6:" (uDACS_A_stat6,2) (Rov2T,9) V;
-  "7:" (uDACS_A_stat7,2) (Rov3T,9) V;
+  POPST: (uDACS_A_stat0,2) (POPST,9) V;
+  Pmp1T: (uDACS_A_stat1,2) (Pmp1T,9) V;
+  Pmp2T: (uDACS_A_stat2,2) (Pmp2T,9) V;
+  RPi_T: (uDACS_A_stat3,2) (RPi_T,9) V;
+  Amb_T: (uDACS_A_stat4,2) (Amb_T,9) V;
+# Rov1T: (uDACS_A_stat5,2) (Rov1T,9) V;
+# Rov2T: (uDACS_A_stat6,2) (Rov2T,9) V;
+# Rov3T: (uDACS_A_stat7,2) (Rov3T,9) V;
   { Status: (uDACS_A_status,4) N: (uDACS_A_N,5) };
 }
 
 ADC_B {
   HBox { +-; Title: ADC_B; -+ };
-  "0:" (uDACS_B_stat0,2) (InltBP,9) V;
-  "1:" (uDACS_B_stat1,2) (Ring1T,9) V;
-  "2:" (uDACS_B_stat2,2) (Ring2T,9) V;
-  "3:" (uDACS_B_stat3,2) (Ring3T,9) V;
+# InltBP: (uDACS_B_stat0,2) (InltBP,9) V;
+  Ring1T: (uDACS_B_stat1,2) (Ring1T,9) V;
+  Ring2T: (uDACS_B_stat2,2) (Ring2T,9) V;
+  Ring3T: (uDACS_B_stat3,2) (Ring3T,9) V;
   { Status: (uDACS_B_status,4) N: (uDACS_B_N,5) };
+}
+
+Baratron {
+  HBox { +-; Title: Baratron; -+ };
+  InltBP:   (InltBP,8)        Torr;
+  "AIN0+:"  (uDACS_B_AIN0,9)  V;
+  "AIN0-:"  (uDACS_B_VSet1,6) V;
+  ZeroV:    (InltBPZV,8)      V;
 }
 
 RTC_A {
@@ -66,15 +74,16 @@ Honey {
 { HBox {
     |+; {
       [ADC_A];
-      [ADC_B]
+      [ADC_B];
+      [Pumps];
     }; |+; {
   #   [DAC_A];
-      [DAC_B];
+  #   [DAC_B];
+      [Honey];
       [RTC_A];
       [RTC_B];
-      [Honey];
     }; |+; {
-      [Pumps];
+      [Baratron];
       [TMbaseB];
       Fail: (Fail,2);
     }; |+

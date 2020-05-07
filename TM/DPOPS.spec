@@ -11,6 +11,7 @@ extbase = uDACS_A_conv.tmc
 extbase = uDACS_B_conv.tmc
 cmdbase = playback.cmd
 cmdbase = uDACS.cmd
+swsbase = DPOPS.sws
 
 Module TMbase
 Module alicat src=alicat.txt

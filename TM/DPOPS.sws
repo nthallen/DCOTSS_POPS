@@ -1,0 +1,6 @@
+SW_Variable: SWStat SW Status
+  SWS_SHUTDOWN       255 Shutdown Full:          Validate Shutdown; break;
+
+SW_Variable: <uint16_t,InltBPZV_t> InltBPZV Baratron Zero
+  : %f (volts) volts { $0 = (uint16_t)((($1 < 0) ? 0 : ($1 >= 1) ? 1 : $1) * 10000.); }
+ 

@@ -1,20 +1,20 @@
 
 --------Frame Statistics-----------
 Major Frame: 2 minor frames, 1 Hz
-Minor Frame: 144 bytes, 2 Hz
+Minor Frame: 145 bytes, 2 Hz
 Effective Frame Dimensions:
-  2 Rows 144 Columns
+  2 Rows 145 Columns
   2 rows/sec
-  2304 bits/sec
-  Data:  2232 bits/sec  97 %
+  2320 bits/sec
+  Data:  2256 bits/sec  97 %
   Synch: 64 bits/sec  3 %
-  Empty: 8 bits/sec  0 %
+  Empty: 0 bits/sec  0 %
 -------End of Frame Statistics-----
 
 
 --------PCM Definition-------------
 2/1 Hz 2 bytes Datum MFCtr (1,0,0,2)
-2/1 Hz 2 bytes Datum Synch (1,0,142,2)
+2/1 Hz 2 bytes Datum Synch (1,0,143,2)
 1/1 Hz 109 bytes Group POPSgrp (2,0,2,109)
 1/1 Hz 1 bytes Member POPS_Stale (2,0,2,1)
 1/1 Hz 4 bytes Member POPS_Bin16 (2,0,3,4)
@@ -43,7 +43,7 @@ Effective Frame Dimensions:
 1/1 Hz 4 bytes Member POPS_num_cc (2,0,95,4)
 1/1 Hz 4 bytes Member POPS_Part_Num (2,0,99,4)
 1/1 Hz 8 bytes Member POPS_Tdrift (2,0,103,8)
-1/1 Hz 47 bytes Group uDACS_A (2,0,111,31) (2,1,113,16)
+1/1 Hz 47 bytes Group uDACS_A (2,0,111,32) (2,1,113,15)
 1/1 Hz 2 bytes Member uDACS_A_maxloopdur (2,0,111,2)
 1/1 Hz 2 bytes Member uDACS_A_curloopdur (2,0,113,2)
 1/1 Hz 4 bytes Member uDACS_A_elapsed (2,0,115,4)
@@ -53,7 +53,7 @@ Effective Frame Dimensions:
 1/1 Hz 4 bytes Member uDACS_A_Raw6 (2,0,127,4)
 1/1 Hz 4 bytes Member uDACS_A_Raw5 (2,0,131,4)
 1/1 Hz 4 bytes Member uDACS_A_Raw4 (2,0,135,4)
-1/1 Hz 4 bytes Member uDACS_A_Raw3 (2,0,139,3) (2,1,113,1)
+1/1 Hz 4 bytes Member uDACS_A_Raw3 (2,0,139,4)
 1/1 Hz 64 bytes Group uDACS_B (2,1,2,64)
 1/1 Hz 4 bytes Member HPS_dP (2,1,2,4)
 1/1 Hz 4 bytes Member HPS_P (2,1,6,4)
@@ -91,15 +91,17 @@ Effective Frame Dimensions:
 1/1 Hz 4 bytes Member MFC1_VolFlow (2,1,104,4)
 1/1 Hz 4 bytes Member MFC1_Set (2,1,108,4)
 1/1 Hz 1 bytes Member Alicat_Stale (2,1,112,1)
-1/1 Hz 4 bytes Member uDACS_A_Raw2 (2,1,114,4)
-1/1 Hz 4 bytes Member uDACS_A_Raw1 (2,1,118,4)
-1/1 Hz 4 bytes Member uDACS_A_Raw0 (2,1,122,4)
-1/1 Hz 2 bytes Member uDACS_A_status (2,1,126,2)
-1/1 Hz 1 bytes Member Fail (2,1,128,1)
-1/1 Hz 4 bytes Datum SysTDrift (2,1,129,4)
-1/1 Hz 2 bytes Datum CPU_Pct (2,1,133,2)
-1/1 Hz 2 bytes Datum Disk (2,1,135,2)
-1/1 Hz 2 bytes Datum memused (2,1,137,2)
-1/1 Hz 2 bytes Datum uDACS_B_VSet1 (2,1,139,2)
+1/1 Hz 4 bytes Member uDACS_A_Raw2 (2,1,113,4)
+1/1 Hz 4 bytes Member uDACS_A_Raw1 (2,1,117,4)
+1/1 Hz 4 bytes Member uDACS_A_Raw0 (2,1,121,4)
+1/1 Hz 2 bytes Member uDACS_A_status (2,1,125,2)
+1/1 Hz 1 bytes Member Fail (2,1,127,1)
+1/1 Hz 4 bytes Datum SysTDrift (2,1,128,4)
+1/1 Hz 2 bytes Datum CPU_Pct (2,1,132,2)
+1/1 Hz 2 bytes Datum Disk (2,1,134,2)
+1/1 Hz 2 bytes Datum InltBPZV (2,1,136,2)
+1/1 Hz 2 bytes Datum memused (2,1,138,2)
+1/1 Hz 2 bytes Datum uDACS_B_VSet1 (2,1,140,2)
+1/1 Hz 1 bytes Datum SWStat (2,1,142,1)
 -------End of PCM Definition-------
 
