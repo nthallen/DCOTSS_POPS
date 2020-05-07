@@ -52,16 +52,18 @@
   1 uDACS_A_curloopdur RTC loop
   1 uDACS_A_maxloopdur RTC loop
 
-#1 uDACS_B_VSet0 uDACS_B DAC
- 1 uDACS_B_VSet1 uDACS_B DAC
-#1 uDACS_B_VSet2 uDACS_B DAC
-#1 uDACS_B_VSet3 uDACS_B DAC
+# 1 uDACS_B_VSet0 uDACS_B DAC
+  1 uDACS_B_VSet1 uDACS_B PVolts
+# 1 uDACS_B_VSet2 uDACS_B DAC
+# 1 uDACS_B_VSet3 uDACS_B DAC
+  1 uDACS_B_AIN0  uDACS_B PVolts
+  1 InltBPZV      uDACS_B PVolts
 
   1 uDACS_B_status uDACS_B AIStat %.0lf
-  1 InltBP uDACS_B V
-  1 Ring1T uDACS_B V
-  1 Ring2T uDACS_B V
-  1 Ring3T uDACS_B V
+  1 InltBP Honeywell HPS_P
+  1 Ring1T uDACS_B RingT
+  1 Ring2T uDACS_B RingT
+  1 Ring3T uDACS_B RingT
 
   1 Fail:Fail:0 uDACS_B Status
   1 Alert:uDACS_B_stat0:7 uDACS_B Status %.0lf
