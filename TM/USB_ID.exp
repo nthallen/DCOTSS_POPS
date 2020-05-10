@@ -3,7 +3,8 @@ set port /dev/ttyS8
 if {$argc>0} { set port [lindex $argv 0]}
 
 log_user 0
-spawn ser_chk -V -p $port
+# spawn ser_chk -V -p $port
+spawn plink -P $port -serial -sercfg 57600,8,n,1,X -batch
 set timeout 1
 set board_id ""
 while 1 {
