@@ -1,4 +1,4 @@
-AD7770_AI_t POPST; Invalidate POPST;
+uDACS_T30K75KU POPST; Invalidate POPST;
 { POPST = (uDACS_A_Raw0 & 0xFFFFFF) |
     ((uDACS_A_Raw0 & 0x800000) ? 0xFF000000 : 0);
   Validate POPST;
@@ -7,7 +7,7 @@ AD7770_AI_stat_t uDACS_A_stat0; Invalidate uDACS_A_stat0;
 { uDACS_A_stat0 = (uDACS_A_Raw0 >> 24) & 0xFF;
   Validate uDACS_A_stat0;
 }
-AD7770_AI_t Pmp1T; Invalidate Pmp1T;
+uDACS_T30K75KU Pmp1T; Invalidate Pmp1T;
 { Pmp1T = (uDACS_A_Raw1 & 0xFFFFFF) |
     ((uDACS_A_Raw1 & 0x800000) ? 0xFF000000 : 0);
   Validate Pmp1T;
@@ -16,7 +16,7 @@ AD7770_AI_stat_t uDACS_A_stat1; Invalidate uDACS_A_stat1;
 { uDACS_A_stat1 = (uDACS_A_Raw1 >> 24) & 0xFF;
   Validate uDACS_A_stat1;
 }
-AD7770_AI_t Pmp2T; Invalidate Pmp2T;
+uDACS_T30K75KU Pmp2T; Invalidate Pmp2T;
 { Pmp2T = (uDACS_A_Raw2 & 0xFFFFFF) |
     ((uDACS_A_Raw2 & 0x800000) ? 0xFF000000 : 0);
   Validate Pmp2T;
@@ -25,7 +25,7 @@ AD7770_AI_stat_t uDACS_A_stat2; Invalidate uDACS_A_stat2;
 { uDACS_A_stat2 = (uDACS_A_Raw2 >> 24) & 0xFF;
   Validate uDACS_A_stat2;
 }
-AD7770_AI_t RPi_T; Invalidate RPi_T;
+uDACS_T30K75KU RPi_T; Invalidate RPi_T;
 { RPi_T = (uDACS_A_Raw3 & 0xFFFFFF) |
     ((uDACS_A_Raw3 & 0x800000) ? 0xFF000000 : 0);
   Validate RPi_T;
@@ -34,7 +34,7 @@ AD7770_AI_stat_t uDACS_A_stat3; Invalidate uDACS_A_stat3;
 { uDACS_A_stat3 = (uDACS_A_Raw3 >> 24) & 0xFF;
   Validate uDACS_A_stat3;
 }
-AD7770_AI_t Amb_T; Invalidate Amb_T;
+uDACS_T30K75KU Amb_T; Invalidate Amb_T;
 { Amb_T = (uDACS_A_Raw4 & 0xFFFFFF) |
     ((uDACS_A_Raw4 & 0x800000) ? 0xFF000000 : 0);
   Validate Amb_T;
@@ -43,7 +43,7 @@ AD7770_AI_stat_t uDACS_A_stat4; Invalidate uDACS_A_stat4;
 { uDACS_A_stat4 = (uDACS_A_Raw4 >> 24) & 0xFF;
   Validate uDACS_A_stat4;
 }
-AD7770_AI_t Rov1T; Invalidate Rov1T;
+uDACS_T30K75KU Rov1T; Invalidate Rov1T;
 { Rov1T = (uDACS_A_Raw5 & 0xFFFFFF) |
     ((uDACS_A_Raw5 & 0x800000) ? 0xFF000000 : 0);
   Validate Rov1T;
@@ -52,7 +52,7 @@ AD7770_AI_stat_t uDACS_A_stat5; Invalidate uDACS_A_stat5;
 { uDACS_A_stat5 = (uDACS_A_Raw5 >> 24) & 0xFF;
   Validate uDACS_A_stat5;
 }
-AD7770_AI_t Rov2T; Invalidate Rov2T;
+uDACS_T30K75KU Rov2T; Invalidate Rov2T;
 { Rov2T = (uDACS_A_Raw6 & 0xFFFFFF) |
     ((uDACS_A_Raw6 & 0x800000) ? 0xFF000000 : 0);
   Validate Rov2T;
@@ -61,7 +61,7 @@ AD7770_AI_stat_t uDACS_A_stat6; Invalidate uDACS_A_stat6;
 { uDACS_A_stat6 = (uDACS_A_Raw6 >> 24) & 0xFF;
   Validate uDACS_A_stat6;
 }
-AD7770_AI_t Rov3T; Invalidate Rov3T;
+uDACS_T30K75KU Rov3T; Invalidate Rov3T;
 { Rov3T = (uDACS_A_Raw7 & 0xFFFFFF) |
     ((uDACS_A_Raw7 & 0x800000) ? 0xFF000000 : 0);
   Validate Rov3T;
