@@ -1,6 +1,7 @@
 State Init {
   > Telemetry Start
   > Set Baratron Vrtn 1.65 Volts
+  > Baratron Zero 0.0955 Volts
 }
 
 State Shutdown {

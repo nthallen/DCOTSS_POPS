@@ -37,7 +37,7 @@ ADC_B {
 
 Baratron {
   HBox { +-; Title: Baratron; -+ };
-  InltBP:   (InltBP,8)        mbar;
+  InltBP:   (InltBP,9)        mbar;
   "AIN0+:"  (uDACS_B_AIN0,9)  V;
   "AIN0-:"  (uDACS_B_VSet1,6) V;
   ZeroV:    (InltBPZV,8)      V;
@@ -45,14 +45,14 @@ Baratron {
 
 RTC_A {
   HBox { +-; Title: RTC_A; -+ };
-  { (uDACS_A_elapsed,13) sec };
+  { (uDACS_A_elapsed,13) cts };
   Loop:    (uDACS_A_curloopdur,6) msec;
   Max:     (uDACS_A_maxloopdur,6) msec;
 }
 
 RTC_B {
   HBox { +-; Title: RTC_B; -+ };
-  { (uDACS_B_elapsed,13) sec };
+  { (uDACS_B_elapsed,13) cts };
   Loop:    (uDACS_B_curloopdur,6) msec;
   Max:     (uDACS_B_maxloopdur,6) msec;
 }
@@ -66,9 +66,9 @@ Honey {
   HBox { +-; Title: Honeywell; -+ };
   Stat: (HPS_Stat,2);
   T1:   (HPS1_Temp,6) C;
-  AP:   (HPS_P,6)     Torr;
+  AP:   (HPS_P,7)     mbar;
   T2:   (HPS2_Temp,6) C;
-  dP:   (HPS_dP,6)    Torr;
+  dP:   (HPS_dP,6)    mbar;
 }
 
 { HBox {

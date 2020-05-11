@@ -1,15 +1,35 @@
 /* uDACS_B */
 %{
-#define rvals_to_float(x) (*(float*)&x)
+  #define rvals_to_float(x) (*(float*)&x)
+
+  /*
+    Sensor 1:
+      Part: RSCDJNI060PASE3
+      S/N:  20182871042
+      Unit: PSI A
+      Min/Range: 0.000000/60.000000
+    Sensor 2:
+      Part: RSCDRRM020NDSE3
+      S/N:  20180560046
+      Unit: inH2O D
+      Min/Range: -20.000000/40.000000
+   */
 %}
 
-TM typedef double HPS_TORR;
 TM typedef uint8_t PumpStat_t { text "%02X"; }
 TM typedef float HPS_Temp_t { text "%6.2f"; }
-TM typedef float HPS_P_t { text "%6.2f"; convert HPS_TORR; }
-  calibration (HPS_P_t, HPS_TORR) { 0, 0, 1, 52.7149 }
+/*
+TM typedef double HPS_TORR;
+TM typedef float HPS_P_t { text "%7.2f"; convert HPS_TORR; }
+  calibration (HPS_P_t, HPS_TORR) { 0, 0, 1, 51.7149 }
 TM typedef float HPS_dP_t { text "%6.4f"; convert HPS_TORR; }
   calibration (HPS_dP_t, HPS_TORR) { 0, 0, 1, 1.86645 }
+*/
+TM typedef double HPS_MBAR;
+TM typedef float HPS_P_t { text "%7.2f"; convert HPS_MBAR; }
+  calibration (HPS_P_t, HPS_MBAR) { 0, 0, 1, 68.9476 }
+TM typedef float HPS_dP_t { text "%6.4f"; convert HPS_MBAR; }
+  calibration (HPS_dP_t, HPS_MBAR) { 0, 0, 1, 2.4884 }
 
 TM typedef uint16_t InltBPZV_t { text "%6.4lf"; }
 
@@ -75,8 +95,8 @@ group uDACS_B (/* uDACS_B_VSet0, uDACS_B_VSet1, uDACS_B_VSet2, uDACS_B_VSet3, */
     
     HPS_Stat = uDACS_B_rvals[17];
     HPS1_Temp = rvals_to_float(uDACS_B_rvals[18]);
-    HPS_P = rvals_to_float(uDACS_B_rvals[20]) * 1013.25 / 760;
+    HPS_P = rvals_to_float(uDACS_B_rvals[20]);
     HPS2_Temp = rvals_to_float(uDACS_B_rvals[22]);
-    HPS_dP = rvals_to_float(uDACS_B_rvals[24]) * 1013.25 / 760;
+    HPS_dP = rvals_to_float(uDACS_B_rvals[24]);
   }
 }

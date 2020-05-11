@@ -359,7 +359,7 @@ case $dispmode in
         echo width -w 58
         #echo height -w 8
         echo screen -t POPS /usr/local/sbin/getcon -V $CMD_OPT scr3 $session
-        echo width -w 66
+        echo width -w 67
         #echo height -w 8
         echo focus
         echo screen -t clt /usr/local/sbin/getcon -V $CMD_OPT clt $session

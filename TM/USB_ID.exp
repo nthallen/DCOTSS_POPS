@@ -4,7 +4,7 @@ if {$argc>0} { set port [lindex $argv 0]}
 
 log_user 0
 # spawn ser_chk -V -p $port
-spawn plink -P $port -serial -sercfg 57600,8,n,1,X -batch
+spawn plink -serial -sercfg 57600,8,n,1,N $port 
 set timeout 1
 set board_id ""
 while 1 {
@@ -32,7 +32,9 @@ while 1 {
   }
   send_user "\r\nEnd of the loop\r\n"
 }
-send "\x01"
+# send "\x01"
+# send_user "\r\nSending SIGINT to pid [ exp_pid ]\r\n"
+exec kill -INT [ exp_pid ]
 expect {
   eof {set saw_eof yes}
   timeout {set saw_eof no}
