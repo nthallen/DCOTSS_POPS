@@ -30,7 +30,7 @@ Alicat_flows {
 
 Alicat_hk {
   HBox { +-; Title: "Alicat HK"; -+ };
-  ""    >Temp<    "" >Status<        >ACK<   ""     >Stale<;
+  ""    >Temp<    "" >Pres< "" >Status< >Stale<;
   MFC1: (MFC1_T,7) C (MFC1_P,7) mbar
 (MFC1_Status,4) (MFC1_Stale,3);
   MFC2: (MFC2_T,7) C (MFC2_P,7) mbar
