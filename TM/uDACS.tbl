@@ -37,7 +37,7 @@ ADC_B {
 
 Baratron {
   HBox { +-; Title: Baratron; -+ };
-  InltBP:   (InltBP,8)        Torr;
+  InltBP:   (InltBP,8)        mbar;
   "AIN0+:"  (uDACS_B_AIN0,9)  V;
   "AIN0-:"  (uDACS_B_VSet1,6) V;
   ZeroV:    (InltBPZV,8)      V;
