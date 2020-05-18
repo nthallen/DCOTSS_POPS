@@ -7,8 +7,8 @@ State Init {
 State Shutdown {
   # Shutdown POPS
   +4  > Pump Both Off
-  +4  > MFC 1 Flow Setpoint 0 ccm
-  +4  > MFC 2 Flow Setpoint 0 ccm
+  +4  > Bypass MFC Flow Setpoint 0 ccm
+  +4  > POPS MFC Flow Setpoint 0 ccm
   +2  > Fail Light On
       > Quit
 }

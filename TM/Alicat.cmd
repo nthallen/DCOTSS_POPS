@@ -20,6 +20,6 @@
 %}
 
 &command
-  : MFC 1 Flow SetPoint %f (ccm) ccm * { Alicat_set(1, $5); }
-  : MFC 2 Flow SetPoint %f (ccm) ccm * { Alicat_set(2, $5); }
+  : Bypass MFC Flow SetPoint %f (ccm) ccm * { Alicat_set(1, $5); }
+  : POPS MFC Flow SetPoint %f (ccm) ccm * { Alicat_set(2, $5); }
   ;

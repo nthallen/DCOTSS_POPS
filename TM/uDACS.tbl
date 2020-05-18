@@ -76,7 +76,6 @@ Honey {
     |+; {
       [ADC_A];
       [ADC_B];
-      [Pumps];
     }; |+; {
   #   [DAC_A];
   #   [DAC_B];
@@ -85,6 +84,7 @@ Honey {
       [RTC_B];
     }; |+; {
       [Baratron];
+      [Pumps];
       [TMbaseB];
       Fail: (Fail,2);
     }; |+
