@@ -109,7 +109,7 @@
   1 PPmpCmd:PumpsStat:0 Pumps Status %.0lf
   1 PPmpS:PumpsStat:1 Pumps Status %.0lf
   1 BPmpCmd:PumpsStat:2 Pumps Status %.0lf
-  1 BPmpS:PumpsStat:0 Pumps Status %.0lf
+  1 BPmpS:PumpsStat:3 Pumps Status %.0lf
 
   1 PS1_Init:HPS_Stat:0 Honeywell Status %.0lf
   1 PS1_CRC_OK:HPS_Stat:1 Honeywell Status %.0lf

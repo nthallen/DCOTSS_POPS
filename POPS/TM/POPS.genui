@@ -4,7 +4,7 @@
  1 POPS_Baseline POPS PartNum
  1 POPS_STD POPS STD
  1 POPS_P_mbar POPS P
- 1 POPS_Flow POPS Flow
+ 1 POPS_ccm POPS Flow
  1 POPS_LDTemp POPS LDTemp
  1 POPS_LD_Mon POPS LDMon
  1 POPS_Temp POPS T

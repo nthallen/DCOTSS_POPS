@@ -33,6 +33,9 @@ TM 1 Hz POPS_Counts_t POPS_Bin15;
 TM 1 Hz POPS_Counts_t POPS_Bin16;
 TM 1 Hz POPS_Stale_t POPS_Stale;
 
+POPS_float_t POPS_ccm; Invalidate POPS_ccm;
+{ POPS_ccm = POPS_Flow * 60; Validate POPS_ccm; }
+
 Group POPSgrp (
     POPS_Tdrift, POPS_Part_Num, POPS_num_cc, POPS_Baseline,
     POPS_STD, POPS_P_mbar, POPS_Flow, POPS_LDTemp,

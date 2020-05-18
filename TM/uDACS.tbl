@@ -16,13 +16,11 @@ DAC_B {
 ADC_A {
   HBox { +-; Title: ADC_A; -+ };
   POPST: (uDACS_A_stat0,2) (POPST,9) C;
-  Pmp1T: (uDACS_A_stat1,2) (Pmp1T,9) C;
-  Pmp2T: (uDACS_A_stat2,2) (Pmp2T,9) C;
   RPi_T: (uDACS_A_stat3,2) (RPi_T,9) C;
   Amb_T: (uDACS_A_stat4,2) (Amb_T,9) C;
-# Rov1T: (uDACS_A_stat5,2) (Rov1T,9) C;
-# Rov2T: (uDACS_A_stat6,2) (Rov2T,9) C;
-# Rov3T: (uDACS_A_stat7,2) (Rov3T,9) C;
+  Rov1T: (uDACS_A_stat5,2) (Rov1T,9) C;
+  Rov2T: (uDACS_A_stat6,2) (Rov2T,9) C;
+  Rov3T: (uDACS_A_stat7,2) (Rov3T,9) C;
   { Status: (uDACS_A_status,4) N: (uDACS_A_N,5) };
 }
 
@@ -59,7 +57,10 @@ RTC_B {
 
 Pumps {
   HBox { +-; Title: Pumps; -+ };
-  Stat: (PumpsStat,2);
+  Bypass: HBox { (BPmpCmd,3); "/"; (BPmpS) };
+  BPmpT: { (uDACS_A_stat2,2) (Pmp2T,9) C };
+  POPS:   HBox { (PPmpCmd,3); "/"; (PPmpS) };
+  PPmpT: { (uDACS_A_stat1,2) (Pmp1T,9) C};
 }
 
 Honey {

@@ -9,7 +9,7 @@
       Baseline: (POPS_Baseline,8);
       STD:    (POPS_STD,8);
       P_mbar: (POPS_P_mbar,8) mbar;
-      Flow:   (POPS_Flow,8)   ccs;
+      Flow:   (POPS_ccm,8)   ccm;
       LDTemp: (POPS_LDTemp,8) C;
       LD_Mon: (POPS_LD_Mon,8);
       Temp:   (POPS_Temp,8)   C;
