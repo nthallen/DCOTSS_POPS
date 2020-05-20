@@ -87,6 +87,7 @@ Honey {
       [Pumps];
       [TMbaseB];
       Fail: (Fail,2);
+      SWStat: (SWStat,3);
     }; |+
   };
   -;
