@@ -2,13 +2,43 @@ State Init {
   > Telemetry Start
   > Set Baratron Vrtn 1.65 Volts
   > Baratron Zero 0.0955 Volts
+  Validate Idle;
+}
+
+State Idle {}
+
+State Explore_Flows {
+      > Pump Both Off
+  +4  > Bypass MFC Flow Setpoint 0 nccm
+      > POPS MFC Flow Setpoint 1000 nccm
+  +10 > Pump POPS On
+  +60 > Bypass MFC Flow Setpoint 500 nccm
+  +10 > Pump Bypass On
+  +60 > Bypass MFC Flow Setpoint 1000 nccm
+  +60 > Bypass MFC Flow Setpoint 1500 nccm
+  +60 > Bypass MFC Flow Setpoint 2000 nccm
+  +60 > Bypass MFC Flow Setpoint 2500 nccm
+  +60 > Bypass MFC Flow Setpoint 3000 nccm
+  +60 > Bypass MFC Flow Setpoint 3500 nccm
+  +60 > Bypass MFC Flow Setpoint 4000 nccm
+  +60 > Pump Both Off
+  +10 > Bypass MFC Flow Setpoint 0 nccm
+      > POPS MFC Flow Setpoint 0 nccm
+      Validate Idle;
+}
+
+State Flows_Abort {
+      > Pump Both Off
+  +10 > Bypass MFC Flow Setpoint 0 nccm
+      > POPS MFC Flow Setpoint 0 nccm
+      Validate Idle;
 }
 
 State Shutdown {
   # Shutdown POPS
   +4  > Pump Both Off
-  +4  > Bypass MFC Flow Setpoint 0 ccm
-  +4  > POPS MFC Flow Setpoint 0 ccm
+  +4  > Bypass MFC Flow Setpoint 0 nccm
+  +4  > POPS MFC Flow Setpoint 0 nccm
   +2  > Fail Light On
       > Quit
 }

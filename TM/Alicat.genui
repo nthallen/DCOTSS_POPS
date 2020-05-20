@@ -2,14 +2,14 @@
   1 MFC1_Stale  Alicat_HK Stale
   1 MFC1_T      Alicat_HK T
   1 MFC1_P      Alicat_HK mbar
-  1 MFC1_Set    Alicat sccm
-  1 MFC1_MassFlow   Alicat sccm
+  1 MFC1_Set    Alicat nccm
+  1 MFC1_MassFlow   Alicat nccm
   1 MFC1_VolFlow   Alicat ccm
   1 MFC2_Status Alicat_HK Status
   1 MFC2_Stale  Alicat_HK Stale
   1 MFC2_T      Alicat_HK T
   1 MFC2_P      Alicat_HK mbar
-  1 MFC2_Set    Alicat sccm
-  1 MFC2_MassFlow   Alicat sccm
+  1 MFC2_Set    Alicat nccm
+  1 MFC2_MassFlow   Alicat nccm
   1 MFC2_VolFlow   Alicat ccm
   1 Alicat_Stale Alicat_HK Stale

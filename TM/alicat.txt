@@ -2,5 +2,5 @@
 Name Alicat
 Rate 1 Hz
 Port /dev/ser3
-Digital MFC1 1 MFC 5000 ccm 5000 sccm 1050 mbar "Bypass MFC"
-Digital MFC2 2 MFC 2000 ccm 2000 sccm 1050 mbar "POPS MFC"
+Digital MFC1 1 MFC 5000 ccm 5000 nccm 1050 mbar "Bypass MFC"
+Digital MFC2 2 MFC 2000 ccm 2000 nccm 1050 mbar "POPS MFC"

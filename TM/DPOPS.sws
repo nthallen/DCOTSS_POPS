@@ -1,4 +1,6 @@
 SW_Variable: SWStat SW Status
+  SWS_EXPLORE_FLOWS   20 Explore Flows:          Validate Explore_Flows; break;
+  SWS_FLOWS_ABORT     21 Abort Flows:            Validate Flows_Abort; break;
   SWS_SHUTDOWN       255 Shutdown Full:          Validate Shutdown; break;
 
 SW_Variable: <uint16_t,InltBPZV_t> InltBPZV Baratron Zero

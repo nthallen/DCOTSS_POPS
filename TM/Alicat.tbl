@@ -1,7 +1,7 @@
 MFC1_v {
   HBox { +-; Title: MFC1; -+ };
-  Set:  (MFC1_Set,7)       sccm;
-  MFlow:  (MFC1_MassFlow,7)  sccm;
+  Set:  (MFC1_Set,7)       nccm;
+  MFlow:  (MFC1_MassFlow,7)  nccm;
   VFlow:  (MFC1_VolFlow,7)   ccm;
   T:      (MFC1_T,7)       C;
   P:      (MFC1_P,7)       mbar;
@@ -11,8 +11,8 @@ MFC1_v {
 
 MFC2_v {
   HBox { +-; Title: MFC2; -+ };
-  Set:  (MFC2_Set,7)       sccm;
-  MFlow:  (MFC2_MassFlow,7)  sccm;
+  Set:  (MFC2_Set,7)       nccm;
+  MFlow:  (MFC2_MassFlow,7)  nccm;
   VFlow:  (MFC2_VolFlow,7)   ccm;
   T:      (MFC2_T,7)       C;
   P:      (MFC2_P,7)       mbar;
