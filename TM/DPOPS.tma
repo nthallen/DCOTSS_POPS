@@ -1,26 +1,60 @@
 State Init {
-  > Telemetry Start
-  > Set Baratron Vrtn 1.65 Volts
-  > Baratron Zero 0.0955 Volts
-  Validate Idle;
+          > Telemetry Start
+          > Set Baratron Vrtn 1.65 Volts
+          > Baratron Zero 0.0955 Volts
+  +30:00  Validate Explore_Flows;
 }
 
 State Idle {}
 
 State Explore_Flows {
       > Pump Both Off
-  +4  > Bypass MFC Flow Setpoint 0 nccm
-      > POPS MFC Flow Setpoint 1000 nccm
-  +10 > Pump POPS On
-  +60 > Bypass MFC Flow Setpoint 500 nccm
-  +10 > Pump Bypass On
-  +60 > Bypass MFC Flow Setpoint 1000 nccm
-  +60 > Bypass MFC Flow Setpoint 1500 nccm
-  +60 > Bypass MFC Flow Setpoint 2000 nccm
-  +60 > Bypass MFC Flow Setpoint 2500 nccm
-  +60 > Bypass MFC Flow Setpoint 3000 nccm
-  +60 > Bypass MFC Flow Setpoint 3500 nccm
-  +60 > Bypass MFC Flow Setpoint 4000 nccm
+  +4  > POPS MFC Flow Setpoint 1000 nccm
+      > Bypass MFC Flow Setpoint 500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 1000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 1500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 2000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 2500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 3000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 3500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 4000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 3500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 3000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 2500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 2000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 1500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 1000 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
+      > Bypass MFC Flow Setpoint 500 nccm
+      Hold until valid (Pumps_Watch);
+      Hold until valid (Pumps_Step);
   +60 > Pump Both Off
   +10 > Bypass MFC Flow Setpoint 0 nccm
       > POPS MFC Flow Setpoint 0 nccm
@@ -28,7 +62,7 @@ State Explore_Flows {
 }
 
 State Flows_Abort {
-      > Pump Both Off
+      Validate Pumps_Off;
   +10 > Bypass MFC Flow Setpoint 0 nccm
       > POPS MFC Flow Setpoint 0 nccm
       Validate Idle;
@@ -36,9 +70,62 @@ State Flows_Abort {
 
 State Shutdown {
   # Shutdown POPS
-  +4  > Pump Both Off
+  +4  Validate Pumps_Off;
   +4  > Bypass MFC Flow Setpoint 0 nccm
   +4  > POPS MFC Flow Setpoint 0 nccm
   +2  > Fail Light On
       > Quit
+}
+
+# Pumps Partition
+# This should be totally passive except for Shutdown.
+# When the flow controller setpoints are set above 100 nccm,
+# The pumps will turn on. This partition will then cycle
+# between Pumps_Watch and Pumps_Step. If the flow through
+# either MFC drops below 1/2 the setpoint for 5 seconds,
+# it will advance to Pumps_Failed, shut off both pumps,
+# wait 20 minutes, and then restart. The point is to
+# guarantee 60 seconds of continuous flow at a particular
+# setpoint before advancing in the mainline algorithm.
+Partition
+
+State Pumps_Idle {
+  Hold until (MFC1_Set > 100 && MFC2_Set > 100);
+  Validate Pumps_On;
+}
+
+State Pumps_On {
+  { if (MFC1_Set < 100 || MFC2_Set < 100)
+      Validate Pumps_Off; }
+  +1  > Pump Both On
+      Validate Pumps_Watch;
+}
+
+State Pumps_Watch {
+  { if (MFC1_Set < 100 || MFC2_Set < 100)
+      Validate Pumps_Off; }
+  +1 Hold Until (MFC1_MassFlow < 0.5 * MFC1_Set ||
+                 MFC2_MassFlow < 0.5 * MFC2_Set) or 58
+     else Validate Pumps_Step;
+  +1 Hold Until (MFC1_MassFlow > 0.9 * MFC1_Set &&
+                 MFC2_MassFlow > 0.9 * MFC2_Set) or 5
+     else Validate Pumps_Failed;
+     Validate Pumps_Watch;
+}
+
+State Pumps_Step {
+  +1  Validate Pumps_Watch;
+}
+
+State Pumps_Failed {
+  { if (MFC1_Set < 100 || MFC2_Set < 100)
+      Validate Pumps_Off; }
+          > Pump Both Off
+  +20:00  Validate Pumps_On;
+}
+
+State Pumps_Off {
+  > Pump Both Off
+  { if (MFC1_Set < 100 || MFC2_Set < 100)
+      Validate Pumps_Idle; }
 }
