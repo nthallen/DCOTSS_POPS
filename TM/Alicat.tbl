@@ -1,38 +1,72 @@
-MFC1_v {
-  HBox { +-; Title: MFC1; -+ };
-  Set:  (MFC1_Set,7)       nccm;
-  MFlow:  (MFC1_MassFlow,7)  nccm;
-  VFlow:  (MFC1_VolFlow,7)   ccm;
-  T:      (MFC1_T,7)       C;
-  P:      (MFC1_P,7)       mbar;
-  Status: (MFC1_Status,4);
-  Stale:  (MFC1_Stale,3);
+BMFC_vfull {
+  Set:    (BMFC_Set,7)       nccm;
+  MFlow:  (BMFC_MassFlow,7)  nccm;
+  VFlow:  (BMFC_VolFlow,7)   ccm;
+  T:      (BMFC_T,7)         C;
+  P:      (BMFC_P,7)         mbar;
+  Status: (BMFC_Status,4);
+  Stale:  (BMFC_Stale,3);
 }
 
-MFC2_v {
-  HBox { +-; Title: MFC2; -+ };
-  Set:  (MFC2_Set,7)       nccm;
-  MFlow:  (MFC2_MassFlow,7)  nccm;
-  VFlow:  (MFC2_VolFlow,7)   ccm;
-  T:      (MFC2_T,7)       C;
-  P:      (MFC2_P,7)       mbar;
-  Status: (MFC2_Status,4);
-  Stale:  (MFC2_Stale,3);
+BMFC_vft {
+  HBox { +-; Title: BMFC; -+ };
+  [BMFC_vfull];
+}
+
+BMFC_vdata {
+  Set:    (BMFC_Set,7)       nccm;
+  MFlow:  (BMFC_MassFlow,7)  nccm;
+  VFlow:  (BMFC_VolFlow,7)   ccm;
+  T:      (BMFC_T,7)         C;
+  P:      (BMFC_P,7)         mbar;
+}
+
+BMFC_vdt {
+  HBox { +-; Title: BMFC; -+ };
+  [BMFC_vdata];
+}
+
+PMFC_vfull {
+  Set:    (PMFC_Set,7)       nccm;
+  MFlow:  (PMFC_MassFlow,7)  nccm;
+  VFlow:  (PMFC_VolFlow,7)   ccm;
+  T:      (PMFC_T,7)         C;
+  P:      (PMFC_P,7)         mbar;
+  Status: (PMFC_Status,4);
+  Stale:  (PMFC_Stale,3);
+}
+
+PMFC_vft {
+  HBox { +-; Title: PMFC; -+ };
+  [PMFC_vfull];
+}
+
+PMFC_vdata {
+  Set:    (PMFC_Set,7)       nccm;
+  MFlow:  (PMFC_MassFlow,7)  nccm;
+  VFlow:  (PMFC_VolFlow,7)   ccm;
+  T:      (PMFC_T,7)         C;
+  P:      (PMFC_P,7)         mbar;
+}
+
+PMFC_vdt {
+  HBox { +-; Title: PMFC; -+ };
+  [PMFC_vdata];
 }
 
 Alicat_flows {
   HBox { +-; Title: Alicat; -+ };
   ""    >Set<        >Flow<;
-  MFC1: (MFC1_Set,7) (MFC1_VolFlow,7) ccm;
-  MFC2: (MFC2_Set,7) (MFC2_VolFlow,7) ccm;
+  BMFC: (BMFC_Set,7) (BMFC_VolFlow,7) ccm;
+  PMFC: (PMFC_Set,7) (PMFC_VolFlow,7) ccm;
   { HGlue 0+1 Stale: (Alicat_Stale,3) }
 }
 
 Alicat_hk {
   HBox { +-; Title: "Alicat HK"; -+ };
   ""    >Temp<    "" >Pres< "" >Status< >Stale<;
-  MFC1: (MFC1_T,7) C (MFC1_P,7) mbar
-(MFC1_Status,4) (MFC1_Stale,3);
-  MFC2: (MFC2_T,7) C (MFC2_P,7) mbar
-(MFC2_Status,4) (MFC2_Stale,3);
+  BMFC: (BMFC_T,7) C (BMFC_P,7) mbar
+(BMFC_Status,4) (BMFC_Stale,3);
+  PMFC: (PMFC_T,7) C (PMFC_P,7) mbar
+(PMFC_Status,4) (PMFC_Stale,3);
 }

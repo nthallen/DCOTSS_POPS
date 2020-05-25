@@ -90,25 +90,25 @@ State Shutdown {
 Partition
 
 State Pumps_Idle {
-  Hold until (MFC1_Set > 100 && MFC2_Set > 100);
+  Hold until (BMFC_Set > 100 && PMFC_Set > 100);
   Validate Pumps_On;
 }
 
 State Pumps_On {
-  { if (MFC1_Set < 100 || MFC2_Set < 100)
+  { if (BMFC_Set < 100 || PMFC_Set < 100)
       Validate Pumps_Off; }
   +1  > Pump Both On
       Validate Pumps_Watch;
 }
 
 State Pumps_Watch {
-  { if (MFC1_Set < 100 || MFC2_Set < 100)
+  { if (BMFC_Set < 100 || PMFC_Set < 100)
       Validate Pumps_Off; }
-  +1 Hold Until (MFC1_MassFlow < 0.5 * MFC1_Set ||
-                 MFC2_MassFlow < 0.5 * MFC2_Set) or 58
+  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set ||
+                 PMFC_MassFlow < 0.5 * PMFC_Set) or 58
      else Validate Pumps_Step;
-  +1 Hold Until (MFC1_MassFlow > 0.9 * MFC1_Set &&
-                 MFC2_MassFlow > 0.9 * MFC2_Set) or 5
+  +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set &&
+                 PMFC_MassFlow > 0.9 * PMFC_Set) or 5
      else Validate Pumps_Failed;
      Validate Pumps_Watch;
 }
@@ -118,7 +118,7 @@ State Pumps_Step {
 }
 
 State Pumps_Failed {
-  { if (MFC1_Set < 100 || MFC2_Set < 100)
+  { if (BMFC_Set < 100 || PMFC_Set < 100)
       Validate Pumps_Off; }
           > Pump Both Off
   +20:00  Validate Pumps_On;
@@ -126,6 +126,6 @@ State Pumps_Failed {
 
 State Pumps_Off {
   > Pump Both Off
-  { if (MFC1_Set < 100 || MFC2_Set < 100)
+  { if (BMFC_Set < 100 || PMFC_Set < 100)
       Validate Pumps_Idle; }
 }

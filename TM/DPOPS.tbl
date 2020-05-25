@@ -1,11 +1,48 @@
 Input "TMbase.tbl";
 Input "Alicat.tbl";
 
+BMFC {
+  HBox { +-; Title: "Bypass Flow"; -+ };
+  [BMFC_vdata];
+}
+
+PMFC {
+  HBox { +-; Title: "POPS Flow"; -+ };
+  [PMFC_vdata];
+}
+
+POPS {
+  HBox { +-; Title: POPS; -+ };
+  Part_Num: (POPS_Part_Num,8);
+  num_cc:   (POPS_num_cc,8) "cc-1";
+  P_mbar:   (POPS_P_mbar,8) mbar;
+  Flow:     (POPS_ccm,8)    ccm;
+  Temp:     (POPS_Temp,8)   C;
+}
+
+InletP {
+  HBox { +-; Title: "Inlet P"; -+ };
+  HBS_P:    (HPS_P,7)    mbar;
+  InltBP:   (InltBP,9)   mbar;
+}
+
+Pumps {
+  HBox { +-; Title: Pumps; -+ };
+  Bypass: HBox { (BPmpCmd,3); "/"; (BPmpS) };
+  POPS:   HBox { (PPmpCmd,3); "/"; (PPmpS) };
+}
+
 { HBox {
     |+;
-    { HBox { [MFC1_v]; |; [MFC2_v] };
-#     [Alicat_flows];
-#     [Alicat_hk];
-    }; |+; [TMbaseB]; |+ };
+    { [BMFC];
+      [InletP];
+      [Pumps]
+    }; |; {
+      [PMFC];
+      [POPS]
+    }; |+; {
+      [TMbaseB];
+    }; |+
+  };
   -
 }

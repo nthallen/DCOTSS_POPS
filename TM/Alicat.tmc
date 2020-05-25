@@ -15,39 +15,39 @@ TM typedef float Alicat_Temp_t { text "%7.2f"; }
 TM typedef float Alicat_Press_t { text "%7.2f"; }
 
 TM 1 Hz Alicat_Stale_t Alicat_Stale;
-TM 1 Hz Alicat_Flow1_t MFC1_Set;
-TM 1 Hz Alicat_Flow1_t MFC1_VolFlow;
-TM 1 Hz Alicat_Flow1_t MFC1_MassFlow;
-TM 1 Hz Alicat_Temp_t MFC1_T;
-TM 1 Hz Alicat_Flow1_t MFC1_P;
-TM 1 Hz Alicat_Status_t MFC1_Status;
-TM 1 Hz Alicat_Stale_t MFC1_Stale;
-TM 1 Hz Alicat_Flow1_t MFC2_Set;
-TM 1 Hz Alicat_Flow1_t MFC2_VolFlow;
-TM 1 Hz Alicat_Flow1_t MFC2_MassFlow;
-TM 1 Hz Alicat_Temp_t MFC2_T;
-TM 1 Hz Alicat_Flow1_t MFC2_P;
-TM 1 Hz Alicat_Status_t MFC2_Status;
-TM 1 Hz Alicat_Stale_t MFC2_Stale;
+TM 1 Hz Alicat_Flow1_t BMFC_Set;
+TM 1 Hz Alicat_Flow1_t BMFC_VolFlow;
+TM 1 Hz Alicat_Flow1_t BMFC_MassFlow;
+TM 1 Hz Alicat_Temp_t BMFC_T;
+TM 1 Hz Alicat_Flow1_t BMFC_P;
+TM 1 Hz Alicat_Status_t BMFC_Status;
+TM 1 Hz Alicat_Stale_t BMFC_Stale;
+TM 1 Hz Alicat_Flow1_t PMFC_Set;
+TM 1 Hz Alicat_Flow1_t PMFC_VolFlow;
+TM 1 Hz Alicat_Flow1_t PMFC_MassFlow;
+TM 1 Hz Alicat_Temp_t PMFC_T;
+TM 1 Hz Alicat_Flow1_t PMFC_P;
+TM 1 Hz Alicat_Status_t PMFC_Status;
+TM 1 Hz Alicat_Stale_t PMFC_Stale;
 TM "Receive" Alicat 1;
 
-Group Alicat (Alicat_Stale, MFC1_Set, MFC1_VolFlow, MFC1_MassFlow, MFC1_T,
-    MFC1_P, MFC1_Status, MFC1_Stale, MFC2_Set, MFC2_VolFlow, MFC2_MassFlow,
-    MFC2_T, MFC2_P, MFC2_Status, MFC2_Stale) {
+Group Alicat (Alicat_Stale, BMFC_Set, BMFC_VolFlow, BMFC_MassFlow, BMFC_T,
+    BMFC_P, BMFC_Status, BMFC_Stale, PMFC_Set, PMFC_VolFlow, PMFC_MassFlow,
+    PMFC_T, PMFC_P, PMFC_Status, PMFC_Stale) {
   Alicat_Stale = Alicat_obj->Stale(255);
-  MFC1_Set = Alicat_drive(0,flow_setpoint);
-  MFC1_VolFlow = Alicat_drive(0,volumetric_flow);
-  MFC1_MassFlow = Alicat_drive(0,mass_flow);
-  MFC1_T = Alicat_drive(0,flow_temp);
-  MFC1_P = Alicat_drive(0,pressure);
-  MFC1_Status = Alicat_drive(0,status);
-  MFC1_Stale = Alicat_drive(0,stale);
-  MFC2_Set = Alicat_drive(1,flow_setpoint);
-  MFC2_VolFlow = Alicat_drive(1,volumetric_flow);
-  MFC2_MassFlow = Alicat_drive(1,mass_flow);
-  MFC2_T = Alicat_drive(1,flow_temp);
-  MFC2_P = Alicat_drive(1,pressure);
-  MFC2_Status = Alicat_drive(1,status);
-  MFC2_Stale = Alicat_drive(1,stale);
+  BMFC_Set = Alicat_drive(0,flow_setpoint);
+  BMFC_VolFlow = Alicat_drive(0,volumetric_flow);
+  BMFC_MassFlow = Alicat_drive(0,mass_flow);
+  BMFC_T = Alicat_drive(0,flow_temp);
+  BMFC_P = Alicat_drive(0,pressure);
+  BMFC_Status = Alicat_drive(0,status);
+  BMFC_Stale = Alicat_drive(0,stale);
+  PMFC_Set = Alicat_drive(1,flow_setpoint);
+  PMFC_VolFlow = Alicat_drive(1,volumetric_flow);
+  PMFC_MassFlow = Alicat_drive(1,mass_flow);
+  PMFC_T = Alicat_drive(1,flow_temp);
+  PMFC_P = Alicat_drive(1,pressure);
+  PMFC_Status = Alicat_drive(1,status);
+  PMFC_Stale = Alicat_drive(1,stale);
   Alicat_obj->synch();
 }

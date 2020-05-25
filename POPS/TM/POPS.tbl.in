@@ -2,7 +2,7 @@
   HBox { -+; Title: POPS; +- };
   HBox { +|+;
     {
-      Stale:  (POPS_Stale,3);
+      Stale:  HBox { (POPS_DrvStale,3); "/"; (POPS_Stale,3) };
       Tdrift: (POPS_Tdrift,8) sec;
       Part_Num: (POPS_Part_Num,8);
       num_cc: (POPS_num_cc,8) "cc-1";

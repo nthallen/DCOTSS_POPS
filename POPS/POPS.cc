@@ -39,6 +39,7 @@ UserPkts_UDP::UserPkts_UDP(int udp_port)
   Bind(udp_port);
   // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()
+  flags |= gflag(0);
 }
 
 bool UserPkts_UDP::protocol_input() {
@@ -142,7 +143,13 @@ bool UserPkts_UDP::protocol_input() {
   POPS.Bin14 = Bin14;
   POPS.Bin15 = Bin15;
   POPS.Bin16 = Bin16;
+  POPS.Stale = 0;
   report_ok(nc);
+  return false;
+}
+
+bool UserPkts_UDP::tm_sync() {
+  ++POPS.Stale;
   return false;
 }
 
@@ -212,28 +219,5 @@ void UserPkts_UDP::Bind(int port) {
   if (ioflags == -1)
     msg( 3, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
-  flags = DAS_IO::Interface::Fl_Read;
+  flags |= DAS_IO::Interface::Fl_Read;
 }
-
-//  int UserPkts_UDP::fillbuf() {
-//    struct sockaddr_storage from;
-//    socklen_t fromlen = sizeof(from);
-//    int rv = recvfrom(fd, &buf[nc], bufsize - nc - 1, 0,
-//                (struct sockaddr*)&from, &fromlen);
-//  	
-//    if (rv == -1) {
-//      if ( errno == EWOULDBLOCK ) {
-//        ++n_eagain;
-//      } else if (errno == EINTR) {
-//        ++n_eintr;
-//      } else {
-//        msg( 2, "%s: UserPkts_UDP::fillbuf: recvfrom error: %s",
-//                  iname, strerror(errno));
-//        return 1;
-//      }
-//      return 0;
-//    }
-//    nc += rv;
-//    buf[nc] = '\0';
-//    return 0;
-//  }
