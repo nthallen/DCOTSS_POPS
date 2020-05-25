@@ -1,4 +1,5 @@
 Input "TMbase.tbl";
+Input "Alicat.tbl";
 
 DAC_A {
   HBox { +-; Title: DAC_A; -+ };
@@ -73,21 +74,23 @@ Honey {
 }
 
 { HBox {
-    |+; {
-      [ADC_A];
-      [ADC_B];
-    }; |+; {
-  #   [DAC_A];
-  #   [DAC_B];
-      [Honey];
-      [RTC_A];
-      [RTC_B];
+    |+;
+    { HBox {
+        {
+          [ADC_A];
+          [ADC_B];
+        }; |+; {
+          [Honey];
+          [RTC_A];
+          [RTC_B];
+        }
+      };
+      [Alicat_hk];
+      HBox { HGlue 0+1; { Driver: (Alicat_Stale,3) } }
     }; |+; {
       [Baratron];
       [Pumps];
       [TMbaseB];
-      Fail: (Fail,2);
-      SWStat: (SWStat,3);
     }; |+
   };
   -;
