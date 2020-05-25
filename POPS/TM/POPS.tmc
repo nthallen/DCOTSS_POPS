@@ -49,7 +49,7 @@ Group POPSgrp (
     POPS_Bin11, POPS_Bin12, POPS_Bin13, POPS_Bin14,
     POPS_Bin15, POPS_Bin16, POPS_Stale, POPS_DrvStale) {
   POPS_DrvStale = POPS_obj->Stale(255);
-  if (POPS_Stale == 0) {
+  if (POPS_DrvStale == 0) {
     POPS_Tdrift = dtime() - POPS.Time;
     POPS_Part_Num = POPS.Part_Num;
     POPS_num_cc = POPS.PartCon_num_cc;
