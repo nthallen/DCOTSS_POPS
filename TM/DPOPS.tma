@@ -2,7 +2,7 @@ State Init {
           > Telemetry Start
           > Set Baratron Vrtn 1.65 Volts
           > Baratron Zero 0.0955 Volts
-  +30:00  Validate Explore_Flows;
+   +1:00  Validate Explore_Flows;
 }
 
 State Idle {}

@@ -353,7 +353,7 @@ case $dispmode in
         echo focus
         echo "screen -t $logfile /bin/sh -c \"echo \$\$ >less.pid.$session; exec $SSH_CMD less +F $logfile\""
         echo screen -t DPOPS /usr/local/sbin/getcon -V $CMD_OPT scr1 $session
-        echo width -w 64
+        echo width -w 69
         #echo height -w 8
         echo screen -t POPS /usr/local/sbin/getcon -V $CMD_OPT scr2 $session
         echo width -w 58
