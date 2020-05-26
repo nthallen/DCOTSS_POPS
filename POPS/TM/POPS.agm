@@ -3,7 +3,7 @@ ModuleDef POPS [ tbl_name= ] {
 
 tmcbase = POPS.tmc
 colbase = POPS_col.tmc
-# cmdbase = POPS.cmd
+cmdbase = POPS.cmd
 genuibase = POPS.genui
 - : POPS.tbl:POPS.tbl.in
 DISTRIB = POPS

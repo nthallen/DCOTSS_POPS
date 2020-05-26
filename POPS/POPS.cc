@@ -6,11 +6,13 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <errno.h>
+#include <unistd.h>
 
 #include "dasio/msg.h"
 #include "dasio/quit.h"
 #include "dasio/tm_data_sndr.h"
 #include "nl.h"
+#include "nl_assert.h"
 #include "oui.h"
 #include "POPS_int.h"
 
@@ -21,7 +23,7 @@ int main(int argc, char **argv) {
   DAS_IO::Loop ELoop;
   UserPkts_UDP *Pkts = new UserPkts_UDP(7079); // constructor generated
   ELoop.add_child(Pkts);
-  DAS_IO::Quit *Q = new DAS_IO::Quit();
+  POPS_Cmd *Q = new POPS_Cmd();
   Q->connect();
   ELoop.add_child(Q);
   DAS_IO::TM_data_sndr *TM =
@@ -160,27 +162,6 @@ bool UserPkts_UDP::process_eof() {
   return false;
 }
 
-//  int UserPkts_UDP::not_KW(char *KWbuf) {
-//    int KWi = 0;
-//    while (cp < nc && isspace(buf[cp]))
-//      ++cp;
-//    while (cp < nc && KWi < 30 && !isspace(buf[cp]) &&
-//           buf[cp] != ',') {
-//      KWbuf[KWi++] = buf[cp++];  
-//    }
-//    if (KWi >= 30) {
-//      report_err("Keyword overflow");
-//      return 1;
-//    } else if (buf[cp] == ',') {
-//      KWbuf[KWi] = '\0';
-//      ++cp;
-//      return 0;
-//    } else {
-//      report_err("Unexpected char in not_KW");
-//      return 1;
-//    }
-//  }
-
 void UserPkts_UDP::Bind(int port) {
   char service[10];
   struct addrinfo hints,*results, *p;
@@ -220,4 +201,65 @@ void UserPkts_UDP::Bind(int port) {
     msg( 3, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
   flags |= DAS_IO::Interface::Fl_Read;
+}
+
+bool POPS_Cmd::app_input() {
+  bool rv = false;
+  if (nc > 0) {
+    switch (buf[0]) {
+      case 'S':
+        send_shutdown();
+        break;
+      case 'Q':
+        rv = true;
+        break;
+      default:
+        msg(2, "%s: Invalid command letter: '%c' (0x%X)",
+          iname, buf[0], buf[0]);
+        rv = true;
+        break;
+    }
+  }
+  return rv;
+}
+
+void POPS_Cmd::send_shutdown() {
+  int udp_sock = socket(AF_INET, SOCK_DGRAM, 0);
+  if (udp_sock == -1) {
+    msg(MSG_ERROR, "%s: Unable to create UDP socket for shutdown: %s",
+      iname, strerror(errno));
+    return;
+  }
+  struct addrinfo hints, *res;
+  hints.ai_flags = AI_NUMERICHOST;
+  hints.ai_family = PF_INET;
+  hints.ai_socktype = SOCK_DGRAM;
+  hints.ai_protocol = IPPROTO_UDP;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = 0;
+  hints.ai_addr = 0;
+  hints.ai_next = 0;
+  if (getaddrinfo("10.11.97.50", "7079", &hints, &res)) {
+    msg(MSG_ERROR, "%s: getaddrinfo for shutdown failed: %s",
+      iname, strerror(errno));
+    return;
+  }
+  nl_assert(res->ai_next == 0);
+  nl_assert(res->ai_addr != 0);
+
+  struct sockaddr_in s;
+  socklen_t addrlen;
+  nl_assert(((unsigned)res->ai_addrlen) <= sizeof(s));
+  memcpy(&s, res->ai_addr, res->ai_addrlen);
+  addrlen = res->ai_addrlen;
+  freeaddrinfo(res);
+  
+  const char *buf = "8";
+  int msglen = 1;
+  int nb = sendto(udp_sock, buf, msglen, 0, (sockaddr*)&s, addrlen);
+  if (nb < msglen) {
+    msg(MSG_ERROR, "%s: sendto() expected %d, returned %d",
+      iname, msglen, nb);
+  }
+  ::close(udp_sock);
 }

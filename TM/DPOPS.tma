@@ -2,77 +2,78 @@ State Init {
           > Telemetry Start
           > Set Baratron Vrtn 1.65 Volts
           > Baratron Zero 0.0955 Volts
-   +1:00  Validate Explore_Flows;
+ # +1:00  Validate Explore_Flows;
+          Validate Idle;
 }
 
 State Idle {}
 
 State Explore_Flows {
       > Pump Both Off
-  +4  > POPS MFC Flow Setpoint 1000 nccm
-      > Bypass MFC Flow Setpoint 500 nccm
+  +4  > MFC POPS Flow Setpoint 1000 nccm
+      > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 1000 nccm
+      > MFC Bypass Flow Setpoint 1000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 1500 nccm
+      > MFC Bypass Flow Setpoint 1500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 2000 nccm
+      > MFC Bypass Flow Setpoint 2000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 2500 nccm
+      > MFC Bypass Flow Setpoint 2500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 3000 nccm
+      > MFC Bypass Flow Setpoint 3000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 3500 nccm
+      > MFC Bypass Flow Setpoint 3500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 4000 nccm
+      > MFC Bypass Flow Setpoint 4000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 3500 nccm
+      > MFC Bypass Flow Setpoint 3500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 3000 nccm
+      > MFC Bypass Flow Setpoint 3000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 2500 nccm
+      > MFC Bypass Flow Setpoint 2500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 2000 nccm
+      > MFC Bypass Flow Setpoint 2000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 1500 nccm
+      > MFC Bypass Flow Setpoint 1500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 1000 nccm
+      > MFC Bypass Flow Setpoint 1000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > Bypass MFC Flow Setpoint 500 nccm
+      > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
   +60 Validate Pumps_Off;
-  +10 > Bypass MFC Flow Setpoint 0 nccm
-      > POPS MFC Flow Setpoint 0 nccm
+  +10 > MFC Bypass Flow Setpoint 0 nccm
+      > MFC POPS Flow Setpoint 0 nccm
       Validate Idle;
 }
 
 State Flows_Abort {
       Validate Pumps_Off;
-  +10 > Bypass MFC Flow Setpoint 0 nccm
-      > POPS MFC Flow Setpoint 0 nccm
+  +10 > MFC Bypass Flow Setpoint 0 nccm
+      > MFC POPS Flow Setpoint 0 nccm
       Validate Idle;
 }
 
 State Shutdown {
-  # Shutdown POPS
+      > POPS Shutdown
   +4  Validate Pumps_Off;
-  +4  > Bypass MFC Flow Setpoint 0 nccm
-  +4  > POPS MFC Flow Setpoint 0 nccm
+  +4  > MFC Bypass Flow Setpoint 0 nccm
+  +4  > MFC POPS Flow Setpoint 0 nccm
   +2  > Fail Light On
       > Quit
 }

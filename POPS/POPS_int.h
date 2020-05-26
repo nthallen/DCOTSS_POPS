@@ -32,5 +32,19 @@ class UserPkts_UDP : public DAS_IO::Interface {
     int udp_port;
 };
 
+class POPS_Cmd : public DAS_IO::Cmd_reader {
+  public:
+    inline POPS_Cmd() : DAS_IO::Cmd_reader("POPS", 80, "POPS") {}
+    /**
+     * Handles single-character commands:
+     *   S: Send shutdown code '8' over UDP to POPS instrument
+     *   Q: Return true to shutdown the driver
+     * @return true on 'Q' or error
+     */
+    bool app_input();
+  private:
+    void send_shutdown();
+};
+
 #endif // __cplusplus
 #endif // DPOPS_INT_H_INCLUDED
