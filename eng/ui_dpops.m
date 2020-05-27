@@ -22,6 +22,7 @@ f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsbs', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsbaics', 'AI Ch S' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsbain', 'AI N' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsbai', 'AI errs' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsbr', 'Raw' );
 f = ne_dialg(f, 'add', 0, 1, 'gdpopsh', 'Honeywell' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopshhpsp', 'HPS P' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopshs', 'Status' );

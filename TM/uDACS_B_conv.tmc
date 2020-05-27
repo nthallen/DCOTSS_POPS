@@ -35,7 +35,12 @@ AD7770_AI_stat_t uDACS_B_stat3; Invalidate uDACS_B_stat3;
   Validate uDACS_B_stat3;
 }
 
-/* Converts volts to mbar. Baratron report 0-10 V for 0-1000 Torr */
+/* Converts volts to mbar. Baratron report 0-10 V for 0-1000 Torr
+ * The 10 V signal is divided down using an 11.29 K over 7.18K Ohms
+ * for a divider ratio of 7.18/(11.29+7.18) = 0.3887. That would
+ * yield a max voltage difference of 6.113V, which is probably
+ * outside our range.
+ */
 TM typedef double InltBP_t { text "%9.4lf"; }
 InltBP_t InltBP; Invalidate InltBP;
 { InltBP = (convert(uDACS_B_AIN0)

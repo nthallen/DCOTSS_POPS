@@ -7,11 +7,11 @@ TM typedef uint16_t uDACS_DAC_t { text "%6.4lf"; convert uDACS_Volts_t; }
 /* Address 0x14 AD7770 subsystem status */
 TM typedef uint16_t AD7770_status_t { text "%04X"; }
 /* Raw 32-bit AIN readings */
-TM typedef uint32_t AD7770_rawAI_t;
+TM typedef uint32_t AD7770_rawAI_t { text "%13lu"; }
 /* Error header (high byte of AD7770_rawAI_t) */
 TM typedef uint8_t AD7770_AI_stat_t { text "%02X"; }
 /* 24-bit AD7770 AIN reading */
-TM typedef int32_t AD7770_AI_t { text "%9.5lf"; convert uDACS_Volts_t; }
+TM typedef int32_t AD7770_AI_t { text "%9.4lf"; convert uDACS_Volts_t; }
   Calibration (AD7770_AI_t, uDACS_Volts_t) {
     -8388610, -9999,
     -8388609, -9999,
