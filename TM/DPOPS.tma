@@ -9,7 +9,7 @@ State Init {
 State Idle {}
 
 State Explore_Flows {
-      > Pump Both Off
+      Validate Pumps_Off;
   +4  > MFC POPS Flow Setpoint 1000 nccm
       > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
@@ -56,10 +56,10 @@ State Explore_Flows {
       > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-  +60 Validate Pumps_Off;
+  +10 Validate Pumps_Off;
   +10 > MFC Bypass Flow Setpoint 0 nccm
       > MFC POPS Flow Setpoint 0 nccm
-      Validate Idle;
+  +60 Validate Explore_Flows;
 }
 
 State Flows_Abort {
