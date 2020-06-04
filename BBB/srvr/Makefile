@@ -1,5 +1,5 @@
 CXXFLAGS = -Wall
-LDFLAGS = -L/usr/local/lib -ldasio -lnl
+LDFLAGS = -L/usr/local/lib -ldasio -lnl -lpthread
 .PHONY : all clean
 
 all : POPS_srvr

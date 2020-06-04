@@ -2,7 +2,6 @@
 dasio=~/SW/dasng/git/libs/dasio/src
 dasiosrc="$dasio/appid.cc
   $dasio/loop.cc
-  $dasio/nldbg.c
   $dasio/not_parsed.cc
   $dasio/server.cc
   $dasio/ascii_escape.cc
@@ -17,6 +16,7 @@ nl=~/SW/dasng/git/libs/nl
 nlsrc="$nl/nl.h
   $nl/newmem.c
   $nl/nlresp.c
+  $nl/nldbg.c
   $nl/nl_assert.h
   $nl/nl_verr.c
   $nl/nl_error.c"
@@ -30,5 +30,10 @@ POPS_srvr.h
 ../../TM/services"
 
 dest=pops:SW/srvr
+echo Creating directories
+ssh pops mkdir -p /root/SW/srvr/dasio
+echo Copying sources
 scp $dasiosrc $nlsrc $oui $srcs $dest
+echo Copying dasio headers
 scp $dasio/dasio/*.h $dest/dasio
+echo Done

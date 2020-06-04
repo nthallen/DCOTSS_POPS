@@ -61,7 +61,9 @@ pops_socket *new_pops_socket(Authenticator *Auth, SubService *SS) {
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   Server server("pops");
-  server.add_subservice(new SubService("pops", (socket_clone_t)new_pops_socket, (void*)0));
+  server.add_subservice(new SubService("pops",
+      (socket_clone_t)new_pops_socket, (void*)0));
+  msg(0, "Starting");
   server.Start(Server::Srv_TCP);
   msg(0, "Terminating");
   return 0;
