@@ -2,6 +2,9 @@ State Init {
           > Telemetry Start
           > Set Baratron Vrtn 1.65 Volts
           > Baratron Zero 0.0955 Volts
+       +1 > MFC Bypass Flow Setpoint 0 nccm
+          > MFC POPS Flow Setpoint 0 nccm
+          
  # +1:00  Validate Explore_Flows;
           Validate Idle;
 }
@@ -199,6 +202,12 @@ State Shutdown {
 # setpoint before advancing in the mainline algorithm.
 Partition
 
+State Pumps_Off {
+  > Pump Both Off
+  { if (BMFC_Set < 100 || PMFC_Set < 100)
+      Validate Pumps_Idle; }
+}
+
 State Pumps_Idle {
   Hold until (BMFC_Set > 100 && PMFC_Set > 100);
   Validate Pumps_On;
@@ -232,10 +241,4 @@ State Pumps_Failed {
       Validate Pumps_Off; }
           > Pump Both Off
   +20:00  Validate Pumps_On;
-}
-
-State Pumps_Off {
-  > Pump Both Off
-  { if (BMFC_Set < 100 || PMFC_Set < 100)
-      Validate Pumps_Idle; }
 }

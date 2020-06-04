@@ -23,10 +23,11 @@ nlsrc="$nl/nl.h
 
 oui=/usr/local/include/oui.h
 
-srcs="BBB/Makefile
+srcs="BBB/*
 POPS_srvr.cc
 POPS_srvroui.cc
-POPS_srvr.h"
+POPS_srvr.h
+../../TM/services"
 
 dest=pops:SW/srvr
 scp $dasiosrc $nlsrc $oui $srcs $dest

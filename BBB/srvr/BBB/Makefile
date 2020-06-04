@@ -6,12 +6,17 @@ OBJ = interface.o socket.o server.o loop.o msg.o \
   newmem.o unix_name.o not_parsed.o nlresp.o \
   nldbg.o appid.o client.o
 
-.PHONY : all clean
+DESTDIR = /root/SW/bin
+
+.PHONY : all clean install
 
 all : POPS_srvr
 
 POPS_srvr : $(OBJ)
 	$(CXX) -o POPS_srvr $(CXXFLAGS) $(OBJ) -lpthread -lrt
+
+install : POPS_srvr
+	cp POPS_srvr start_POPS start_POPS_srvr services $(DESTDIR)
 
 clean :
 	rm -f *.o POPS_srvr
