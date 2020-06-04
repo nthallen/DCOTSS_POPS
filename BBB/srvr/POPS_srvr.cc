@@ -4,9 +4,9 @@ POPS_Server
   On accept, send current status
   Loop on read() supporting:
     V: Status : Respond with current status
-    B: Start : Runs POPS_startup script system("/media/uSD/start_POPS");
+    B: Start : Runs POPS_startup script system("/root/SW/bin/start_POPS");
                Status is updated to Active
-    Q: Shutdown : Runs system("shutdown -h now");
+    Q: Shutdown : Runs system("/sbin/shutdown -h now");
                 Status is updated to shutdown
                 Reply before shutting down
     D: Disconnect : Don't respond, wait for connection to break
@@ -27,10 +27,10 @@ bool pops_socket::protocol_input() {
   switch (buf[0]) {
     case 'V': break; // Status
     case 'B':
-      system("/media/uSD/start_POPS");
+      system("/root/SW/bin/start_POPS");
       break;
     case 'Q':
-      system("shutdown -h now");
+      system("/sbin/shutdown -h now");
       break;
     case 'D': return false;
     default:
