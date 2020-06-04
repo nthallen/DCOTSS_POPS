@@ -10,6 +10,7 @@ extern SWData_t SWData;
 
 #define SWS_EXPLORE_FLOWS 20
 #define SWS_FLOWS_ABORT 21
+#define SWS_FIXED_FLOWS 22
 #define SWS_SHUTDOWN 255
 
 #endif
