@@ -28,8 +28,10 @@ bool pops_socket::protocol_input() {
     case 'V': break; // Status
     case 'B':
       system("/root/SW/bin/start_POPS");
+      POPS_status = POPS_active;
       break;
     case 'Q':
+      POPS_status = POPS_shutdown;
       system("/sbin/shutdown -h now");
       break;
     case 'D': return false;
