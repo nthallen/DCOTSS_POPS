@@ -31,7 +31,8 @@ typedef struct __attribute__((__packed__)) {
   uint32_t Bin14;
   uint32_t Bin15;
   uint32_t Bin16;
-  uint32_t Stale;
+  uint8_t  Srvr; // Server status enum {POPS_init, POPS_idle, POPS_active, POPS_shutdown}
+  uint8_t  Stale;
 } POPS_t;
 extern POPS_t POPS;
 

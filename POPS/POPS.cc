@@ -151,7 +151,7 @@ bool UserPkts_UDP::protocol_input() {
 }
 
 bool UserPkts_UDP::tm_sync() {
-  ++POPS.Stale;
+  if (POPS.Stale < 255) ++POPS.Stale;
   return false;
 }
 

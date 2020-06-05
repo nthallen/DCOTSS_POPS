@@ -31,6 +31,7 @@ TM 1 Hz POPS_Counts_t POPS_Bin13;
 TM 1 Hz POPS_Counts_t POPS_Bin14;
 TM 1 Hz POPS_Counts_t POPS_Bin15;
 TM 1 Hz POPS_Counts_t POPS_Bin16;
+TM 1 Hz POPS_Stale_t POPS_Srvr;
 TM 1 Hz POPS_Stale_t POPS_Stale;
 TM 1 Hz POPS_Stale_t POPS_DrvStale;
 
