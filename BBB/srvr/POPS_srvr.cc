@@ -6,7 +6,7 @@ POPS_Server
     V: Status : Respond with current status
     B: Start : Runs POPS_startup script system("/root/SW/bin/start_POPS");
                Status is updated to Active
-    Q: Shutdown : Runs system("/sbin/shutdown -h now");
+    E: Shutdown : Runs system("/sbin/shutdown -h now");
                 Status is updated to shutdown
                 Reply before shutting down
     D: Disconnect : Don't respond, wait for connection to break
@@ -23,12 +23,12 @@ bool pops_socket::protocol_input() {
   cp = 0;
   if (nc == 0) return false;
   unsigned char cmd = buf[0];
-  consume(nc);
   switch (buf[0]) {
-    case 'V': break; // Status
-      msg(MSG, "V request");
+    case 'V': // Status
+      msg(0, "V request");
+      break;
     case 'B':
-      msg(MSG, "Starting POPS software");
+      msg(0, "Starting POPS software");
       system("/root/SW/bin/start_POPS");
       POPS_status = POPS_active;
       break;
@@ -36,14 +36,16 @@ bool pops_socket::protocol_input() {
       if (POPS_status == POPS_active) {
         msg(MSG_ERROR, "Shutdown refused while POPS is active");
         iwrite("Error: Shutdown should be directed to POPS while active\n");
+        consume(nc);
         return false;
       }
-      msg(MSG, "Issuing Shutdown");
+      msg(0, "Issuing Shutdown");
       POPS_status = POPS_shutdown;
       system("/sbin/shutdown -h now");
       break;
     case 'D':
-      msg(MSG, "Received disconnect message");
+      msg(0, "Received disconnect message");
+      consume(nc);
       return false;
     default:
       if (isgraph(cmd)) {
@@ -52,8 +54,9 @@ bool pops_socket::protocol_input() {
         msg(MSG_ERROR, "Invalid command value: '0x%02X'", cmd);
       }
       iwrite("Error: Invalid command\n");
-      return false;
+      break;
   }
+  consume(nc);
   return send_status();
 }
 
