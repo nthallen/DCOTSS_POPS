@@ -291,6 +291,7 @@ bool POPS_client::app_input() {
       if (not_uint8(POPS.Srvr) || not_str("\n")) {
         report_err("%s: poorly formed status response", iname);
       }
+      msg(MSG, "%s: POPS.Srvr = %d", iname, POPS.Srvr);
     } else {
       while (cp < nc && buf[cp] != '\n') ++cp;
       if (cp < nc) {
