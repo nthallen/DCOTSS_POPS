@@ -26,15 +26,25 @@ bool pops_socket::protocol_input() {
   consume(nc);
   switch (buf[0]) {
     case 'V': break; // Status
+      msg(MSG, "V request");
     case 'B':
+      msg(MSG, "Starting POPS software");
       system("/root/SW/bin/start_POPS");
       POPS_status = POPS_active;
       break;
-    case 'Q':
+    case 'E':
+      if (POPS_status == POPS_active) {
+        msg(MSG_ERROR, "Shutdown refused while POPS is active");
+        iwrite("Error: Shutdown should be directed to POPS while active\n");
+        return false;
+      }
+      msg(MSG, "Issuing Shutdown");
       POPS_status = POPS_shutdown;
       system("/sbin/shutdown -h now");
       break;
-    case 'D': return false;
+    case 'D':
+      msg(MSG, "Received disconnect message");
+      return false;
     default:
       if (isgraph(cmd)) {
         msg(MSG_ERROR, "Invalid command code: '%c'", cmd);

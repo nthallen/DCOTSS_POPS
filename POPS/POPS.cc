@@ -30,6 +30,9 @@ int main(int argc, char **argv) {
     new DAS_IO::TM_data_sndr("POPS", 0, "POPS", &POPS, sizeof(POPS));
   TM->connect();
   ELoop.add_child(TM);
+  POPS_client *clt = new POPS_client();
+  clt->connect();
+  ELoop.add_child(clt);
   msg(0, "Starting: V3.0");
   ELoop.event_loop();
   msg(0, "Terminating");
@@ -207,7 +210,12 @@ bool POPS_Cmd::app_input() {
   bool rv = false;
   if (nc > 0) {
     switch (buf[0]) {
-      case 'S':
+      case 'B': // Send POPS start to POPS_srvr
+      case 'E': // Send Shutdown to POPS_srvr
+        nl_assert(POPS_client::instance);
+        POPS_client::instance->forward(buf);
+        break;
+      case 'S': // Send Shutdown to POPS
         send_shutdown();
         break;
       case 'Q':
@@ -216,9 +224,9 @@ bool POPS_Cmd::app_input() {
       default:
         msg(2, "%s: Invalid command letter: '%c' (0x%X)",
           iname, buf[0], buf[0]);
-        rv = true;
         break;
     }
+    report_ok(nc);
   }
   return rv;
 }
@@ -263,3 +271,48 @@ void POPS_Cmd::send_shutdown() {
   }
   ::close(udp_sock);
 }
+
+POPS_client::POPS_client() :
+      DAS_IO::Client("pops", 80, "10.11.97.50", "pops", 0) {
+  POPS.Srvr = 0;
+  nl_assert(POPS_client::instance == 0);
+  POPS_client::instance = this;
+}
+
+bool POPS_client::app_connected() {
+  iwrite("V\n");
+  return false;
+}
+
+bool POPS_client::app_input() {
+  cp = 0;
+  while (cp < nc) {
+    if (isdigit(buf[cp])) {
+      if (not_uint8(POPS.Srvr) || not_str("\n")) {
+        report_err("%s: poorly formed status response", iname);
+      }
+    } else {
+      while (cp < nc && buf[cp] != '\n') ++cp;
+      if (cp < nc) {
+        // buf[cp] must be == '\n'
+        buf[cp++] = '\0';
+        msg(MSG_ERROR, "%s: %s", iname, buf);
+      } else {
+        msg(MSG_ERROR, "%s: missing nl: %s", iname, buf);
+      }
+    }
+  }
+  report_ok(nc);
+  return false;
+}
+
+bool POPS_client::forward(const uint8_t *cmd) {
+  if (is_negotiated()) {
+    iwrite((const char *)cmd);
+  } else {
+    msg(MSG_ERROR, "%s: command issued before comms established", iname);
+  }
+  return false;
+}
+
+POPS_client *POPS_client::instance = 0;

@@ -46,5 +46,15 @@ class POPS_Cmd : public DAS_IO::Cmd_reader {
     void send_shutdown();
 };
 
+class POPS_client : public DAS_IO::Client {
+  public:
+    POPS_client();
+    bool app_connected();
+    bool app_input();
+    bool forward(const uint8_t *cmd);
+    static POPS_client *instance;
+  protected:
+};
+
 #endif // __cplusplus
 #endif // DPOPS_INT_H_INCLUDED

@@ -6,9 +6,9 @@ Effective Frame Dimensions:
   2 Rows 146 Columns
   2 rows/sec
   2336 bits/sec
-  Data:  2264 bits/sec  97 %
+  Data:  2272 bits/sec  97 %
   Synch: 64 bits/sec  3 %
-  Empty: 8 bits/sec  0 %
+  Empty: 0 bits/sec  0 %
 -------End of Frame Statistics-----
 
 
@@ -103,6 +103,7 @@ Effective Frame Dimensions:
 1/1 Hz 2 bytes Datum InltBPZV (2,1,136,2)
 1/1 Hz 2 bytes Datum memused (2,1,138,2)
 1/1 Hz 2 bytes Datum uDACS_B_VSet1 (2,1,140,2)
-1/1 Hz 1 bytes Datum SWStat (2,1,142,1)
+1/1 Hz 1 bytes Datum POPS_Srvr (2,1,142,1)
+1/1 Hz 1 bytes Datum SWStat (2,1,143,1)
 -------End of PCM Definition-------
 

@@ -32,6 +32,14 @@ Pumps {
   POPS:   HBox { (PPmpCmd,3); "/"; (PPmpS) };
 }
 
+System {
+  HBox{ +-; Title: "System"; -+ };
+  [TMbase_data];
+  POPS: (POPS_Srvr,4);
+  VGlue 0+1;
+  [TMbase_times]
+}
+
 { HBox {
     |+;
     { [BMFC];
@@ -41,7 +49,7 @@ Pumps {
       [PMFC];
       [POPS]
     }; |+; {
-      [TMbaseB];
+      [System];
     }; |+
   };
   -

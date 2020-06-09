@@ -2,8 +2,21 @@ TM "Receive" POPS 1;
 
 TM typedef double POPS_Tdrift_t { text "%8.2lf"; }
 TM typedef uint8_t POPS_Stale_t { text "%3u"; }
+TM typedef uint8_t POPS_Srvr_t { text "%4u" POPS_Srvr_text(); }
 TM typedef uint32_t POPS_Counts_t { text "%8u"; }
 TM typedef float POPS_float_t { text "%8.3f"; }
+
+%{
+  const char *POPS_Srvr_text(POPS_Srvr_t state) {
+    switch (state) {
+      case 0: return "Init";
+      case 1: return "Idle";
+      case 2: return "Actv";
+      case 3: return "ShDn";
+      default: return "????";
+    }
+  }
+%}
 
 TM 1 Hz POPS_Tdrift_t POPS_Tdrift;
 TM 1 Hz POPS_Counts_t POPS_Part_Num;
@@ -31,7 +44,7 @@ TM 1 Hz POPS_Counts_t POPS_Bin13;
 TM 1 Hz POPS_Counts_t POPS_Bin14;
 TM 1 Hz POPS_Counts_t POPS_Bin15;
 TM 1 Hz POPS_Counts_t POPS_Bin16;
-TM 1 Hz POPS_Stale_t POPS_Srvr;
+TM 1 Hz POPS_Srvr_t POPS_Srvr;
 TM 1 Hz POPS_Stale_t POPS_Stale;
 TM 1 Hz POPS_Stale_t POPS_DrvStale;
 
