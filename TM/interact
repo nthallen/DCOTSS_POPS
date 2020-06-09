@@ -50,5 +50,5 @@ if [ -n "$RS485" ]; then
   Launch      -        alicat -a 1:MFC1,2:MFC2 -p $RS485
 fi
 
-  Launch      -        POPS
+  Launch      -        POPS -v
   Launch      -TMC-    DPOPSalgo -v

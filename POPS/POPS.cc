@@ -309,6 +309,7 @@ bool POPS_client::app_input() {
 
 bool POPS_client::forward(const uint8_t *cmd) {
   if (is_negotiated()) {
+    msg(MSG_DEBUG, "%s: Forwarding command %c", iname, cmd[0]);
     iwrite((const char *)cmd);
   } else {
     msg(MSG_ERROR, "%s: command issued before comms established", iname);
