@@ -12,7 +12,8 @@ State Init {
 State Idle {}
 
 State Explore_Flows {
-      Validate Pumps_Off;
+      Validate BPump_Off;
+      Validate PPump_Off;
   +4  > MFC POPS Flow Setpoint 1000 nccm
       > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
@@ -59,21 +60,24 @@ State Explore_Flows {
       > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-  +10 Validate Pumps_Off;
+  +10 Validate BPump_Off;
+      Validate PPump_Off;
   +10 > MFC Bypass Flow Setpoint 0 nccm
       > MFC POPS Flow Setpoint 0 nccm
   +60 Validate Explore_Flows;
 }
 
 State Flows_Abort {
-      Validate Pumps_Off;
+      Validate BPump_Off;
+      Validate PPump_Off;
   +10 > MFC Bypass Flow Setpoint 0 nccm
       > MFC POPS Flow Setpoint 0 nccm
       Validate Idle;
 }
 
 State Fixed_Flow {
-      Validate Pumps_Off;
+      Validate BPump_Off;
+      Validate PPump_Off;
   +4
       > MFC POPS Flow Setpoint 400 nccm
       > MFC Bypass Flow Setpoint 4600 nccm
@@ -175,7 +179,8 @@ State Fixed_Flow {
       > MFC Bypass Flow Setpoint 4600 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-  +10 Validate Pumps_Off;
+  +10 Validate BPump_Off;
+      Validate BPump_Off;
   +10 > MFC Bypass Flow Setpoint 0 nccm
       > MFC POPS Flow Setpoint 0 nccm
   +60 Validate Fixed_Flow;
@@ -183,11 +188,30 @@ State Fixed_Flow {
 
 State Shutdown {
       > POPS Shutdown
-  +4  Validate Pumps_Off;
+  +4  Validate BPump_Off;
+      Validate PPump_Off;
   +4  > MFC Bypass Flow Setpoint 0 nccm
   +4  > MFC POPS Flow Setpoint 0 nccm
   +2  > Fail Light On
       > Quit
+}
+
+Partition
+
+State Pumps_Watch {
+  depending on (PPump_Failed) { Validate Pumps_Failed; }
+  depending on (BPump_Failed) { Validate Pumps_Failed; }
+  +58 Validate Pumps_Step;
+}
+
+State Pumps_Step {
+  +1 Validate Pumps_Watch;
+}
+
+State Pumps_Failed {
+  Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
+              BMFC_MassFlow > 0.9 * BMFC_Set);
+  +1 Validate Pumps_Watch;
 }
 
 # Pumps Partition
@@ -202,43 +226,72 @@ State Shutdown {
 # setpoint before advancing in the mainline algorithm.
 Partition
 
-State Pumps_Off {
-  > Pump Both Off
-  { if (BMFC_Set < 100 || PMFC_Set < 100)
-      Validate Pumps_Idle; }
+State PPump_Off {
+  > Pump POPS Off
+  { if (PMFC_Set < 10)
+      Validate PPump_Idle; }
 }
 
-State Pumps_Idle {
-  Hold until (BMFC_Set > 100 && PMFC_Set > 100);
-  Validate Pumps_On;
+State PPump_Idle {
+  Hold until (PMFC_Set >= 10);
+  Validate PPump_On;
 }
 
-State Pumps_On {
-  { if (BMFC_Set < 100 || PMFC_Set < 100)
-      Validate Pumps_Off; }
-  +1  > Pump Both On
-      Validate Pumps_Watch;
+State PPump_On {
+  { if (PMFC_Set < 10)
+      Validate PPump_Off; }
+  +1  > Pump POPS On
+      Validate PPump_Watch;
 }
 
-State Pumps_Watch {
-  { if (BMFC_Set < 100 || PMFC_Set < 100)
-      Validate Pumps_Off; }
-  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set ||
-                 PMFC_MassFlow < 0.5 * PMFC_Set) or 58
-     else Validate Pumps_Step;
-  +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set &&
-                 PMFC_MassFlow > 0.9 * PMFC_Set) or 5
-     else Validate Pumps_Failed;
-     Validate Pumps_Watch;
+State PPump_Watch {
+  { if (PMFC_Set < 10)
+      Validate PPump_Off; }
+  +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set) or 58;
+  +1 Hold Until (PMFC_MassFlow > 0.9 * PMFC_Set) or 5
+     else Validate PPump_Failed;
+     Validate PPump_Watch;
 }
 
-State Pumps_Step {
-  +1  Validate Pumps_Watch;
+State PPump_Failed {
+  { if (PMFC_Set < 10)
+      Validate PPump_Off; }
+          > Pump POPS Off
+  +20:00  Validate PPump_On;
 }
 
-State Pumps_Failed {
-  { if (BMFC_Set < 100 || PMFC_Set < 100)
-      Validate Pumps_Off; }
-          > Pump Both Off
-  +20:00  Validate Pumps_On;
+Partition
+
+State BPump_Off {
+  > Pump Bypass Off
+  { if (BMFC_Set < 10)
+      Validate BPump_Idle; }
+}
+
+State BPump_Idle {
+  Hold until (BMFC_Set >= 10);
+  Validate BPump_On;
+}
+
+State BPump_On {
+  { if (BMFC_Set < 10)
+      Validate BPump_Off; }
+  +1  > Pump Bypass On
+      Validate BPump_Watch;
+}
+
+State BPump_Watch {
+  { if (BMFC_Set < 10)
+      Validate BPump_Off; }
+  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set) or 58;
+  +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set) or 5
+     else Validate BPump_Failed;
+     Validate BPump_Watch;
+}
+
+State BPump_Failed {
+  { if (BMFC_Set < 10)
+      Validate BPump_Off; }
+          > Pump Bypass Off
+  +20:00  Validate BPump_On;
 }
