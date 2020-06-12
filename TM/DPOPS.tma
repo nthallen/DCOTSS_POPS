@@ -247,7 +247,7 @@ State PPump_On {
 State PPump_Watch {
   { if (PMFC_Set < 10)
       Validate PPump_Off; }
-  +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set) or 58;
+  +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set);
   +1 Hold Until (PMFC_MassFlow > 0.9 * PMFC_Set) or 5
      else Validate PPump_Failed;
      Validate PPump_Watch;
@@ -283,7 +283,7 @@ State BPump_On {
 State BPump_Watch {
   { if (BMFC_Set < 10)
       Validate BPump_Off; }
-  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set) or 58;
+  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set);
   +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set) or 5
      else Validate BPump_Failed;
      Validate BPump_Watch;
