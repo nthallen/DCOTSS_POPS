@@ -1,4 +1,14 @@
+% Assumes the data dir function returns either the location where
+% getrun exists or a subdirectory one level down.
+pdir = ne_load_runsdir('HCl16_DATA_DIR');
+cd(pdir);
 [fd,msg] = fopen('runs.dat','r');
+if fd <= 0
+  [fd,msg] = fopen('../runs.dat','r');
+  if fd > 0
+    cd ..
+  end
+end
 if fd > 0
     tline = fgetl(fd);
     while ischar(tline)
