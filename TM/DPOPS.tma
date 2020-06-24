@@ -260,8 +260,10 @@ State Pumps_Step {
 }
 
 State Pumps_Failed {
-  Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
-              BMFC_MassFlow > 0.9 * BMFC_Set);
+#  Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
+#              BMFC_MassFlow > 0.9 * BMFC_Set);
+   Hold until (PMFC_MassFlow > -1 &&
+              BMFC_MassFlow > -1);
   +1 Validate Pumps_Watch;
 }
 
