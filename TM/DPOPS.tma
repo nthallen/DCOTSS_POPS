@@ -14,7 +14,7 @@ State Idle {}
 State Explore_Flows {
       Validate BPump_Off;
       Validate PPump_Off;
-+1    > MFC Bypass Flow Setpoint 3500 nccm
+#+1    > MFC Bypass Flow Setpoint 3500 nccm
 +2:00 > MFC POPS Flow Setpoint 100 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
