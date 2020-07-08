@@ -15,52 +15,52 @@ State Explore_Flows {
       Validate BPump_Off;
       Validate PPump_Off;
 #+1    > MFC Bypass Flow Setpoint 3500 nccm
-+2:00 > MFC POPS Flow Setpoint 100 nccm
++2:00 > MFC Bypass Flow Setpoint 100 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 200 nccm
+      > MFC Bypass Flow Setpoint 200 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 300 nccm
+      > MFC Bypass Flow Setpoint 300 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 400 nccm
+      > MFC Bypass Flow Setpoint 400 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 500 nccm
+      > MFC Bypass Flow Setpoint 500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 600 nccm
+      > MFC Bypass Flow Setpoint 600 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 700 nccm
+      > MFC Bypass Flow Setpoint 700 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 800 nccm
+      > MFC Bypass Flow Setpoint 800 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 900 nccm
+      > MFC Bypass Flow Setpoint 900 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1000 nccm
+      > MFC Bypass Flow Setpoint 1000 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1100 nccm
+      > MFC Bypass Flow Setpoint 1100 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1200 nccm
+      > MFC Bypass Flow Setpoint 1200 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1300 nccm
+      > MFC Bypass Flow Setpoint 1300 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1400 nccm
+      > MFC Bypass Flow Setpoint 1400 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1500 nccm
+      > MFC Bypass Flow Setpoint 1500 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1600 nccm
+      > MFC Bypass Flow Setpoint 1600 nccm
       Hold until valid (Pumps_Watch);
       Hold until valid (Pumps_Step);
  #     > MFC POPS Flow Setpoint 1500 nccm
