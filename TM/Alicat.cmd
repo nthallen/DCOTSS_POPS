@@ -22,4 +22,5 @@
 &command
   : MFC Bypass Flow SetPoint %f (nccm) nccm * { Alicat_set(1, $5); }
   : MFC POPS Flow SetPoint %f (nccm) nccm * { Alicat_set(2, $5); }
+  : MFC Sheath Flow SetPoint %f (nccm) nccm * { Alicat_set(3, $5); }
   ;

@@ -1,6 +1,6 @@
 %{
   /* alicat driver interface */
-  #define ALICAT_MAX_DRIVES 2
+  #define ALICAT_MAX_DRIVES 3
   #include "alicat.h"
   #define Alicat_drive(x,y) Alicat[x].y
 %}
@@ -29,11 +29,19 @@ TM 1 Hz Alicat_Temp_t PMFC_T;
 TM 1 Hz Alicat_Flow1_t PMFC_P;
 TM 1 Hz Alicat_Status_t PMFC_Status;
 TM 1 Hz Alicat_Stale_t PMFC_Stale;
+TM 1 Hz Alicat_Flow1_t SMFC_Set;
+TM 1 Hz Alicat_Flow1_t SMFC_VolFlow;
+TM 1 Hz Alicat_Flow1_t SMFC_MassFlow;
+TM 1 Hz Alicat_Temp_t SMFC_T;
+TM 1 Hz Alicat_Flow1_t SMFC_P;
+TM 1 Hz Alicat_Status_t SMFC_Status;
+TM 1 Hz Alicat_Stale_t SMFC_Stale;
 TM "Receive" Alicat 1;
 
 Group Alicat (Alicat_Stale, BMFC_Set, BMFC_VolFlow, BMFC_MassFlow, BMFC_T,
     BMFC_P, BMFC_Status, BMFC_Stale, PMFC_Set, PMFC_VolFlow, PMFC_MassFlow,
-    PMFC_T, PMFC_P, PMFC_Status, PMFC_Stale) {
+    PMFC_T, PMFC_P, PMFC_Status, PMFC_Stale, SMFC_Set, SMFC_VolFlow,
+    SMFC_MassFlow, SMFC_T, SMFC_P, SMFC_Status, SMFC_Stale) {
   Alicat_Stale = Alicat_obj->Stale(255);
   BMFC_Set = Alicat_drive(0,flow_setpoint);
   BMFC_VolFlow = Alicat_drive(0,volumetric_flow);
@@ -49,5 +57,12 @@ Group Alicat (Alicat_Stale, BMFC_Set, BMFC_VolFlow, BMFC_MassFlow, BMFC_T,
   PMFC_P = Alicat_drive(1,pressure);
   PMFC_Status = Alicat_drive(1,status);
   PMFC_Stale = Alicat_drive(1,stale);
+  SMFC_Set = Alicat_drive(2,flow_setpoint);
+  SMFC_VolFlow = Alicat_drive(2,volumetric_flow);
+  SMFC_MassFlow = Alicat_drive(2,mass_flow);
+  SMFC_T = Alicat_drive(2,flow_temp);
+  SMFC_P = Alicat_drive(2,pressure);
+  SMFC_Status = Alicat_drive(2,status);
+  SMFC_Stale = Alicat_drive(2,stale);
   Alicat_obj->synch();
 }

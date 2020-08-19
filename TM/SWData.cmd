@@ -19,6 +19,8 @@
   : Set %d { $0 = $2; }
   : Abort Flows { $0 = SWS_FLOWS_ABORT; }
   : Fixed Flow { $0 = SWS_FIXED_FLOWS; }
+  : Disable POPS Pump Algo { $0 = SWS_PPUMP_DISABLE; }
+  : Disable Bypass Pump Algo { $0 = SWS_BPUMP_DISABLE; }
   : Shutdown Full { $0 = SWS_SHUTDOWN; }
   ;
 &InltBPZV <uint16_t>
