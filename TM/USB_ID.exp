@@ -26,7 +26,7 @@ while 1 {
       break
     }
     timeout {
-      send_user "\r\nTimed out waiting\r\n"
+      # send_user "\r\nTimed out waiting\r\n"
       break
     }
   }
