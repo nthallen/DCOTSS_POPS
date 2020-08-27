@@ -1,12 +1,22 @@
 /* uDACS_A */
 TM typedef uint8_t Fail_t { text "%02X"; }
 TM 1 Hz Fail_t Fail;
+TM 1 Hz PwrStat_t PwrStat;
+
+/* MS5607 P and T */
+TM 1 Hz MS5607_P_t MS5607_P;
+TM 1 Hz MS5607_T_t MS5607_T;
+
+/* DAC Channels */
 /*
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet0;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet1;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet2;
 TM 1 Hz uDACS_DAC_t uDACS_A_VSet3;
 */
+
+/* AD7770 for uDACS */
+/*
 TM 1 Hz AD7770_status_t uDACS_A_status;
 TM 1 Hz AD7770_rawAI_t uDACS_A_Raw0;
 TM 1 Hz AD7770_rawAI_t uDACS_A_Raw1;
@@ -18,21 +28,41 @@ TM 1 Hz AD7770_rawAI_t uDACS_A_Raw6;
 TM 1 Hz AD7770_rawAI_t uDACS_A_Raw7;
 TM 1 Hz AD7770_count_t uDACS_A_N;
 TM 1 Hz AD7770_status_t uDACS_A_errors;
+*/
+
+/* ADS1115 for uDACS16 */
+TM 1 Hz ADS1115_status_t uDACS_A_status;
+TM 1 Hz uDACS16_T30K75KU POPST;
+TM 1 Hz uDACS16_T30K75KU PPmpT;
+TM 1 Hz uDACS16_T30K75KU BPmpT;
+TM 1 Hz uDACS16_T30K75KU RPi_T;
+TM 1 Hz uDACS16_T30K75KU Amb_T;
+TM 1 Hz uDACS16_T30K75KU Rov1T;
+TM 1 Hz uDACS16_T30K75KU Rov2T;
+TM 1 Hz uDACS16_T30K75KU Rov3T;
+TM 1 Hz ADS1115_count_t uDACS_A_N;
+
+/* RTC data */
 TM 1 Hz RTC_elapsed_t uDACS_A_elapsed;
 TM 1 Hz RTC_loopdur_t uDACS_A_curloopdur;
 TM 1 Hz RTC_loopdur_t uDACS_A_maxloopdur;
 
-group uDACS_A (Fail, /* uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3, */
-    uDACS_A_status, uDACS_A_Raw0, uDACS_A_Raw1, uDACS_A_Raw2, uDACS_A_Raw3,
-    uDACS_A_Raw4, uDACS_A_Raw5, uDACS_A_Raw6, uDACS_A_Raw7, uDACS_A_N, uDACS_A_errors,
+group uDACS_A (Fail,
+    MS5607_P, MS5607_T,
+    /* uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3, */
+    uDACS_A_status, POPST, PPmpT, BPmpT, RPi_T,
+    Amb_T, Rov1T, Rov2T, Rov3T, uDACS_A_N,
     uDACS_A_elapsed, uDACS_A_curloopdur, uDACS_A_maxloopdur) {
   if (uDACS_mread(uDACS_A)) {
+    MS5607_P = rvals_to_float(uDACS_A_rvals[0]);
+    MS5607_T = rvals_to_float(uDACS_A_rvals[2]);
     /*
     uDACS_A_Vset0 = uDACS_A_rvals[0];
     uDACS_A_Vset1 = uDACS_A_rvals[1];
     uDACS_A_Vset2 = uDACS_A_rvals[2];
     uDACS_A_Vset3 = uDACS_A_rvals[3];
     */
+    /*
     uDACS_A_status = uDACS_A_rvals[0];
     uDACS_A_Raw0 = (uDACS_A_rvals[2] << 16) | uDACS_A_rvals[1];
     uDACS_A_Raw1 = (uDACS_A_rvals[4] << 16) | uDACS_A_rvals[3];
@@ -44,10 +74,22 @@ group uDACS_A (Fail, /* uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSe
     uDACS_A_Raw7 = (uDACS_A_rvals[16] << 16) | uDACS_A_rvals[15];
     uDACS_A_N = uDACS_A_rvals[17];
     uDACS_A_errors = uDACS_A_rvals[18];
-    Fail = uDACS_A_rvals[19] & 0xFF;
+    */
+    uDACS_A_status = uDACS_A_rvals[4];
+    POPST = uDACS_A_rvals[5];
+    PPmpT = uDACS_A_rvals[6];
+    BPmpT = uDACS_A_rvals[7];
+    RPi_T = uDACS_A_rvals[8];
+    Amb_T = uDACS_A_rvals[9];
+    Rov1T = uDACS_A_rvals[10];
+    Rov2T = uDACS_A_rvals[11];
+    Rov3T = uDACS_A_rvals[12];
+    uDACS_A_N = uDACS_A_rvals[13];
     
-    uDACS_A_elapsed = (uDACS_A_rvals[21] << 16) | uDACS_A_rvals[20];
-    uDACS_A_curloopdur = uDACS_A_rvals[22];
-    uDACS_A_maxloopdur = uDACS_A_rvals[23];
+    uDACS_A_elapsed = (uDACS_A_rvals[15] << 16) | uDACS_A_rvals[14];
+    uDACS_A_curloopdur = uDACS_A_rvals[16];
+    uDACS_A_maxloopdur = uDACS_A_rvals[17];
+    
+    Fail = uDACS_A_rvals[18] & 0xFF;
   }
 }

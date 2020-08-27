@@ -1,3 +1,6 @@
+/* These conversions are only relevant to uDACS AD7770 */
+
+/*
 uDACS_T30K75KU POPST; Invalidate POPST;
 { POPST = (uDACS_A_Raw0 & 0xFFFFFF) |
     ((uDACS_A_Raw0 & 0x800000) ? 0xFF000000 : 0);
@@ -70,6 +73,9 @@ AD7770_AI_stat_t uDACS_A_stat7; Invalidate uDACS_A_stat7;
 { uDACS_A_stat7 = (uDACS_A_Raw7 >> 24) & 0xFF;
   Validate uDACS_A_stat7;
 }
+*/
+uDACS_on_off POPSPwr; Invalidate POPSPwr;
+{ POPSPwr = (PwrStat>>3) & 1; Validate POPSPwr; }
 
 /*
 uDACS_sec uDACS_A_elapsed_d; Invalidate uDACS_A_elapsed_d;

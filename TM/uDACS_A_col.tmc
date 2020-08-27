@@ -1,14 +1,24 @@
 %{
   #define tick_sic() uDACS_A.SB->tick_sic()
   // #define tick_sic()
-  
+
+  /*
+    Addresses Category Offsets
+    10:1:13   MS5607   0-3
+    20:1:29   ADS1115  4-13
+    40:1:43   RTC      14-17
+    6         FAIL     18
+    30        CmdStat  19
+    Total of 20 (0x14) words
+  */  
   uDACS_mreq uDACS_A;
-  uint16_t uDACS_A_rvals[0x18];
+  uint16_t uDACS_A_rvals[0x13];
   
   void uDACS_A_init() {
     uDACS_init(uDACS_A, "uDACS_A");
     if (uDACS_A.present) {
-      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x18, "14:1:26,6,40:1:43");
+      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x18,
+        "10:1:13,20:1:29,40:1:43,6,30");
       uDACS_A.rvals = uDACS_A_rvals;
     }
   }

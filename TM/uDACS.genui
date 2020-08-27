@@ -1,56 +1,59 @@
+ 1 MS5607_P MS5607 P
+ 1 MS5607_T MS5607 T
 #1 uDACS_A_VSet0 uDACS_A DAC
 #1 uDACS_A_VSet1 uDACS_A DAC
 #1 uDACS_A_VSet2 uDACS_A DAC
 #1 uDACS_A_VSet3 uDACS_A DAC
   1 uDACS_A_status uDACS_A AIStat %.0lf
   1 POPST uDACS_A Temps
-  1 Pmp1T Pumps Temps
-  1 Pmp2T Pumps Temps
+  1 PPmpT Pumps Temps
+  1 BPmpT Pumps Temps
   1 RPi_T uDACS_A Temps
   1 Amb_T uDACS_A Temps
   1 Rov1T uDACS_A Temps
   1 Rov2T uDACS_A Temps
   1 Rov3T uDACS_A Temps
   1 Fail:Fail:0 uDACS_A Status
-  1 Alert:uDACS_A_stat0:7 uDACS_A Status %.0lf
-  1 Reset:uDACS_A_stat0:3 uDACS_A AIChS %.0lf
+# 1 Alert:uDACS_A_stat0:7 uDACS_A Status %.0lf
+# 1 Reset:uDACS_A_stat0:3 uDACS_A AIChS %.0lf
 
-  1 MSat0:uDACS_A_stat0:2 uDACS_A AIChS %.0lf
-  1 FSat0:uDACS_A_stat0:1 uDACS_A AIChS %.0lf
-  1 OUV0:uDACS_A_stat0:0 uDACS_A AIChS %.0lf
+# 1 MSat0:uDACS_A_stat0:2 uDACS_A AIChS %.0lf
+# 1 FSat0:uDACS_A_stat0:1 uDACS_A AIChS %.0lf
+# 1 OUV0:uDACS_A_stat0:0 uDACS_A AIChS %.0lf
 
-  1 MSat1:uDACS_A_stat1:2 uDACS_A AIChS %.0lf
-  1 FSat1:uDACS_A_stat1:1 uDACS_A AIChS %.0lf
-  1 OUV1:uDACS_A_stat1:0 uDACS_A AIChS %.0lf
+# 1 MSat1:uDACS_A_stat1:2 uDACS_A AIChS %.0lf
+# 1 FSat1:uDACS_A_stat1:1 uDACS_A AIChS %.0lf
+# 1 OUV1:uDACS_A_stat1:0 uDACS_A AIChS %.0lf
 
-  1 MSat2:uDACS_A_stat2:2 uDACS_A AIChS %.0lf
-  1 FSat2:uDACS_A_stat2:1 uDACS_A AIChS %.0lf
-  1 OUV2:uDACS_A_stat2:0 uDACS_A AIChS %.0lf
+# 1 MSat2:uDACS_A_stat2:2 uDACS_A AIChS %.0lf
+# 1 FSat2:uDACS_A_stat2:1 uDACS_A AIChS %.0lf
+# 1 OUV2:uDACS_A_stat2:0 uDACS_A AIChS %.0lf
 
-  1 MSat3:uDACS_A_stat3:2 uDACS_A AIChS %.0lf
-  1 FSat3:uDACS_A_stat3:1 uDACS_A AIChS %.0lf
-  1 OUV3:uDACS_A_stat3:0 uDACS_A AIChS %.0lf
+# 1 MSat3:uDACS_A_stat3:2 uDACS_A AIChS %.0lf
+# 1 FSat3:uDACS_A_stat3:1 uDACS_A AIChS %.0lf
+# 1 OUV3:uDACS_A_stat3:0 uDACS_A AIChS %.0lf
 
-  1 MSat4:uDACS_A_stat4:2 uDACS_A AIChS %.0lf
-  1 FSat4:uDACS_A_stat4:1 uDACS_A AIChS %.0lf
-  1 OUV4:uDACS_A_stat4:0 uDACS_A AIChS %.0lf
+# 1 MSat4:uDACS_A_stat4:2 uDACS_A AIChS %.0lf
+# 1 FSat4:uDACS_A_stat4:1 uDACS_A AIChS %.0lf
+# 1 OUV4:uDACS_A_stat4:0 uDACS_A AIChS %.0lf
 
-  1 MSat5:uDACS_A_stat5:2 uDACS_A AIChS %.0lf
-  1 FSat5:uDACS_A_stat5:1 uDACS_A AIChS %.0lf
-  1 OUV5:uDACS_A_stat5:0 uDACS_A AIChS %.0lf
+# 1 MSat5:uDACS_A_stat5:2 uDACS_A AIChS %.0lf
+# 1 FSat5:uDACS_A_stat5:1 uDACS_A AIChS %.0lf
+# 1 OUV5:uDACS_A_stat5:0 uDACS_A AIChS %.0lf
 
-  1 MSat6:uDACS_A_stat6:2 uDACS_A AIChS %.0lf
-  1 FSat6:uDACS_A_stat6:1 uDACS_A AIChS %.0lf
-  1 OUV6:uDACS_A_stat6:0 uDACS_A AIChS %.0lf
+# 1 MSat6:uDACS_A_stat6:2 uDACS_A AIChS %.0lf
+# 1 FSat6:uDACS_A_stat6:1 uDACS_A AIChS %.0lf
+# 1 OUV6:uDACS_A_stat6:0 uDACS_A AIChS %.0lf
 
-  1 MSat7:uDACS_A_stat7:2 uDACS_A AIChS %.0lf
-  1 FSat7:uDACS_A_stat7:1 uDACS_A AIChS %.0lf
-  1 OUV7:uDACS_A_stat7:0 uDACS_A AIChS %.0lf
+# 1 MSat7:uDACS_A_stat7:2 uDACS_A AIChS %.0lf
+# 1 FSat7:uDACS_A_stat7:1 uDACS_A AIChS %.0lf
+# 1 OUV7:uDACS_A_stat7:0 uDACS_A AIChS %.0lf
   1 uDACS_A_N uDACS_A AI_N
-  1 uDACS_A_errors uDACS_A AI_errs
+# 1 uDACS_A_errors uDACS_A AI_errs
   1 uDACS_A_elapsed RTC elapsed
   1 uDACS_A_curloopdur RTC loop
   1 uDACS_A_maxloopdur RTC loop
+  1 POPSPwr:PwrStat:3 POPS Status
 
 # 1 uDACS_B_VSet0 uDACS_B DAC
   1 uDACS_B_VSet1 uDACS_B PVolts

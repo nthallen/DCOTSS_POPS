@@ -1,7 +1,5 @@
 /* uDACS_B */
 %{
-  #define rvals_to_float(x) (*(float*)&x)
-
   /*
     Sensor 1:
       Part: RSCDJNI060PASE3

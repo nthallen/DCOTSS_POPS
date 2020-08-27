@@ -1,3 +1,7 @@
+%{
+  #define rvals_to_float(x) (*(float*)&x)
+%}
+
 /* uDACS DAC AD5664: 0-65536 = 0-5V */
 TM typedef double uDACS_Volts_t { text "%7.4lf"; }
 TM typedef uint16_t uDACS_DAC_t { text "%6.4lf"; convert uDACS_Volts_t; }
@@ -29,3 +33,23 @@ TM typedef double uDACS_msec;
 TM typedef uint32_t RTC_elapsed_t { text "%13lu"; }
 TM typedef uint16_t RTC_loopdur_t { text "%6.2lf"; convert uDACS_msec; }
   Calibration (RTC_loopdur_t, uDACS_msec) { 0, 0, 100, 1 }
+
+/* uDACS16 ADS1115 ADC +/- 4.096 V */
+TM typedef int16_t ADS1115_AI { text "%7.4lf"; convert uDACS_Volts_t; }
+  Calibration (ADS1115_AI, uDACS_Volts_t) {
+    -32768, -4.096,
+     32768,  4.096
+  }
+TM typedef ADS1115_AI uDACS16_T30K75KU { text "%7.3lf"; convert uDACS_CELCIUS; }
+TM typedef AD7770_status_t ADS1115_status_t;
+TM typedef AD7770_status_t ADS1115_count_t;
+
+TM typedef float MS5607_P_t { text "%8.3lf"; } /* mbar */
+TM typedef float MS5607_T_t { text "%7.3lf"; } /* Celcius */
+
+TM typedef uint8_t PwrStat_t { text "%2X"; }
+
+%{
+  #define uDACS_on_off_text(x) ((x) ? " on" : "off")
+%}
+TM typedef uint8_t uDACS_on_off { text "%3u" uDACS_on_off_text(); }

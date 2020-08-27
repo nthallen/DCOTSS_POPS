@@ -98,11 +98,6 @@ uDACS_sec uDACS_B_elapsed_d; Invalidate uDACS_B_elapsed_d;
   */
 %}
 
-%{
-  #define uDACS_on_off_text(x) ((x) ? " on" : "off")
-%}
-
-TM typedef uint8_t uDACS_on_off { text "%3u" uDACS_on_off_text(); }
 uDACS_on_off PPmpCmd; Invalidate PPmpCmd;
 { PPmpCmd = (PumpsStat>>0) & 1; Validate PPmpCmd; }
 uDACS_on_off PPmpS; Invalidate PPmpS;
