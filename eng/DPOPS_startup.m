@@ -1,6 +1,6 @@
 % Assumes the data dir function returns either the location where
 % getrun exists or a subdirectory one level down.
-pdir = ne_load_runsdir('HCl16_DATA_DIR');
+pdir = ne_load_runsdir('DPOPS_DATA_DIR');
 cd(pdir);
 [fd,msg] = fopen('runs.dat','r');
 if fd <= 0

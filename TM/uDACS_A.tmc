@@ -47,12 +47,13 @@ TM 1 Hz RTC_elapsed_t uDACS_A_elapsed;
 TM 1 Hz RTC_loopdur_t uDACS_A_curloopdur;
 TM 1 Hz RTC_loopdur_t uDACS_A_maxloopdur;
 
-group uDACS_A (Fail,
+group uDACS_A (
     MS5607_P, MS5607_T,
     /* uDACS_A_VSet0, uDACS_A_VSet1, uDACS_A_VSet2, uDACS_A_VSet3, */
     uDACS_A_status, POPST, PPmpT, BPmpT, RPi_T,
     Amb_T, Rov1T, Rov2T, Rov3T, uDACS_A_N,
-    uDACS_A_elapsed, uDACS_A_curloopdur, uDACS_A_maxloopdur) {
+    uDACS_A_elapsed, uDACS_A_curloopdur, uDACS_A_maxloopdur,
+    Fail, PwrStat) {
   if (uDACS_mread(uDACS_A)) {
     MS5607_P = rvals_to_float(uDACS_A_rvals[0]);
     MS5607_T = rvals_to_float(uDACS_A_rvals[2]);
@@ -91,5 +92,6 @@ group uDACS_A (Fail,
     uDACS_A_maxloopdur = uDACS_A_rvals[17];
     
     Fail = uDACS_A_rvals[18] & 0xFF;
+    PwrStat = uDACS_A_rvals[19] & 0xFF;
   }
 }
