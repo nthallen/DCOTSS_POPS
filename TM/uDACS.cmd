@@ -14,13 +14,11 @@
     }
   }
 
-#if 0
   void uDACS_A_wr(uint16_t addr, uint16_t val) {
     if (uDACS_A_present) {
       uDA->write_ack(addr, val);
     }
   }
-#endif
 
   void uDACS_B_cmd(uint16_t cmd) {
     if (uDACS_B_present) {
@@ -63,6 +61,11 @@
 
 &command
   : Fail Light &fail_on_off * { uDACS_fail($3); }
+  : uDACS_A J7 &pumps_on_off * { uDACS_A_wr(0x30, 0+$3); }
+  : uDACS_A J8 &pumps_on_off * { uDACS_A_wr(0x30, 2+$3); }
+  : uDACS_A J34 &pumps_on_off * { uDACS_A_wr(0x30, 4+$3); }
+  : uDACS_A POPS Power &pumps_on_off * { uDACS_A_wr(0x30, 6+$4); }
+  : POPS Power &pumps_on_off * { uDACS_A_wr(0x30, 6+$3); }
   : Pump Both &pumps_on_off * { uDACS_B_cmd($3); }
   : Pump POPS &pumps_on_off * { uDACS_B_cmd(2+$3); }
   : Pump Bypass &pumps_on_off * { uDACS_B_cmd(4+$3); }

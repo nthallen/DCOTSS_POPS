@@ -3,6 +3,7 @@ tmcbase = uDACS.tmc
 tmcbase = uDACS_A.tmc
 tmcbase = uDACS_B.tmc
 tmcbase = T30K75KU_uDACS.tmc
+tmcbase = T30K75KU_uDACS16.tmc
 
 colbase = uDACS_col.tmc
 colbase = uDACS_A_col.tmc
