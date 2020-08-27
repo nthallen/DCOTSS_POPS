@@ -45,8 +45,8 @@
     if (subfunc == 0) {
       msg(2, "subbus load() failed");
     } else {
-      if (subfunc != 9 && subfunc != 14)
-        msg(2, "Expected Subfunction 9 or 14 for uDACS, was %d", subfunc);
+      if (subfunc != 9 && subfunc != 14 && subfunc != 15)
+        msg(2, "Expected Subfunction 9, 14 or 15 for uDACS, was %d", subfunc);
       if (A) {
         uDACS_A_present = true;
         uDA = uD;

@@ -42,7 +42,7 @@ TM typedef int16_t ADS1115_AI { text "%7.4lf"; convert uDACS_Volts_t; }
   }
 TM typedef ADS1115_AI uDACS16_T30K75KU { text "%7.3lf"; convert uDACS_CELCIUS; }
 TM typedef AD7770_status_t ADS1115_status_t;
-TM typedef AD7770_status_t ADS1115_count_t;
+TM typedef AD7770_count_t ADS1115_count_t;
 
 TM typedef float MS5607_P_t { text "%8.3lf"; } /* mbar */
 TM typedef float MS5607_T_t { text "%7.3lf"; } /* Celcius */

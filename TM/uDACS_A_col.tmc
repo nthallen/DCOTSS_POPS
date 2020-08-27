@@ -17,7 +17,7 @@
   void uDACS_A_init() {
     uDACS_init(uDACS_A, "uDACS_A");
     if (uDACS_A.present) {
-      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x18,
+      uDACS_A.mreq = uDACS_A.SB->pack_mread_request(0x14,
         "10:1:13,20:1:29,40:1:43,6,30");
       uDACS_A.rvals = uDACS_A_rvals;
     }
