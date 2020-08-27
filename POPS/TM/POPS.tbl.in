@@ -36,7 +36,7 @@
 	}
       };
       +-+;
-      HBox { HGlue 0+1; { (flttime,9) MFCtr: (MFCtr,5) } }
+      HBox { { Power: (POPSPwr,3) }; HGlue 0+1; { (flttime,9) MFCtr: (MFCtr,5) } }
     }; +|+
   };
   -;
