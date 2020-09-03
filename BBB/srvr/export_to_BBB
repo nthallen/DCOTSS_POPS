@@ -1,5 +1,6 @@
 #! /bin/bash
-dasio=~/SW/dasng/git/libs/dasio/src
+monarch=~/SW/monarch/git
+dasio=$monarch/libs/dasio/src
 dasiosrc="$dasio/appid.cc
   $dasio/loop.cc
   $dasio/not_parsed.cc
@@ -12,7 +13,7 @@ dasiosrc="$dasio/appid.cc
   $dasio/unix_name.cc
   $dasio/interface.cc"
 
-nl=~/SW/dasng/git/libs/nl
+nl=$monarch/libs/nl
 nlsrc="$nl/nl.h
   $nl/newmem.c
   $nl/nlresp.c
@@ -28,6 +29,8 @@ POPS_srvr.cc
 POPS_srvroui.cc
 POPS_srvr.h
 ../../TM/services"
+
+make POPS_srvroui.cc
 
 dest=pops:SW/srvr
 echo Creating directories
