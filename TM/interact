@@ -8,7 +8,9 @@ uDACS_A=
 uDACS_B=
 
 for dev in /dev/ttyUSB*; do
-  foo=`$TMBINDIR/USB_ID.exp $dev`
+  verb=`$TMBINDIR/USB_ID.exp $dev verbose | tr [:cntrl:] ' '`
+  verb=${verb% }
+  foo=${verb##* }
   case "$foo" in
     *=*)
       port=${foo#*=}
@@ -19,7 +21,7 @@ for dev in /dev/ttyUSB*; do
       else
         eval $foo
       fi;;
-    *) msg -n interact "port $dev unidentified";;
+    *) msg -n interact "port $dev unidentified verb='$verb'";;
   esac
 done
 
