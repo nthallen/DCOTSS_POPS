@@ -6,7 +6,8 @@
 RS485=
 uDACS_A=
 uDACS_B=
-
+id | grep -q '(dialout)' ||
+  msg -n interact "[ERROR] flight not in group dialout: `id`"
 for dev in /dev/ttyUSB*; do
   verb=`$TMBINDIR/USB_ID.exp $dev verbose | tr [:cntrl:] ' '`
   verb=${verb% }
