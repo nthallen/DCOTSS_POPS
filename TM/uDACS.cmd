@@ -69,11 +69,11 @@
   : Pump Both &pumps_on_off * { uDACS_B_cmd($3); }
   : Pump POPS &pumps_on_off * { uDACS_B_cmd(2+$3); }
   : Pump Bypass &pumps_on_off * { uDACS_B_cmd(4+$3); }
-# : Set uDACS_A Vout %d (0-3) %d (bits) bits * {
-#     if ($4 >= 0 && $4 < 4) {
-#       uDACS_A_wr(0x10 + $4, $5);
-#     }
-#   }
+  : Set uDACS_A Vout %d (0-3) %d (bits) bits * {
+      if ($4 >= 0 && $4 < 4) {
+        uDACS_A_wr(0x10 + $4, $5);
+      }
+    }
   : Set Baratron Vrtn %f (Volts) Volts * {
       double counts = $4 * 65536./5.;
       uint16_t icounts;
