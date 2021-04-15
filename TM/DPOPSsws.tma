@@ -1,0 +1,28 @@
+%{
+  #include "SWData.h"
+%}
+
+Partition
+
+State SWStat_Wait NoLog {
+  { int reSet_it;
+    reSet_it = 1;
+    switch (SWStat) {
+      default:
+      case 0: reSet_it = 0; break;
+      case SWS_EXPLORE_FLOWS:          Validate Explore_Flows; break;
+      case SWS_FLOWS_ABORT:            Validate Flows_Abort; break;
+      case SWS_FIXED_FLOWS:            Validate Fixed_Flow; break;
+      case SWS_PPUMP_DISABLE: Validate PPump_Disable; break;
+      case SWS_BPUMP_DISABLE: Validate BPump_Disable; break;
+      case SWS_SHUTDOWN:          Validate Shutdown; break;
+    }
+    if (reSet_it) Validate SWStat_ReSet;
+  }
+}
+
+State SWStat_ReSet NoLog {
+  > _SW Status Set 0
+  Hold until (SWStat == 0) or 10;
+  Validate SWStat_Wait;
+}

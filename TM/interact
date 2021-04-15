@@ -1,7 +1,7 @@
   Launch      memo     memo -o $Experiment.log -l4
               [ -z "$launch_err" ] &&
                 msg -nflight "Running script interact"
-  Launch      tm_bfr   bfr -s Both
+  Launch      tm_bfr   bfr -H bfr: -S:
 
 RS485=
 uDACS_A=
@@ -46,7 +46,7 @@ if [ -n "$uDACS_B" ]; then
 fi
 
   Launch      tm_gen   DPOPScol
-  Launch      cmd      DPOPSsrvr -s Both
+  Launch      cmd      DPOPSsrvr -H srvr: -S:
   Launch      -        tmdf
 
 if [ -n "$RS485" ]; then
