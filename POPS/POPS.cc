@@ -212,6 +212,7 @@ bool POPS_Cmd::app_input() {
     switch (buf[0]) {
       case 'B': // Send POPS start to POPS_srvr
       case 'E': // Send Shutdown to POPS_srvr
+      case 'F': // Send forced shutdown to POPS_srvr
         nl_assert(POPS_client::instance);
         POPS_client::instance->forward(buf);
         break;

@@ -14,6 +14,10 @@ class pops_socket : public DAS_IO::Serverside_client {
   protected:
     bool protocol_input();
     bool send_status();
+    /**
+     * @return true if message is delivered
+     */
+    bool send_shutdown();
 };
 
 pops_socket *new_pops_socket(Authenticator *Auth, SubService *SS);

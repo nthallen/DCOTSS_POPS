@@ -14,8 +14,13 @@ POPS_Server
     Status is reported as an integer
     Error returns are preceded with "Error"
  */
+#include <sys/socket.h>
+#include <netdb.h>
+#include <string.h>
+#include <unistd.h>
 #include "POPS_srvr.h"
 #include "dasio/msg.h"
+#include "nl_assert.h"
 
 POPS_status_t POPS_status = POPS_idle;
 
@@ -33,13 +38,17 @@ bool pops_socket::protocol_input() {
       POPS_status = POPS_active;
       break;
     case 'E':
-      if (POPS_status == POPS_active) {
-        msg(MSG_ERROR, "Shutdown refused while POPS is active");
-        iwrite("Error: Shutdown should be directed to POPS while active\n");
-        consume(nc);
-        return false;
+      if (POPS_status == POPS_active && send_shutdown()) {
+        msg(0, "Shutdown forwarded to POPS");
+        POPS_status = POPS_shutdown;
+      } else {
+        msg(0, "Issuing Shutdown");
+        POPS_status = POPS_shutdown;
+        system("/sbin/shutdown -h now");
       }
-      msg(0, "Issuing Shutdown");
+      break;
+    case 'F':
+      msg(0, "Issuing Forced Shutdown");
       POPS_status = POPS_shutdown;
       system("/sbin/shutdown -h now");
       break;
@@ -65,6 +74,48 @@ bool pops_socket::send_status() {
   snprintf(buf, 8, "%d\n", POPS_status);
   if (iwrite(buf) || !obuf_empty()) return true;
   return false;
+}
+
+bool pops_socket::send_shutdown() {
+  int udp_sock = socket(AF_INET, SOCK_DGRAM, 0);
+  if (udp_sock == -1) {
+    msg(MSG_ERROR, "%s: Unable to create UDP socket for shutdown: %s",
+      iname, strerror(errno));
+    return false;
+  }
+  struct addrinfo hints, *res;
+  hints.ai_flags = AI_NUMERICHOST;
+  hints.ai_family = PF_INET;
+  hints.ai_socktype = SOCK_DGRAM;
+  hints.ai_protocol = IPPROTO_UDP;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = 0;
+  hints.ai_addr = 0;
+  hints.ai_next = 0;
+  if (getaddrinfo("10.11.97.50", "7079", &hints, &res)) {
+    msg(MSG_ERROR, "%s: getaddrinfo for shutdown failed: %s",
+      iname, strerror(errno));
+    return false;
+  }
+  nl_assert(res->ai_next == 0);
+  nl_assert(res->ai_addr != 0);
+
+  struct sockaddr_in s;
+  socklen_t addrlen;
+  nl_assert(((unsigned)res->ai_addrlen) <= sizeof(s));
+  memcpy(&s, res->ai_addr, res->ai_addrlen);
+  addrlen = res->ai_addrlen;
+  freeaddrinfo(res);
+  
+  const char *buf = "8";
+  int msglen = 1;
+  int nb = sendto(udp_sock, buf, msglen, 0, (sockaddr*)&s, addrlen);
+  if (nb < msglen) {
+    msg(MSG_ERROR, "%s: sendto() expected %d, returned %d",
+      iname, msglen, nb);
+  }
+  ::close(udp_sock);
+  return true;
 }
 
 pops_socket *new_pops_socket(Authenticator *Auth, SubService *SS) {
