@@ -11,7 +11,8 @@ dasiosrc="$dasio/appid.cc
   $dasio/msg.cc
   $dasio/timeout.cc
   $dasio/unix_name.cc
-  $dasio/interface.cc"
+  $dasio/interface.cc
+  $dasio/host_session.cc"
 
 nl=$monarch/libs/nl
 nlsrc="$nl/nl.h
