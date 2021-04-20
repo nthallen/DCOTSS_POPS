@@ -23,8 +23,14 @@ echo max5802w 0x0F > /sys/class/i2c-adapter/i2c-1/new_device
 
 mount /dev/mmcblk0p1 /media/uSD
 
+# delay to allow RTC to initialize (see /usr/bin/clock_init.sh)
 sleep 20
-cd /var/lib/cloud9/POPS
-/var/lib/cloud9/POPS/popsdt < /media/uSD/POPS_BBB.cfg &
+
+#-- These commands moved to /root/SW/bin/start_POPS
+# cd /var/lib/cloud9/POPS
+# /var/lib/cloud9/POPS/popsdt < /media/uSD/POPS_BBB.cfg &
+#--
+
+/root/SW/bin/start_POPS_srvr
 
 exit 0
