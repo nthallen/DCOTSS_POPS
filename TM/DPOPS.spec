@@ -35,6 +35,6 @@ DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
 DPOPSdisp : uDACS_A_conv.tmc uDACS_B_conv.tmc DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS_A_conv.tmc uDACS_B_conv.tmc uDACS.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
-madedoit : DPOPS.doit
+doit : DPOPS.doit
 %%
 CXXFLAGS=-Wall -g

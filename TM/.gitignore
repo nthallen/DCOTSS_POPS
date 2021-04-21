@@ -28,7 +28,7 @@ DPOPSalgo.cc
 DPOPSalgooui.cc
 DPOPSalgo.o
 DPOPSalgooui.o
-madedoit.dep
+doit.dep
 DPOPScltnc.o
 DPOPScltncoui.cc
 DPOPScltncoui.o
@@ -53,6 +53,6 @@ DPOPSsrvr
 DPOPSdispnc
 uDACSdispnc
 DPOPSalgo
-madedoit
+doit
 DPOPScltnc
 DPOPSengext
