@@ -31,14 +31,21 @@ for device in RS485 uDACS_A uDACS_B; do
   fi
 done
 
-  Launch      memo     memo -o $Experiment.log -l2
+  Launch      memo     memo -o $Experiment.log -l3
               [ -z "$launch_err" ] &&
-                msg -nflight "Running script interact"
+                msg -nflight "Running script runfile.flight"
 
 flight_mode=yes
 if [ -n "$uDACS_A" ]; then
   Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A -s uDACS_A -n uDACS_A
+  msgf -V 0 sbswitch -N uDACS_A -Q 1 1
   sbswitch -N uDACS_A -Q 1 1 && flight_mode=no
+  msgf -V 0 sbswitch report flight_mode=$flight_mode
+  if [ $flight_mode = no ]; then
+    jobs=`jobs -p`
+    msgf -V 0 "Waiting for jobs $jobs to terminate"
+    wait $jobs
+  fi
 fi
 
 if [ $flight_mode = yes ]; then
