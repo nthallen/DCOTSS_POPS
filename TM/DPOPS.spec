@@ -26,7 +26,7 @@ Module POPS
 
 TGTDIR = /home/DPOPS
 IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
-DISTRIB = services interact
+DISTRIB = services interact runfile.flight
 DISTRIB = USB_ID.exp
 IDISTRIB = doit
 
