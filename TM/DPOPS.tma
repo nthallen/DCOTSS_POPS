@@ -1,12 +1,15 @@
+# -----------------------------------------------------------------------------
+# Partition 1: Main Line
+# -----------------------------------------------------------------------------
 State Init {
-          > Telemetry Start
-          > Set Baratron Vrtn 1.65 Volts
-          > Baratron Zero 0.0955 Volts
-       +1 > MFC Bypass Flow Setpoint 0 nccm
-          > MFC POPS Flow Setpoint 0 nccm
-          
- # +1:00  Validate Explore_Flows;
-          Validate Idle;
+    > Telemetry Start
+ +1 > MFC Bypass Flow Setpoint 0 nccm
+    > MFC POPS Flow Setpoint 0 nccm
+    Hold until (SWStat == SWS_TIME_WARP || convert(HPS_P) < P_ground_up) or 5:00;
+    { if (Fail & 0x10) Validate Startup; }
+}
+
+State Startup {
 }
 
 State Idle {}
@@ -241,6 +244,52 @@ State Shutdown {
   +2  > Fail Light On
       > Quit
 }
+
+# -----------------------------------------------------------------------------
+# Partition 2: Altitude
+# -----------------------------------------------------------------------------
+
+Partition
+
+# This partition converts pressure (altitude) into states 
+# (ON_GROUND, OFF_GROUND).
+# The threshold pressures each have two values - one for 
+# the flight up and the other for the flight down.
+# This provides hysteresis and prevents bouncing.  
+# Of course we need to ensure that P_ground_up < P_ground_dn,
+# which is to say P_ground_up represent a higher altitude.
+# We also want to ensure that P_ground_dn is high enough to
+# allow the system to shutdown before landing while not being
+# so high that it will be triggered during a mid-flight
+# altitude scan. 
+
+# MS5607_P is a float value in mbar
+#
+#
+# REF: 650 torr ~867 mbar ~5000 ft
+# Palmdale, CA is at elevation 2657'
+# Salina, KS is at elevation 1227'
+
+%{ /* Altitude definitions */
+    double P_ground_up = 800.;
+    double P_ground_dn = 850.;
+    int using_swp = 0;
+%}
+
+State ON_GROUND {
+  { using_swp = 0; }
+  { if (using_swp || (MS5607_P > 0 && MS5607_P < P_ground_up))
+      Validate OFF_GROUND;
+  }
+}
+
+State OFF_GROUND {
+  { if ((using_swp == SWS_LAND) || (!using_swp && MS5607_P > P_ground_dn)) {
+      Validate ON_GROUND;
+    }
+  }
+}
+
 
 Partition
 

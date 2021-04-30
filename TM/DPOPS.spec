@@ -20,7 +20,7 @@ cmdbase = uDACS.cmd
 
 swsbase = DPOPS.sws
 
-Module TMbase SWSnot= Fnot=
+Module TMbase
 Module alicat src=alicat.txt
 Module POPS
 

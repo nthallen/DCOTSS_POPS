@@ -2,8 +2,8 @@ TMbase_data {
   CPU:    (CPU_Pct,6)  %;
   RAM:    (memused,6)  %;
   Disk:   (Disk,6)     %;
-  SWStat: (SWStat,3);
-    Fail:   (Fail,2);
+#  SWStat: (SWStat,3);
+#    Fail:   (Fail,2);
   TDrift: (SysTDrift,7) sec;
 }
 

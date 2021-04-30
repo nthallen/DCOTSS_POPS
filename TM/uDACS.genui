@@ -1,9 +1,11 @@
- 1 MS5607_P MS5607 P
- 1 MS5607_T MS5607 T
-#1 uDACS_A_VSet0 uDACS_A DAC
-#1 uDACS_A_VSet1 uDACS_A DAC
-#1 uDACS_A_VSet2 uDACS_A DAC
-#1 uDACS_A_VSet3 uDACS_A DAC
+  1 Fail:Fail:0 uDACS_A Status
+  1 Mode:Fail:4 uDACS_A Status
+  1 MS5607_P MS5607 P
+  1 MS5607_T MS5607 T
+# 1 uDACS_A_VSet0 uDACS_A DAC
+# 1 uDACS_A_VSet1 uDACS_A DAC
+# 1 uDACS_A_VSet2 uDACS_A DAC
+# 1 uDACS_A_VSet3 uDACS_A DAC
   1 uDACS_A_status uDACS_A AIStat %.0lf
   1 POPST uDACS_A Temps
   1 PPmpT Pumps Temps
@@ -13,7 +15,6 @@
   1 Rov1T uDACS_A Temps
   1 Rov2T uDACS_A Temps
   1 Rov3T uDACS_A Temps
-  1 Fail:Fail:0 uDACS_A Status
 # 1 Alert:uDACS_A_stat0:7 uDACS_A Status %.0lf
 # 1 Reset:uDACS_A_stat0:3 uDACS_A AIChS %.0lf
 
@@ -50,31 +51,29 @@
 # 1 OUV7:uDACS_A_stat7:0 uDACS_A AIChS %.0lf
   1 uDACS_A_N uDACS_A AI_N
 # 1 uDACS_A_errors uDACS_A AI_errs
-  1 uDACS_A_elapsed RTC elapsed
-  1 uDACS_A_curloopdur RTC loop
-  1 uDACS_A_maxloopdur RTC loop
+# 1 uDACS_A_elapsed RTC elapsed
+# 1 uDACS_A_curloopdur RTC loop
+# 1 uDACS_A_maxloopdur RTC loop
   1 POPSPwr:PwrStat:3 POPS Status
 
 # 1 uDACS_B_VSet0 uDACS_B DAC
-  1 uDACS_B_VSet1 uDACS_B PVolts
 # 1 uDACS_B_VSet2 uDACS_B DAC
 # 1 uDACS_B_VSet3 uDACS_B DAC
-  1 uDACS_B_AIN0  uDACS_B PVolts
-  1 InltBPZV      uDACS_B PVolts
+# 1 uDACS_B_AIN0  uDACS_B PVolts
+# 1 InltBPZV      uDACS_B PVolts
 
   1 uDACS_B_status uDACS_B AIStat %.0lf
-  1 InltBP Honeywell HPS_P
+# 1 InltBP Honeywell HPS_P
   1 Ring1T uDACS_B RingT
   1 Ring2T uDACS_B RingT
   1 Ring3T uDACS_B RingT
 
-  1 Fail:Fail:0 uDACS_B Status
-  1 Alert:uDACS_B_stat0:7 uDACS_B Status %.0lf
-  1 Reset:uDACS_B_stat0:3 uDACS_B AIChS %.0lf
+# 1 Alert:uDACS_B_stat0:7 uDACS_B Status %.0lf
+# 1 Reset:uDACS_B_stat0:3 uDACS_B AIChS %.0lf
 
-  1 MSat0:uDACS_B_stat0:2 uDACS_B AIChS %.0lf
-  1 FSat0:uDACS_B_stat0:1 uDACS_B AIChS %.0lf
-  1 OUV0:uDACS_B_stat0:0 uDACS_B AIChS %.0lf
+# 1 MSat0:uDACS_B_stat0:2 uDACS_B AIChS %.0lf
+# 1 FSat0:uDACS_B_stat0:1 uDACS_B AIChS %.0lf
+# 1 OUV0:uDACS_B_stat0:0 uDACS_B AIChS %.0lf
 
   1 MSat1:uDACS_B_stat1:2 uDACS_B AIChS %.0lf
   1 FSat1:uDACS_B_stat1:1 uDACS_B AIChS %.0lf
@@ -105,14 +104,15 @@
 # 1 OUV7:uDACS_B_stat7:0 uDACS_B AIChS %.0lf
   1 uDACS_B_N uDACS_B AI_N
   1 uDACS_B_errors uDACS_B AI_errs
-  1 uDACS_B_elapsed RTC elapsed
-  1 uDACS_B_curloopdur RTC loop
-  1 uDACS_B_maxloopdur RTC loop
+# 1 uDACS_B_elapsed RTC elapsed
+# 1 uDACS_B_curloopdur RTC loop
+# 1 uDACS_B_maxloopdur RTC loop
 
   1 PPmpCmd:PumpsStat:0 Pumps Status %.0lf
   1 PPmpS:PumpsStat:1 Pumps Status %.0lf
   1 BPmpCmd:PumpsStat:2 Pumps Status %.0lf
   1 BPmpS:PumpsStat:3 Pumps Status %.0lf
+  1 BPmpV Pumps BPmpV
 
   1 PS1_Init:HPS_Stat:0 Honeywell Status %.0lf
   1 PS1_CRC_OK:HPS_Stat:1 Honeywell Status %.0lf
@@ -124,7 +124,7 @@
   1 HPS_P Honeywell HPS_P
   1 HPS_dP Honeywell HPS_dP
 
-  1 uDACS_B_Raw0 uDACS_B Raw %.0lf
+# 1 uDACS_B_Raw0 uDACS_B Raw %.0lf
   1 uDACS_B_Raw1 uDACS_B Raw %.0lf
   1 uDACS_B_Raw2 uDACS_B Raw %.0lf
   1 uDACS_B_Raw3 uDACS_B Raw %.0lf

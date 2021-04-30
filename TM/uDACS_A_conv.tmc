@@ -84,3 +84,14 @@ uDACS_sec uDACS_A_elapsed_d; Invalidate uDACS_A_elapsed_d;
 }
 */
 
+%{
+  #define FailText_txt(x) ((x&1)?" On":"Off")
+  #define ModeText_txt(x) ((x&1)?"Flt":"Lab")
+%}
+TM typedef uint8_t FailText_t { text "%3u" FailText_txt(); }
+FailText_t FailText; Invalidate FailText;
+{ FailText = Fail&1; Validate FailText; }
+
+TM typedef uint8_t ModeText_t { text "%3u" ModeText_txt(); }
+ModeText_t ModeText; Invalidate ModeText;
+{ ModeText = (Fail>>4)&1; Validate ModeText; }

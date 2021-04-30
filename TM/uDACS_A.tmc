@@ -1,5 +1,9 @@
 /* uDACS_A */
 TM typedef uint8_t Fail_t { text "%02X"; }
+/* Fail&1 is the Fail Light status.
+   Fail&0x10 is the mode switch position
+   FailText and ModeText are defined in uDACS_A_conv.tmc
+ */
 TM 1 Hz Fail_t Fail;
 TM 1 Hz PwrStat_t PwrStat;
 
@@ -63,19 +67,6 @@ group uDACS_A (
     uDACS_A_Vset2 = uDACS_A_rvals[2];
     uDACS_A_Vset3 = uDACS_A_rvals[3];
     */
-    /*
-    uDACS_A_status = uDACS_A_rvals[0];
-    uDACS_A_Raw0 = (uDACS_A_rvals[2] << 16) | uDACS_A_rvals[1];
-    uDACS_A_Raw1 = (uDACS_A_rvals[4] << 16) | uDACS_A_rvals[3];
-    uDACS_A_Raw2 = (uDACS_A_rvals[6] << 16) | uDACS_A_rvals[5];
-    uDACS_A_Raw3 = (uDACS_A_rvals[8] << 16) | uDACS_A_rvals[7];
-    uDACS_A_Raw4 = (uDACS_A_rvals[10] << 16) | uDACS_A_rvals[9];
-    uDACS_A_Raw5 = (uDACS_A_rvals[12] << 16) | uDACS_A_rvals[11];
-    uDACS_A_Raw6 = (uDACS_A_rvals[14] << 16) | uDACS_A_rvals[13];
-    uDACS_A_Raw7 = (uDACS_A_rvals[16] << 16) | uDACS_A_rvals[15];
-    uDACS_A_N = uDACS_A_rvals[17];
-    uDACS_A_errors = uDACS_A_rvals[18];
-    */
     uDACS_A_status = uDACS_A_rvals[4];
     POPST = uDACS_A_rvals[5];
     PPmpT = uDACS_A_rvals[6];
@@ -87,11 +78,13 @@ group uDACS_A (
     Rov3T = uDACS_A_rvals[12];
     uDACS_A_N = uDACS_A_rvals[13];
     
+    /*
     uDACS_A_elapsed = (uDACS_A_rvals[15] << 16) | uDACS_A_rvals[14];
     uDACS_A_curloopdur = uDACS_A_rvals[16];
     uDACS_A_maxloopdur = uDACS_A_rvals[17];
+    */
     
-    Fail = uDACS_A_rvals[18] & 0xFF;
-    PwrStat = uDACS_A_rvals[19] & 0xFF;
+    Fail = (uDACS_A_rvals[14] & 0x01) | ((uDACS_A_rvals[15] & 0x01)<<4);
+    PwrStat = uDACS_A_rvals[16] & 0xFF;
   }
 }

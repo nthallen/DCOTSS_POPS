@@ -34,34 +34,13 @@ ADC_B {
   { Status: (uDACS_B_status,4) N: (uDACS_B_N,5) };
 }
 
-Baratron {
-  HBox { +-; Title: Baratron; -+ };
-  InltBP:   (InltBP,9)        mbar;
-  "AIN0+:"  (uDACS_B_AIN0,9)  V;
-  "AIN0-:"  (uDACS_B_VSet1,6) V;
-  ZeroV:    (InltBPZV,8)      V;
-}
-
-RTC_A {
-  HBox { +-; Title: RTC_A; -+ };
-  { (uDACS_A_elapsed,13) cts };
-  Loop:    (uDACS_A_curloopdur,6) msec;
-  Max:     (uDACS_A_maxloopdur,6) msec;
-}
-
-RTC_B {
-  HBox { +-; Title: RTC_B; -+ };
-  { (uDACS_B_elapsed,13) cts };
-  Loop:    (uDACS_B_curloopdur,6) msec;
-  Max:     (uDACS_B_maxloopdur,6) msec;
-}
-
 Pumps {
   HBox { +-; Title: Pumps; -+ };
   Bypass: HBox { (BPmpCmd,3); "/"; (BPmpS) };
-  BPmpT: { (BPmpT,7) C };
   POPS:   HBox { (PPmpCmd,3); "/"; (PPmpS) };
-  PPmpT: { (PPmpT,7) C};
+  BPmpT:    (BPmpT,7) C;
+  BPmpV:    (BPmpV,6) V;
+  PPmpT:    (PPmpT,7) C;
 }
 
 Honey {
@@ -73,6 +52,16 @@ Honey {
   dP:   (HPS_dP,6)    mbar;
 }
 
+TMbaseC {
+  HBox{ +-; Title: "System"; -+ };
+  [TMbase_data];
+  SWStat:   (SWStat,3);
+  Fail:     (FailText,3);
+  Mode:     (ModeText,3);
+  VGlue 0+1;
+  [TMbase_times]
+}
+
 { HBox {
     |+;
     { HBox {
@@ -81,16 +70,13 @@ Honey {
           [ADC_B];
         }; |+; {
           [Honey];
-          [RTC_A];
-          [RTC_B];
+          [Pumps];
         }
       };
       [Alicat_hk];
       HBox { HGlue 0+1; { Driver: (Alicat_Stale,3) } }
     }; |+; {
-      [Baratron];
-      [Pumps];
-      [TMbaseB];
+      [TMbaseC];
     }; |+
   };
   -;

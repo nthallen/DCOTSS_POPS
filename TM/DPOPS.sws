@@ -1,11 +1,12 @@
 SW_Variable: SWStat SW Status
+  SWS_TAKEOFF          1 Altitude Takeoff:
+    depending on (ON_GROUND) using_swp = SWStat; break;
+  SWS_LAND             4 Altitude Land:
+    depending on (OFF_GROUND) using_swp = SWStat; break;
   SWS_EXPLORE_FLOWS   20 Explore Flows:          Validate Explore_Flows; break;
   SWS_FLOWS_ABORT     21 Abort Flows:            Validate Flows_Abort; break;
   SWS_FIXED_FLOWS     22 Fixed Flow:            Validate Fixed_Flow; break;
   SWS_PPUMP_DISABLE   23 Disable POPS Pump Algo: Validate PPump_Disable; break;
   SWS_BPUMP_DISABLE   24 Disable Bypass Pump Algo: Validate BPump_Disable; break;
+  SWS_TIME_WARP      253 Time Warp:              break;
   SWS_SHUTDOWN       255 Shutdown Full:          Validate Shutdown; break;
-
-SW_Variable: <uint16_t,InltBPZV_t> InltBPZV Baratron Zero
-  : %f (volts) volts { $0 = (uint16_t)((($1 < 0) ? 0 : ($1 >= 1) ? 1 : $1) * 10000.); }
- 

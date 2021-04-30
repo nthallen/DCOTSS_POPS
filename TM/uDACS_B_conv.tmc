@@ -1,3 +1,4 @@
+/*
 AD7770_AI_t uDACS_B_AIN0; Invalidate uDACS_B_AIN0;
 { uDACS_B_AIN0 = (uDACS_B_Raw0 & 0xFFFFFF) |
     ((uDACS_B_Raw0 & 0x800000) ? 0xFF000000 : 0);
@@ -7,6 +8,8 @@ AD7770_AI_stat_t uDACS_B_stat0; Invalidate uDACS_B_stat0;
 { uDACS_B_stat0 = (uDACS_B_Raw0 >> 24) & 0xFF;
   Validate uDACS_B_stat0;
 }
+*/
+
 AD7770_AI_t Ring1T; Invalidate Ring1T;
 { Ring1T = (uDACS_B_Raw1 & 0xFFFFFF) |
     ((uDACS_B_Raw1 & 0x800000) ? 0xFF000000 : 0);
@@ -34,28 +37,6 @@ AD7770_AI_stat_t uDACS_B_stat3; Invalidate uDACS_B_stat3;
 { uDACS_B_stat3 = (uDACS_B_Raw3 >> 24) & 0xFF;
   Validate uDACS_B_stat3;
 }
-
-/* Converts volts to mbar. Baratron report 0-10 V for 0-1000 Torr
- * The 10 V signal is divided down using an 11.29 K over 7.18K Ohms
- * for a divider ratio of 7.18/(11.29+7.18) = 0.3887. That would
- * yield a max voltage difference of 6.113V, which is probably
- * outside our range.
- */
-TM typedef double InltBP_t { text "%9.4lf"; }
-InltBP_t InltBP; Invalidate InltBP;
-{ InltBP = (convert(uDACS_B_AIN0)
-            + convert(uDACS_B_VSet1)
-            - convert(InltBPZV))
-           * 1000. * (1013.25/760) / (10. * 0.3875);
-  Validate InltBP;
-}
-
-/*
-uDACS_sec uDACS_B_elapsed_d; Invalidate uDACS_B_elapsed_d;
-{ uDACS_B_elapsed_d = uDACS_B_elapsed/100;
-  Validate uDACS_B_elapsed_d;
-}
-*/
 
 %{
   /*

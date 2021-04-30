@@ -27,8 +27,8 @@ POPS {
 
 InletP {
   HBox { +-; Title: "Inlet P"; -+ };
-  HBS_P:    (HPS_P,7)    mbar;
-  InltBP:   (InltBP,9)   mbar;
+  HPS_P:    (HPS_P,7)    mbar;
+# InltBP:   (InltBP,9)   mbar;
 }
 
 Pumps {
