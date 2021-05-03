@@ -36,6 +36,9 @@ int main(int argc, char **argv) {
   msg(0, "Starting: V3.0");
   ELoop.event_loop();
   msg(0, "Terminating");
+  ELoop.delete_children();
+  ELoop.clear_delete_queue(true);
+  return 0;
 }
 
 UserPkts_UDP::UserPkts_UDP(int udp_port)
@@ -274,14 +277,18 @@ void POPS_Cmd::send_shutdown() {
 }
 
 POPS_client::POPS_client() :
-      DAS_IO::Client("pops", 80, "10.11.97.50", "pops", 0) {
+      DAS_IO::Client("pops", 80, "10.11.97.50", "pops", 0),
+      srvr_Stale(0) {
   POPS.Srvr = 0;
   nl_assert(POPS_client::instance == 0);
   POPS_client::instance = this;
+  set_retries(-1, 1, 1);
+  flags |= gflag(0);
 }
 
 bool POPS_client::app_connected() {
   iwrite("V\n");
+  ++srvr_Stale;
   return false;
 }
 
@@ -304,6 +311,7 @@ bool POPS_client::app_input() {
       }
     }
   }
+  srvr_Stale = 0;
   report_ok(nc);
   return false;
 }
@@ -314,6 +322,24 @@ bool POPS_client::forward(const uint8_t *cmd) {
     iwrite((const char *)cmd);
   } else {
     msg(MSG_ERROR, "%s: command issued before comms established", iname);
+  }
+  return false;
+}
+
+bool POPS_client::app_process_eof() {
+  connect_later();
+  POPS.Srvr = 0;
+  return false;
+}
+
+bool POPS_client::tm_sync() {
+  if (POPS.Stale > 2 && socket_state == Socket_connected) {
+    if (srvr_Stale == 0)
+      return app_connected();
+    else
+      ++srvr_Stale;
+    if (srvr_Stale == 20)
+      msg(2, "%s: srvr_Stale=%d while connected", iname, srvr_Stale);
   }
   return false;
 }

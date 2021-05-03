@@ -52,8 +52,12 @@ class POPS_client : public DAS_IO::Client {
     bool app_connected();
     bool app_input();
     bool forward(const uint8_t *cmd);
+    bool app_process_eof();
     static POPS_client *instance;
   protected:
+    bool tm_sync();
+  private:
+    uint8_t srvr_Stale;
 };
 
 #endif // __cplusplus

@@ -5,11 +5,54 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
-    Hold until (SWStat == SWS_TIME_WARP || convert(HPS_P) < P_ground_up) or 5:00;
-    { if (Fail & 0x10) Validate Startup; }
+    { depending on (OFF_GROUND) Validate Startup; }
 }
 
 State Startup {
+  { depending on (ON_GROUND) Validate Shutdown; }
+  > POPS Power On
+  Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
+  else Validate POPS_Power_Cycle;
+  Hold Until (POPS_Srvr == 1) or 1
+  else > POPS Start
+  Hold Until (POPS_Srvr == 2 && POPS_Stale == 0) or 10
+  else Validate POPS_Comms;
+  # Validate Flows_Start;
+}
+
+State POPS_Power_Cycle {
+      { depending on (ON_GROUND) Validate Shutdown; }
+      > POPS Power Off
+  +30 Validate Startup;
+}
+
+State POPS_Comms {
+      { depending on (ON_GROUND) Validate Shutdown; }
+      # POPS did not respond to Start command
+      # Try Shutdown?
+      > POPS Shutdown
+      Hold Until (POPS_Srvr == 4) or 10;
+  +30 Validate POPS_Power_Cycle;
+}
+
+State Shutdown {
+      # Shutdown flows
+      { if (POPS_srvr == 0 || POPS_srvr == 3)
+          Validate Shutdown1;
+      }
+      > POPS Shutdown
+      Hold Until (POPS_srvr == 3) or 10;
+  +30 Validate Shutdown1;
+}
+
+State Shutdown1 {
+      > POPS Power Off
+  +30 > Fail Light On
+      > Quit
+# +4  Validate BPump_Off;
+#     Validate PPump_Off;
+# +4  > MFC Bypass Flow Setpoint 0 nccm
+# +4  > MFC POPS Flow Setpoint 0 nccm
 }
 
 State Idle {}
@@ -235,16 +278,6 @@ State Fixed_Flow {
   +60 Validate Fixed_Flow;
 }
 
-State Shutdown {
-      > POPS Shutdown
-  +4  Validate BPump_Off;
-      Validate PPump_Off;
-  +4  > MFC Bypass Flow Setpoint 0 nccm
-  +4  > MFC POPS Flow Setpoint 0 nccm
-  +2  > Fail Light On
-      > Quit
-}
-
 # -----------------------------------------------------------------------------
 # Partition 2: Altitude
 # -----------------------------------------------------------------------------
@@ -290,6 +323,9 @@ State OFF_GROUND {
   }
 }
 
+# -----------------------------------------------------------------------------
+# Partition 3: Pumps
+# -----------------------------------------------------------------------------
 
 Partition
 

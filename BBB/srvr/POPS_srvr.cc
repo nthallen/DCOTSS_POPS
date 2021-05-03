@@ -25,47 +25,53 @@ POPS_Server
 POPS_status_t POPS_status = POPS_idle;
 
 bool pops_socket::protocol_input() {
-  cp = 0;
-  if (nc == 0) return false;
-  unsigned char cmd = buf[0];
-  switch (buf[0]) {
-    case 'V': // Status
-      msg(0, "V request");
-      break;
-    case 'B':
-      msg(0, "Starting POPS software");
-      system("/root/SW/bin/start_POPS");
-      POPS_status = POPS_active;
-      break;
-    case 'E':
-      if (POPS_status == POPS_active && send_shutdown()) {
-        msg(0, "Shutdown forwarded to POPS");
-        POPS_status = POPS_shutdown;
-      } else {
-        msg(0, "Issuing Shutdown");
-        POPS_status = POPS_shutdown;
-        system("/sbin/shutdown -h now");
+  while (cp + 2 <= nc) {
+    unsigned char cmd = buf[cp];
+    if (buf[cp+1] != '\n') {
+      msg(2, "%s: Invalid command string", iname);
+      ++cp;
+    } else {
+      cp += 2;
+      switch (cmd) {
+        case 'V': // Status
+          msg(MSG_DEBUG, "V request");
+          break;
+        case 'B':
+          msg(0, "Starting POPS software");
+          system("/root/SW/bin/start_POPS");
+          POPS_status = POPS_active;
+          break;
+        case 'E':
+          if (POPS_status == POPS_active && send_shutdown()) {
+            msg(0, "Shutdown forwarded to POPS");
+            POPS_status = POPS_shutdown;
+          } else {
+            msg(0, "Issuing Shutdown");
+            POPS_status = POPS_shutdown;
+            system("/sbin/shutdown -h now");
+          }
+          break;
+        case 'F':
+          msg(0, "Issuing Forced Shutdown");
+          POPS_status = POPS_shutdown;
+          system("/sbin/shutdown -h now");
+          break;
+        case 'D':
+          msg(0, "Received disconnect message");
+          consume(cp);
+          return false;
+        default:
+          if (isgraph(cmd)) {
+            msg(MSG_ERROR, "Invalid command code: '%c'", cmd);
+          } else {
+            msg(MSG_ERROR, "Invalid command value: '0x%02X'", cmd);
+          }
+          iwrite("Error: Invalid command\n");
+          break;
       }
-      break;
-    case 'F':
-      msg(0, "Issuing Forced Shutdown");
-      POPS_status = POPS_shutdown;
-      system("/sbin/shutdown -h now");
-      break;
-    case 'D':
-      msg(0, "Received disconnect message");
-      consume(nc);
-      return false;
-    default:
-      if (isgraph(cmd)) {
-        msg(MSG_ERROR, "Invalid command code: '%c'", cmd);
-      } else {
-        msg(MSG_ERROR, "Invalid command value: '0x%02X'", cmd);
-      }
-      iwrite("Error: Invalid command\n");
-      break;
+    }
   }
-  consume(nc);
+  consume(cp);
   return send_status();
 }
 
