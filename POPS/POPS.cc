@@ -328,7 +328,8 @@ bool POPS_client::forward(const uint8_t *cmd) {
 
 bool POPS_client::app_process_eof() {
   connect_later();
-  POPS.Srvr = 0;
+  if (POPS.Srvr != 3)
+    POPS.Srvr = 0;
   return false;
 }
 

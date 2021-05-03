@@ -74,8 +74,8 @@
         uDACS_A_wr(0x10 + $4, $5);
       }
     }
-  : Set Baratron Vrtn %f (Volts) Volts * {
-      double counts = $4 * 65536./5.;
+  : Set Bypass Pump Speed %f (Volts) Volts * {
+      double counts = $5 * 65536./5.;
       uint16_t icounts;
       if (counts < 0) icounts = 0;
       else if (counts > 65535) icounts = 65535;
