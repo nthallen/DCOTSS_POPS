@@ -10,7 +10,7 @@ AD7770_AI_stat_t uDACS_B_stat0; Invalidate uDACS_B_stat0;
 }
 */
 
-AD7770_AI_t Ring1T; Invalidate Ring1T;
+AD7770_T10K100KU Ring1T; Invalidate Ring1T;
 { Ring1T = (uDACS_B_Raw1 & 0xFFFFFF) |
     ((uDACS_B_Raw1 & 0x800000) ? 0xFF000000 : 0);
   Validate Ring1T;
@@ -19,7 +19,7 @@ AD7770_AI_stat_t uDACS_B_stat1; Invalidate uDACS_B_stat1;
 { uDACS_B_stat1 = (uDACS_B_Raw1 >> 24) & 0xFF;
   Validate uDACS_B_stat1;
 }
-AD7770_AI_t Ring2T; Invalidate Ring2T;
+AD7770_T10K100KU Ring2T; Invalidate Ring2T;
 { Ring2T = (uDACS_B_Raw2 & 0xFFFFFF) |
     ((uDACS_B_Raw2 & 0x800000) ? 0xFF000000 : 0);
   Validate Ring2T;
@@ -28,7 +28,7 @@ AD7770_AI_stat_t uDACS_B_stat2; Invalidate uDACS_B_stat2;
 { uDACS_B_stat2 = (uDACS_B_Raw2 >> 24) & 0xFF;
   Validate uDACS_B_stat2;
 }
-AD7770_AI_t Ring3T; Invalidate Ring3T;
+AD7770_T10K100KU Ring3T; Invalidate Ring3T;
 { Ring3T = (uDACS_B_Raw3 & 0xFFFFFF) |
     ((uDACS_B_Raw3 & 0x800000) ? 0xFF000000 : 0);
   Validate Ring3T;

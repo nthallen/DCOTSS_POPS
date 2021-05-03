@@ -25,6 +25,7 @@ TM typedef int32_t AD7770_AI_t { text "%9.4lf"; convert uDACS_Volts_t; }
     8388610, 9999
   }
 TM typedef double uDACS_CELCIUS;
+TM typedef AD7770_AI_t AD7770_T10K100KU { text "%7.3lf"; convert uDACS_CELCIUS; }
 TM typedef int32_t uDACS_T30K75KU { text "%8.3lf"; convert uDACS_CELCIUS; }
 TM typedef uint16_t AD7770_count_t { text "%5u"; }
 

@@ -28,9 +28,9 @@ ADC_A {
 ADC_B {
   HBox { +-; Title: ADC_B; -+ };
 # InltBP: (uDACS_B_stat0,2) (InltBP,9) V;
-  Ring1T: (uDACS_B_stat1,2) (Ring1T,9) V;
-  Ring2T: (uDACS_B_stat2,2) (Ring2T,9) V;
-  Ring3T: (uDACS_B_stat3,2) (Ring3T,9) V;
+  Ring1T: (uDACS_B_stat1,2) (Ring1T,7) C;
+  Ring2T: (uDACS_B_stat2,2) (Ring2T,7) C;
+  Ring3T: (uDACS_B_stat3,2) (Ring3T,7) C;
   { Status: (uDACS_B_status,4) N: (uDACS_B_N,5) };
 }
 
