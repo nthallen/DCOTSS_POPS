@@ -1,3 +1,7 @@
+%{
+  #include "dasio/cmd_writer.h"
+%}
+
 # -----------------------------------------------------------------------------
 # Partition 1: Main Line
 # -----------------------------------------------------------------------------
@@ -10,278 +14,24 @@ State Init {
 
 State Startup {
   { depending on (ON_GROUND) Validate Shutdown; }
-  > POPS Power On
-  Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
-  else Validate POPS_Power_Cycle;
-  Hold Until (POPS_Srvr == 1) or 1
-  else > POPS Start
-  Hold Until (POPS_Srvr == 2 && POPS_Stale == 0) or 10
-  else Validate POPS_Comms;
-  # Validate Flows_Start;
-}
-
-State POPS_Power_Cycle {
-      { depending on (ON_GROUND) Validate Shutdown; }
-      > POPS Power Off
-  +30 Validate Startup;
-}
-
-State POPS_Comms {
-      { depending on (ON_GROUND) Validate Shutdown; }
-      # POPS did not respond to Start command
-      # Try Shutdown?
-      > POPS Shutdown
-      Hold Until (POPS_Srvr == 4) or 10;
-  +30 Validate POPS_Power_Cycle;
+  Validate POPS_Startup;
+  Hold until valid (POPS_Is_Active);
+  Validate POPS_Flow_PI;
+  Validate Bypass_Flow_PI;
 }
 
 State Shutdown {
-      # Shutdown flows
-      { if (POPS_srvr == 0 || POPS_srvr == 3)
-          Validate Shutdown1;
+      Hold until valid (POPS_Is_Off, POPS_Flow_Off, Bypass_Flow_Off) or 2:00
+      else {
+        msg(2, "Timed out waiting for POPS, POPS_Flow and Bypass_Flow to shutdown");
       }
-      > POPS Shutdown
-      Hold Until (POPS_srvr == 3) or 10;
-  +30 Validate Shutdown1;
-}
-
-State Shutdown1 {
-      > POPS Power Off
-  +30 > Fail Light On
+  +1  > Fail Light On
       > Quit
-# +4  Validate BPump_Off;
-#     Validate PPump_Off;
-# +4  > MFC Bypass Flow Setpoint 0 nccm
-# +4  > MFC POPS Flow Setpoint 0 nccm
-}
-
-State Idle {}
-
-State Explore_Flows {
-      Validate BPump_Off;
-      Validate PPump_Off;
-#+1    > MFC Bypass Flow Setpoint 3500 nccm
-+2:00 > MFC Bypass Flow Setpoint 100 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 200 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 300 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 400 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 500 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 600 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 700 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 800 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 900 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1000 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1100 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1200 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1300 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1400 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1500 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC Bypass Flow Setpoint 1600 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
- #     > MFC POPS Flow Setpoint 1500 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 1400 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 1300 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 1200 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 1100 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 1000 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 900 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 800 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 700 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 600 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 500 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 400 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 300 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 200 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
- #    > MFC POPS Flow Setpoint 100 nccm
- #    Hold until valid (Pumps_Watch);
- #    Hold until valid (Pumps_Step);
-   +1 Validate PPump_Off;
-   +1 > MFC POPS Flow Setpoint 0 nccm
-+1:58 Validate Idle;
-}
-
-State Flows_Abort {
-      Validate BPump_Off;
-      Validate PPump_Off;
-  +10 > MFC Bypass Flow Setpoint 0 nccm
-      > MFC POPS Flow Setpoint 0 nccm
-      Validate Idle;
-}
-
-State Fixed_Flow {
-      Validate BPump_Off;
-      Validate PPump_Off;
-  +4
-      > MFC POPS Flow Setpoint 400 nccm
-      > MFC Bypass Flow Setpoint 4600 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 450 nccm
-      > MFC Bypass Flow Setpoint 4550 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 500 nccm
-      > MFC Bypass Flow Setpoint 4500 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 550 nccm
-      > MFC Bypass Flow Setpoint 4450 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 600 nccm
-      > MFC Bypass Flow Setpoint 4400 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 650 nccm
-      > MFC Bypass Flow Setpoint 4350 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 700 nccm
-      > MFC Bypass Flow Setpoint 4300 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 750 nccm
-      > MFC Bypass Flow Setpoint 4250 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 800 nccm
-      > MFC Bypass Flow Setpoint 4200 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 850 nccm
-      > MFC Bypass Flow Setpoint 4150 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 900 nccm
-      > MFC Bypass Flow Setpoint 4100 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 950 nccm
-      > MFC Bypass Flow Setpoint 4050 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 1000 nccm
-      > MFC Bypass Flow Setpoint 4000 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 950 nccm
-      > MFC Bypass Flow Setpoint 4050 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 900 nccm
-      > MFC Bypass Flow Setpoint 4100 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 850 nccm
-      > MFC Bypass Flow Setpoint 4150 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 800 nccm
-      > MFC Bypass Flow Setpoint 4200 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 750 nccm
-      > MFC Bypass Flow Setpoint 4250 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 700 nccm
-      > MFC Bypass Flow Setpoint 4300 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 650 nccm
-      > MFC Bypass Flow Setpoint 4350 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 600 nccm
-      > MFC Bypass Flow Setpoint 4400 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 550 nccm
-      > MFC Bypass Flow Setpoint 4450 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 500 nccm
-      > MFC Bypass Flow Setpoint 4500 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 450 nccm
-      > MFC Bypass Flow Setpoint 4550 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-      > MFC POPS Flow Setpoint 400 nccm
-      > MFC Bypass Flow Setpoint 4600 nccm
-      Hold until valid (Pumps_Watch);
-      Hold until valid (Pumps_Step);
-  +10 Validate BPump_Off;
-      Validate BPump_Off;
-  +10 > MFC Bypass Flow Setpoint 0 nccm
-      > MFC POPS Flow Setpoint 0 nccm
-  +60 Validate Fixed_Flow;
 }
 
 # -----------------------------------------------------------------------------
 # Partition 2: Altitude
 # -----------------------------------------------------------------------------
-
 Partition
 
 # This partition converts pressure (altitude) into states 
@@ -324,117 +74,256 @@ State OFF_GROUND {
 }
 
 # -----------------------------------------------------------------------------
-# Partition 3: Pumps
+# Partition 3: POPS
+# -----------------------------------------------------------------------------
+Partition
+
+State POPS_Idle {}
+
+State POPS_Startup {
+  { depending on (ON_GROUND) Validate POPS_Shutdown; }
+  > POPS Power On
+  Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
+  else Validate POPS_Power_Cycle;
+  Hold Until (POPS_Srvr == 1) or 1
+  else > POPS Start
+  Hold Until (POPS_Srvr == 2 && POPS_Stale == 0) or 10
+  else Validate POPS_Comms;
+  Validate POPS_Is_Active;
+}
+
+State POPS_Is_Active {
+  { depending on (ON_GROUND) Validate POPS_Shutdown; }
+}
+
+State POPS_Power_Cycle {
+      { depending on (ON_GROUND) Validate POPS_Shutdown; }
+      > POPS Power Off
+  +30 Validate POPS_Startup;
+}
+
+State POPS_Comms {
+      { depending on (ON_GROUND) Validate POPS_Shutdown; }
+      # POPS did not respond to Start command
+      { msg(2, "POPS did not respond to Start command"); }
+      > POPS Shutdown
+      Hold Until (POPS_Srvr == 4) or 10;
+  +30 Validate POPS_Power_Cycle;
+}
+
+State POPS_Shutdown {
+  +1  { if (!POPSPwr) Validate POPS_Is_Off;
+        else if (POPS_Stale > 3 && (POPS_srvr == 0 || POPS_srvr == 3))
+          Validate POPS_Shutdown1;
+      }
+  +1  > POPS Shutdown
+      Hold Until (POPS_srvr == 3 && POPS_Stale > 3) or 10;
+  +30 Validate POPS_Shutdown1;
+}
+
+State POPS_Shutdown1 {
+      > POPS Power Off
+  +1  Validate POPS_Is_Off;
+}
+
+State POPS_Is_Off {}
+
+# -----------------------------------------------------------------------------
+# Partition 4: POPS Flow
+# -----------------------------------------------------------------------------
+Partition
+
+%{
+  double LFE_Set = 800.; // ccm
+  double LFE_Gp = -0.4;  // Proportional Gain
+  double LFE_Gi = -0.1;  // Integral Gain
+  double LFE_I = 0.;     // Integral
+  double LFE_err;
+  double LFE_MFset;
+  double T0 = 273.15;
+  double P0 = 1013.25;   // 1 atm
+%}
+
+State POPS_Flow_Idle {
+  depending on (Shutdown) { Validate POPS_Flow_Stop; }
+}
+
+State POPS_Flow_PI {
+  depending on (Shutdown) { Validate POPS_Flow_Stop; }
+  { LFE_I = 0; }
+  {
+    LFE_err = POPS_Flow - LFE_Set;
+    LFE_I = LFE_I + LFE_err;
+    LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
+      (T0/convert(RingT))*(HPS_P/P0);
+    if (LFE_MFset < 10) {
+      if (PPmpS) {
+        ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
+      }
+      if (LFE_MFset < 0) LFE_MFset = 0;
+    }
+    if (LFE_MFset > 1000) LFE_MFset = 1000; // Alicats limited to 2 SLM
+    ci_sendfcmd(Cmd_Send_Quiet,
+      "MFC POPS Flow SetPoint %.1lf nccm\n", LFE_MFset*2);
+    ci_sendfcmd(Cmd_Send_Quiet,
+      "MFC Sheath Flow SetPoint %.1lf nccm\n", LFE_MFset);
+    if (LFE_MFset > 10 && !PPmpS) {
+      ci_sendfcmd(Cmd_Send, "Pump POPS On\n");
+    }
+  }
+}
+
+State POPS_Flow_Stop {
+      > Pump POPS Off
+  +1  > MFC POPS Flow SetPoint 0 nccm
+      > MFC Sheath Flow SetPoint 0 nccm
+      Validate POPS_Flow_Off;
+}
+
+State POPS_Flow_Off {}
+
+# -----------------------------------------------------------------------------
+# Partition 5: Bypass Flow
+# -----------------------------------------------------------------------------
+Partition
+
+State Bypass_Flow_Idle {
+  depending on (Shutdown) { Validate Bypass_Flow_Stop; }
+}
+
+State Bypass_Flow_PI {
+  depending on (Shutdown) { Validate Bypass_Flow_Stop; }
+  { double Fm_SPX, Fm_BMFC;
+    Fm_SPX = 120*(T0/convert(RingT))*(HPS_P/P0);
+    Fm_BMFC = PD_nccm - PMFC_MassFlow + SMFC_MassFlow - Fm_SPX;
+    if (Fm_BMFC < 10) {
+      if (BPmpS) {
+        ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");
+      }
+      if (Fm_BMFC < 0) Fm_BMFC = 0;    
+    }
+    if (Fm_BMFC > 5000) Fm_BMFC = 5000;
+    ci_sendfcmd(Cmd_Send_Quiet,
+      "MFC Bypass Flow SetPoint %.1lf nccm\n", Fm_BMFC);
+    if (Fm_BMFC > 10 && !BPmpS) {
+      ci_sendfcmd(Cmd_Send, "Pump Bypass On\n");
+    }
+  }
+}
+
+State Bypass_Flow_Stop {
+      > Pump Bypass Off
+  +1  >MFC Bypass Flow SetPoint 0 nccm
+      Validate Bypass_Flow_Off;
+}
+
+State Bypass_Flow_Off {}
+
+# -----------------------------------------------------------------------------
+# Partition 6: Old stuff
 # -----------------------------------------------------------------------------
 
-Partition
+# State Pumps_Watch {
+#   depending on (PPump_Failed) { Validate Pumps_Failed; }
+#   depending on (BPump_Failed) { Validate Pumps_Failed; }
+#   depending on (BPump_Idle, PPump_Idle) { Validate Pumps_Idle; }
+#   +1:58 Validate Pumps_Step;
+# }
 
-State Pumps_Idle {
-  depending on (PPump_Watch) { Validate Pumps_Watch; }
-  depending on (BPump_Watch) { Validate Pumps_Watch; }
-}
+# State Pumps_Step {
+#   +1 Validate Pumps_Watch;
+# }
 
-State Pumps_Watch {
-  depending on (PPump_Failed) { Validate Pumps_Failed; }
-  depending on (BPump_Failed) { Validate Pumps_Failed; }
-  depending on (BPump_Idle, PPump_Idle) { Validate Pumps_Idle; }
-  +1:58 Validate Pumps_Step;
-}
+# State Pumps_Failed {
+#   Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
+#               BMFC_MassFlow > 0.9 * BMFC_Set);
+#   +1 Validate Pumps_Watch;
+# }
 
-State Pumps_Step {
-  +1 Validate Pumps_Watch;
-}
+# # Pumps Partition
+# # This should be totally passive except for Shutdown.
+# # When the flow controller setpoints are set above 100 nccm,
+# # The pumps will turn on. This partition will then cycle
+# # between Pumps_Watch and Pumps_Step. If the flow through
+# # either MFC drops below 1/2 the setpoint for 5 seconds,
+# # it will advance to Pumps_Failed, shut off both pumps,
+# # wait 20 minutes, and then restart. The point is to
+# # guarantee 60 seconds of continuous flow at a particular
+# # setpoint before advancing in the mainline algorithm.
+# Partition
 
-State Pumps_Failed {
-  Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
-              BMFC_MassFlow > 0.9 * BMFC_Set);
-  +1 Validate Pumps_Watch;
-}
+# State PPump_Off {
+#   > Pump POPS Off
+#   { if (PMFC_Set < 10)
+#       Validate PPump_Idle; }
+# }
 
-# Pumps Partition
-# This should be totally passive except for Shutdown.
-# When the flow controller setpoints are set above 100 nccm,
-# The pumps will turn on. This partition will then cycle
-# between Pumps_Watch and Pumps_Step. If the flow through
-# either MFC drops below 1/2 the setpoint for 5 seconds,
-# it will advance to Pumps_Failed, shut off both pumps,
-# wait 20 minutes, and then restart. The point is to
-# guarantee 60 seconds of continuous flow at a particular
-# setpoint before advancing in the mainline algorithm.
-Partition
+# State PPump_Disable {
+# }
 
-State PPump_Off {
-  > Pump POPS Off
-  { if (PMFC_Set < 10)
-      Validate PPump_Idle; }
-}
+# State PPump_Idle {
+#   Hold until (PMFC_Set >= 10);
+#   Validate PPump_On;
+# }
 
-State PPump_Disable {
-}
+# State PPump_On {
+#   { if (PMFC_Set < 10)
+#       Validate PPump_Off; }
+#   +1  > Pump POPS On
+#       Validate PPump_Watch;
+# }
 
-State PPump_Idle {
-  Hold until (PMFC_Set >= 10);
-  Validate PPump_On;
-}
+# State PPump_Watch {
+#   { if (PMFC_Set < 10)
+#       Validate PPump_Off; }
+#   +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set);
+#   +1 Hold Until (PMFC_MassFlow > 0.9 * PMFC_Set) or 5
+#      else Validate PPump_Failed;
+#      Validate PPump_Watch;
+# }
 
-State PPump_On {
-  { if (PMFC_Set < 10)
-      Validate PPump_Off; }
-  +1  > Pump POPS On
-      Validate PPump_Watch;
-}
+# State PPump_Failed {
+#   { if (PMFC_Set < 10)
+#       Validate PPump_Off; }
+#           > Pump POPS Off
+#   +20:00  Validate PPump_On;
+# }
 
-State PPump_Watch {
-  { if (PMFC_Set < 10)
-      Validate PPump_Off; }
-  +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set);
-  +1 Hold Until (PMFC_MassFlow > 0.9 * PMFC_Set) or 5
-     else Validate PPump_Failed;
-     Validate PPump_Watch;
-}
+# Partition
 
-State PPump_Failed {
-  { if (PMFC_Set < 10)
-      Validate PPump_Off; }
-          > Pump POPS Off
-  +20:00  Validate PPump_On;
-}
+# State BPump_Off {
+#   > Pump Bypass Off
+#   { if (BMFC_Set < 10)
+#       Validate BPump_Idle; }
+# }
 
-Partition
+# State BPump_Disable {
+# }
 
-State BPump_Off {
-  > Pump Bypass Off
-  { if (BMFC_Set < 10)
-      Validate BPump_Idle; }
-}
+# State BPump_Idle {
+#   Hold until (BMFC_Set >= 10);
+#   Validate BPump_On;
+# }
 
-State BPump_Disable {
-}
+# State BPump_On {
+#   { if (BMFC_Set < 10)
+#       Validate BPump_Off; }
+#   +1  > Pump Bypass On
+#       Validate BPump_Watch;
+# }
 
-State BPump_Idle {
-  Hold until (BMFC_Set >= 10);
-  Validate BPump_On;
-}
+# State BPump_Watch {
+#   { if (BMFC_Set < 10)
+#       Validate BPump_Off; }
+#   +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set);
+#   +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set) or 5
+#      else Validate BPump_Failed;
+#      Validate BPump_Watch;
+# }
 
-State BPump_On {
-  { if (BMFC_Set < 10)
-      Validate BPump_Off; }
-  +1  > Pump Bypass On
-      Validate BPump_Watch;
-}
-
-State BPump_Watch {
-  { if (BMFC_Set < 10)
-      Validate BPump_Off; }
-  +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set);
-  +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set) or 5
-     else Validate BPump_Failed;
-     Validate BPump_Watch;
-}
-
-State BPump_Failed {
-  { if (BMFC_Set < 10)
-      Validate BPump_Off; }
-          > Pump Bypass Off
-  +20:00  Validate BPump_On;
-}
+# State BPump_Failed {
+#   { if (BMFC_Set < 10)
+#       Validate BPump_Off; }
+#           > Pump Bypass Off
+#   +20:00  Validate BPump_On;
+# }

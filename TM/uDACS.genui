@@ -64,9 +64,12 @@
 
   1 uDACS_B_status uDACS_B AIStat %.0lf
 # 1 InltBP Honeywell HPS_P
-  1 Ring1T uDACS_B RingT
-  1 Ring2T uDACS_B RingT
-  1 Ring3T uDACS_B RingT
+  1 Ring1T  Inlet RingT
+  1 Ring2T  Inlet RingT
+  1 Ring3T  Inlet RingT
+  1 RingT   Inlet RingT
+  1 PD_Vel  Inlet Velocity
+  1 PD_nccm Inlet NCCM
 
 # 1 Alert:uDACS_B_stat0:7 uDACS_B Status %.0lf
 # 1 Reset:uDACS_B_stat0:3 uDACS_B AIChS %.0lf
@@ -128,3 +131,4 @@
   1 uDACS_B_Raw1 uDACS_B Raw %.0lf
   1 uDACS_B_Raw2 uDACS_B Raw %.0lf
   1 uDACS_B_Raw3 uDACS_B Raw %.0lf
+

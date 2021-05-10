@@ -1,3 +1,7 @@
+%{
+  #include "math.h"
+%}
+
 /*
 AD7770_AI_t uDACS_B_AIN0; Invalidate uDACS_B_AIN0;
 { uDACS_B_AIN0 = (uDACS_B_Raw0 & 0xFFFFFF) |
@@ -36,6 +40,52 @@ AD7770_T10K100KU Ring3T; Invalidate Ring3T;
 AD7770_AI_stat_t uDACS_B_stat3; Invalidate uDACS_B_stat3;
 { uDACS_B_stat3 = (uDACS_B_Raw3 >> 24) & 0xFF;
   Validate uDACS_B_stat3;
+}
+
+uDACS_CELCIUS RingT; Invalidate RingT;
+{ int N;
+  uDACS_CELCIUS Sum, Cur;
+  N = 0;
+  Sum = 0;
+  Cur = convert(Ring1T);
+  if (Cur > -100 && Cur < 100) {
+    Sum += Cur;
+    ++N;
+  }
+  Cur = convert(Ring2T);
+  if (Cur > -100 && Cur < 100) {
+    Sum += Cur;
+    ++N;
+  }
+  Cur = convert(Ring3T);
+  if (Cur > -100 && Cur < 100) {
+    Sum += Cur;
+    ++N;
+  }
+  RingT = N ? Sum/N : -50;
+  Validate RingT;
+}
+
+TM typedef double uDACS_Velocity { text "%5.1lf"; }
+uDACS_Velocity PD_Vel; Invalidate PD_Vel;
+{ double r;
+  r = HPS_P/(287.058*RingT);
+  PD_Vel = sqrt(2*HPS_dP)/r;
+  Validate PD_Vel;
+}
+
+TM typedef double uDACS_nccm { text "%6.1lf"; }
+uDACS_nccm PD_nccm; Invalidate PD_nccm;
+{ double P0, T0;
+  P0 = 1013.25;
+  T0 = 273.15;
+  /* Area = 7.85E-3 cm^2 (1mm ID)
+   * Vel = PD_Vel m/s * 100cm/1m * 1m/60s = cm/min
+   * Area * Vel = cc/min = ccm
+   * ccm * (P/P0) * (T0/T) = nccm
+   */
+  PD_nccm = 7.85E-3 * PD_Vel * 100/60 * (HPS_P/P0) * (T0/RingT);
+  Validate PD_nccm;
 }
 
 %{

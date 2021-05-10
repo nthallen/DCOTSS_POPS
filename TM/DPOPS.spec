@@ -5,6 +5,7 @@ tmcbase = uDACS_B.tmc
 tmcbase = T30K75KU_uDACS.tmc
 tmcbase = T30K75KU_uDACS16.tmc
 tmcbase = AD7770_T10K100KU.tmc
+tmcbase = uDACS_A_conv.tmc uDACS_B_conv.tmc
 
 colbase = uDACS_col.tmc
 colbase = uDACS_A_col.tmc
@@ -12,9 +13,6 @@ colbase = uDACS_B_col.tmc
 
 genuibase = DPOPS.genui
 genuibase = uDACS.genui
-
-extbase = uDACS_A_conv.tmc
-extbase = uDACS_B_conv.tmc
 
 cmdbase = playback.cmd
 cmdbase = uDACS.cmd
@@ -33,8 +31,8 @@ IDISTRIB = doit
 
 DPOPScol : -lsubbuspp
 DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
-DPOPSdisp : uDACS_A_conv.tmc uDACS_B_conv.tmc DPOPS.tbl POPS.tbl uDACS.tbl
-uDACSdisp : uDACS_A_conv.tmc uDACS_B_conv.tmc uDACS.tbl
+DPOPSdisp : DPOPS.tbl POPS.tbl uDACS.tbl
+uDACSdisp : uDACS.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
 doit : DPOPS.doit
 %%
