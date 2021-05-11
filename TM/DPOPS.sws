@@ -3,10 +3,17 @@ SW_Variable: SWStat SW Status
     depending on (ON_GROUND) using_swp = SWStat; break;
   SWS_LAND             4 Altitude Land:
     depending on (OFF_GROUND) using_swp = SWStat; break;
-# SWS_EXPLORE_FLOWS   20 Explore Flows:          Validate Explore_Flows; break;
-# SWS_FLOWS_ABORT     21 Abort Flows:            Validate Flows_Abort; break;
-# SWS_FIXED_FLOWS     22 Fixed Flow:            Validate Fixed_Flow; break;
-# SWS_PPUMP_DISABLE   23 Disable POPS Pump Algo: Validate PPump_Disable; break;
-# SWS_BPUMP_DISABLE   24 Disable Bypass Pump Algo: Validate BPump_Disable; break;
-  SWS_TIME_WARP      253 Time Warp:              break;
-  SWS_SHUTDOWN       255 Shutdown Full:          Validate Shutdown; break;
+
+# SWS_EXPLORE_FLOWS    20 Explore Flows:            Validate Explore_Flows; break;
+# SWS_FLOWS_ABORT      21 Abort Flows:              Validate Flows_Abort; break;
+# SWS_FIXED_FLOWS      22 Fixed Flow:               Validate Fixed_Flow; break;
+# SWS_PPUMP_DISABLE    23 Disable POPS Pump Algo:   Validate PPump_Disable; break;
+# SWS_BPUMP_DISABLE    24 Disable Bypass Pump Algo: Validate BPump_Disable; break;
+
+  SWS_POPS_STARTUP     30 POPS Startup:             Validate POPS_Startup; break;
+  SWS_POPS_SHUTDOWN    31 POPS Shutdown:            Validate POPS_Shutdown; break;
+  SWS_POPS_FLOW_STOP   32 POPS Flow Stop:           Validate POPS_Flow_Stop; break;
+  SWS_BYPASS_FLOW_STOP 33 Bypass Flow Stop:         Validate Bypass_Flow_Stop; break;
+
+  SWS_TIME_WARP      253 Time Warp:                 break;
+  SWS_SHUTDOWN       255 Shutdown Full:             Validate Shutdown; break;

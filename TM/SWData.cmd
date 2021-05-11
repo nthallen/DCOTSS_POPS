@@ -17,6 +17,10 @@
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
   : Set %d { $0 = $2; }
   : Altitude Land { $0 = SWS_LAND; }
+  : POPS Startup { $0 = SWS_POPS_STARTUP; }
+  : POPS Shutdown { $0 = SWS_POPS_SHUTDOWN; }
+  : POPS Flow Stop { $0 = SWS_POPS_FLOW_STOP; }
+  : Bypass Flow Stop { $0 = SWS_BYPASS_FLOW_STOP; }
   : Time Warp { $0 = SWS_TIME_WARP; }
   : Shutdown Full { $0 = SWS_SHUTDOWN; }
   ;
