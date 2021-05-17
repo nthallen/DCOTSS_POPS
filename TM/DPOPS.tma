@@ -16,8 +16,8 @@ State Startup {
   { depending on (ON_GROUND) Validate Shutdown; }
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
-  Validate POPS_Flow_PI;
-  Validate Bypass_Flow_PI;
+  Validate POPS_Flow_PI_Init;
+  Validate Bypass_Flow_Iso;
 }
 
 State Shutdown {
@@ -78,14 +78,16 @@ State OFF_GROUND {
 # -----------------------------------------------------------------------------
 Partition
 
-State POPS_Idle {}
+State POPS_Idle {
+  { depending on (Shutdown) Validate POPS_Shutdown; }
+}
 
 State POPS_Startup {
-  { depending on (ON_GROUND) Validate POPS_Shutdown; }
+  { depending on (Shutdown) Validate POPS_Shutdown; }
   > POPS Power On
   Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
   else Validate POPS_Power_Cycle;
-  Hold Until (POPS_Srvr == 1) or 1
+  Hold Until (POPS_Srvr == 2) or 1
   else > POPS Start
   Hold Until (POPS_Srvr == 2 && POPS_Stale == 0) or 10
   else Validate POPS_Comms;
@@ -93,17 +95,17 @@ State POPS_Startup {
 }
 
 State POPS_Is_Active {
-  { depending on (ON_GROUND) Validate POPS_Shutdown; }
+  { depending on (Shutdown) Validate POPS_Shutdown; }
 }
 
 State POPS_Power_Cycle {
-      { depending on (ON_GROUND) Validate POPS_Shutdown; }
+      { depending on (Shutdown) Validate POPS_Shutdown; }
       > POPS Power Off
   +30 Validate POPS_Startup;
 }
 
 State POPS_Comms {
-      { depending on (ON_GROUND) Validate POPS_Shutdown; }
+      { depending on (Shutdown) Validate POPS_Shutdown; }
       # POPS did not respond to Start command
       { msg(2, "POPS did not respond to Start command"); }
       > POPS Shutdown
@@ -148,9 +150,14 @@ State POPS_Flow_Idle {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
 }
 
+State POPS_Flow_PI_Init {
+  { LFE_I = 0.;
+    Validate POPS_Flow_PI;
+  }
+}
+
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
-  { LFE_I = 0; }
   {
     LFE_err = POPS_Flow - LFE_Set;
     LFE_I = LFE_I + LFE_err;
@@ -191,7 +198,7 @@ State Bypass_Flow_Idle {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
 }
 
-State Bypass_Flow_PI {
+State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC;
     Fm_SPX = 120*(T0/convert(RingT))*(HPS_P/P0);
