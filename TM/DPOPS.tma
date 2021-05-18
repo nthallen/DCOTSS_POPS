@@ -9,11 +9,11 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
-    { depending on (OFF_GROUND) Validate Startup; }
+    depending on (OFF_GROUND) { Validate Startup; }
 }
 
 State Startup {
-  { depending on (ON_GROUND) Validate Shutdown; }
+  depending on (ON_GROUND) { Validate Shutdown; }
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
   Validate POPS_Flow_PI_Init;
@@ -79,11 +79,11 @@ State OFF_GROUND {
 Partition
 
 State POPS_Idle {
-  { depending on (Shutdown) Validate POPS_Shutdown; }
+  depending on (Shutdown) { Validate POPS_Shutdown; }
 }
 
 State POPS_Startup {
-  { depending on (Shutdown) Validate POPS_Shutdown; }
+  depending on (Shutdown) { Validate POPS_Shutdown; }
   > POPS Power On
   Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
   else Validate POPS_Power_Cycle;
@@ -95,17 +95,17 @@ State POPS_Startup {
 }
 
 State POPS_Is_Active {
-  { depending on (Shutdown) Validate POPS_Shutdown; }
+  depending on (Shutdown) { Validate POPS_Shutdown; }
 }
 
 State POPS_Power_Cycle {
-      { depending on (Shutdown) Validate POPS_Shutdown; }
+      depending on (Shutdown) { Validate POPS_Shutdown; }
       > POPS Power Off
   +30 Validate POPS_Startup;
 }
 
 State POPS_Comms {
-      { depending on (Shutdown) Validate POPS_Shutdown; }
+      depending on (Shutdown) { Validate POPS_Shutdown; }
       # POPS did not respond to Start command
       { msg(2, "POPS did not respond to Start command"); }
       > POPS Shutdown
