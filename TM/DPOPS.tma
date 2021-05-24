@@ -162,7 +162,7 @@ State POPS_Flow_PI {
     LFE_err = POPS_Flow - LFE_Set;
     LFE_I = LFE_I + LFE_err;
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
-      (T0/convert(RingT))*(HPS_P/P0);
+      (T0/(RingT+273.15))*(HPS_P/P0);
     if (LFE_MFset < 10) {
       if (PPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
