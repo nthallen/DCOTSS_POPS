@@ -202,7 +202,7 @@ State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC;
     Fm_SPX = 120*(T0/convert(RingT))*(HPS_P/P0);
-    Fm_BMFC = PD_nccm - PMFC_MassFlow + SMFC_MassFlow - Fm_SPX;
+    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX /* + SMFC_MassFlow */;
     if (Fm_BMFC < 10) {
       if (BPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");

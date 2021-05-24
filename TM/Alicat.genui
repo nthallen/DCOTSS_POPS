@@ -12,11 +12,4 @@
   1 PMFC_Set    Alicat nccm
   1 PMFC_MassFlow   Alicat nccm
   1 PMFC_VolFlow   Alicat ccm
-  1 SMFC_Status Alicat_HK Status
-  1 SMFC_Stale  Alicat_HK Stale
-  1 SMFC_T      Alicat_HK T
-  1 SMFC_P      Alicat_HK mbar
-  1 SMFC_Set    Alicat nccm
-  1 SMFC_MassFlow   Alicat nccm
-  1 SMFC_VolFlow   Alicat ccm
   1 Alicat_Stale Alicat_HK Stale

@@ -11,10 +11,10 @@ PMFC {
   [PMFC_vdata];
 }
 
-SMFC {
-  HBox { +-; Title: "Sheath Flow"; -+ };
-  [SMFC_vdata];
-}
+# SMFC {
+#   HBox { +-; Title: "Sheath Flow"; -+ };
+#   [SMFC_vdata];
+# }
 
 POPS {
   HBox { +-; Title: POPS; -+ };
@@ -48,12 +48,11 @@ System {
 { HBox {
     |+;
     { [BMFC];
-      [SMFC];
       [InletP];
+      [Pumps];
     }; |+; {
       [PMFC];
       [POPS];
-      [Pumps];
     }; |+; {
       [System];
     }; |+

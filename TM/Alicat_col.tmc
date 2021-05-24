@@ -1,4 +1,4 @@
 %{
   #include "alicat.h"
-  alicat_tm_t Alicat[3];
+  alicat_tm_t Alicat[2];
 %}
