@@ -50,7 +50,8 @@ fi
   Launch      -        tmdf
 
 if [ -n "$RS485" ]; then
-  Launch      -        alicat -a 1:BMFC,2:PMFC,3:SMFC -p $RS485
+# Launch      -        alicat -a 1:BMFC,2:PMFC,3:SMFC -p $RS485
+  Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485
 fi
 
   Launch      -        POPS -v

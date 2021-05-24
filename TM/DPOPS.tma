@@ -170,7 +170,7 @@ State POPS_Flow_PI {
       if (LFE_MFset < 0) LFE_MFset = 0;
     }
     if (LFE_MFset > 1000) LFE_MFset = 1000; // Alicats limited to 2 SLM
-    ci_sendfcmd(Cmd_Send_Quiet,
+    ci_sendfcmd(Cmd_Send /* _Quiet */,
       "MFC POPS Flow SetPoint %.1lf nccm\n", LFE_MFset*1.75);
     /* ci_sendfcmd(Cmd_Send_Quiet,
       "MFC Sheath Flow SetPoint %.1lf nccm\n", LFE_MFset); */
