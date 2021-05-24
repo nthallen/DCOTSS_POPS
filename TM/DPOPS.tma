@@ -171,9 +171,9 @@ State POPS_Flow_PI {
     }
     if (LFE_MFset > 1000) LFE_MFset = 1000; // Alicats limited to 2 SLM
     ci_sendfcmd(Cmd_Send_Quiet,
-      "MFC POPS Flow SetPoint %.1lf nccm\n", LFE_MFset*2);
-    ci_sendfcmd(Cmd_Send_Quiet,
-      "MFC Sheath Flow SetPoint %.1lf nccm\n", LFE_MFset);
+      "MFC POPS Flow SetPoint %.1lf nccm\n", LFE_MFset*1.75);
+    /* ci_sendfcmd(Cmd_Send_Quiet,
+      "MFC Sheath Flow SetPoint %.1lf nccm\n", LFE_MFset); */
     if (LFE_MFset > 10 && !PPmpS) {
       ci_sendfcmd(Cmd_Send, "Pump POPS On\n");
     }
@@ -183,7 +183,7 @@ State POPS_Flow_PI {
 State POPS_Flow_Stop {
       > Pump POPS Off
   +1  > MFC POPS Flow SetPoint 0 nccm
-      > MFC Sheath Flow SetPoint 0 nccm
+#     > MFC Sheath Flow SetPoint 0 nccm
       Validate POPS_Flow_Off;
 }
 
