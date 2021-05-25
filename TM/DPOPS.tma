@@ -159,7 +159,7 @@ State POPS_Flow_PI_Init {
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
   {
-    LFE_err = POPS_Flow - LFE_Set;
+    LFE_err = POPS_ccm - LFE_Set;
     LFE_I = LFE_I + LFE_err;
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
       (T0/(RingT+273.15))*(HPS_P/P0);
