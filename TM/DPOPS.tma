@@ -137,7 +137,7 @@ Partition
 
 %{
   double LFE_Set = 800.; // ccm
-  double LFE_Gp = -0.4;  // Proportional Gain
+  double LFE_Gp = -4.0;  // Proportional Gain
   double LFE_Gi = -0.1;  // Integral Gain
   double LFE_I = 0.;     // Integral
   double LFE_err;
@@ -201,7 +201,7 @@ State Bypass_Flow_Idle {
 State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC;
-    Fm_SPX = 120*(T0/convert(RingT))*(HPS_P/P0);
+    Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
     Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX /* + SMFC_MassFlow */;
     if (Fm_BMFC < 10) {
       if (BPmpS) {
