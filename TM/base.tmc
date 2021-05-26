@@ -2,3 +2,5 @@ TM typedef uint8_t UCHAR { text "%3u"; }
 TM typedef uint16_t MFCtr_t { text "%5u"; }
 TM 1 Hz MFCtr_T MFCtr, Synch;
 TM MAXCOLS = 200;
+
+TM typedef float LFE_Gain_T { text "%7.2f"; }

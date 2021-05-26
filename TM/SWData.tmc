@@ -1,3 +1,5 @@
 TM "Receive" SWData 0;
 
 TM 1 Hz UCHAR SWStat; collect SWStat = SWData.SWStat;
+TM 1 Hz LFE_Gain_t LFE_PGain; collect LFE_PGain = SWData.LFE_PGain;
+TM 1 Hz LFE_Gain_t LFE_IGain; collect LFE_IGain = SWData.LFE_IGain;

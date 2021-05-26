@@ -16,6 +16,7 @@ genuibase = uDACS.genui
 
 cmdbase = playback.cmd
 cmdbase = uDACS.cmd
+cmdbase = LFE.cmd
 
 swsbase = DPOPS.sws
 

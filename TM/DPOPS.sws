@@ -17,3 +17,8 @@ SW_Variable: SWStat SW Status
 
   SWS_TIME_WARP      253 Time Warp:                 break;
   SWS_SHUTDOWN       255 Shutdown Full:             Validate Shutdown; break;
+
+SW_Variable: <float,LFE_Gain_t> LFE_PGain Set LFE PGain
+  : &LFE_gain { $0 = $1; }
+SW_Variable: <float,LFE_Gain_t> LFE_IGain Set LFE IGain
+  : &LFE_gain { $0 = $1; }

@@ -146,6 +146,9 @@ Partition
   double P0 = 1013.25;   // 1 atm
 %}
 
+{ LFE_Gp = LFE_PGain; }
+{ LFE_Gi = LFE_IGain; }
+
 State POPS_Flow_Idle {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
 }
@@ -170,7 +173,7 @@ State POPS_Flow_PI {
       if (LFE_MFset < 0) LFE_MFset = 0;
     }
     if (LFE_MFset > 1000) LFE_MFset = 1000; // Alicats limited to 2 SLM
-    ci_sendfcmd(Cmd_Send /* _Quiet */,
+    ci_sendfcmd(Cmd_Send_Quiet,
       "MFC POPS Flow SetPoint %.1lf nccm\n", LFE_MFset*1.75);
     /* ci_sendfcmd(Cmd_Send_Quiet,
       "MFC Sheath Flow SetPoint %.1lf nccm\n", LFE_MFset); */

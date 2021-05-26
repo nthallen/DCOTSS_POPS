@@ -12,6 +12,8 @@
   ;
 &SWTM
   : SW Status &SWStat { SWData.SWStat = $3; }
+  : Set LFE PGain &LFE_PGain { SWData.LFE_PGain = $4; }
+  : Set LFE IGain &LFE_IGain { SWData.LFE_IGain = $4; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -23,4 +25,10 @@
   : Bypass Flow Stop { $0 = SWS_BYPASS_FLOW_STOP; }
   : Time Warp { $0 = SWS_TIME_WARP; }
   : Shutdown Full { $0 = SWS_SHUTDOWN; }
+  ;
+&LFE_PGain <float>
+  : &LFE_gain { $0 = $1; }
+  ;
+&LFE_IGain <float>
+  : &LFE_gain { $0 = $1; }
   ;

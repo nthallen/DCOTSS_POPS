@@ -4,6 +4,8 @@
 
 typedef struct __attribute__((__packed__)) {
   unsigned char SWStat;
+  float LFE_PGain;
+  float LFE_IGain;
 } SWData_t;
 extern SWData_t SWData;
 
