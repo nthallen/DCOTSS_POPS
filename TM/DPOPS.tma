@@ -138,7 +138,7 @@ Partition
 %{
   double LFE_Set = 800.; // ccm
   double LFE_Gp = -4.0;  // Proportional Gain
-  double LFE_Gi = -0.1;  // Integral Gain
+  double LFE_Gi = -1.0;  // Integral Gain
   double LFE_I = 0.;     // Integral
   double LFE_err;
   double LFE_MFset;
