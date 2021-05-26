@@ -9,6 +9,8 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
+    > Set LFE PGain -4.0
+    > Set LFE IGain -1.0
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
