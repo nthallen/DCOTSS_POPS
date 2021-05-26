@@ -1,5 +1,7 @@
 function ui_dpops
 f = ne_dialg('DCOTSS POPS',1);
+f = ne_dialg(f, 'add', 0, 1, 'gdpopslfe', 'LFE' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopslfeg', 'Gains' );
 f = ne_dialg(f, 'add', 0, 1, 'gdpopsdacsa', 'uDACS A' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsas', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsaais', 'AI Stat' );
