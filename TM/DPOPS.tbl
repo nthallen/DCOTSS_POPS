@@ -37,10 +37,16 @@ Pumps {
   POPS:   HBox { (PPmpCmd,3); "/"; (PPmpS) };
 }
 
+Gains {
+  LFE_Gp: (LFE_PGain,7);
+  LFE_Gi: (LFE_IGain,7);
+}
+
 System {
   HBox{ +-; Title: "System"; -+ };
   [TMbase_data];
-  POPS: (POPS_Srvr,4);
+  [Gains];
+  POPS: (POPSPwr,3) (POPS_Srvr,4);
   VGlue 0+1;
   [TMbase_times]
 }

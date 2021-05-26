@@ -161,6 +161,12 @@ State POPS_Flow_PI_Init {
   }
 }
 
+State POPS_Flow_PI_Quick_Init {
+  { LFE_I = LFE_Set/LFE_Gi;
+    Validate POPS_Flow_PI;
+  }
+}
+
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
   {

@@ -22,6 +22,7 @@
   : POPS Startup { $0 = SWS_POPS_STARTUP; }
   : POPS Shutdown { $0 = SWS_POPS_SHUTDOWN; }
   : POPS Flow PI { $0 = SWS_POPS_FLOW_PI; }
+  : POPS Flow Quick PI { $0 = SWS_POPS_FLOW_QPI; }
   : POPS Flow Stop { $0 = SWS_POPS_FLOW_STOP; }
   : Bypass Flow Stop { $0 = SWS_BYPASS_FLOW_STOP; }
   : Bypass Flow Isokinetic { $0 = SWS_BYPASS_FLOW_ISO; }
