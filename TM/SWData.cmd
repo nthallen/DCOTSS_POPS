@@ -21,8 +21,10 @@
   : Altitude Land { $0 = SWS_LAND; }
   : POPS Startup { $0 = SWS_POPS_STARTUP; }
   : POPS Shutdown { $0 = SWS_POPS_SHUTDOWN; }
+  : POPS Flow PI { $0 = SWS_POPS_FLOW_PI; }
   : POPS Flow Stop { $0 = SWS_POPS_FLOW_STOP; }
   : Bypass Flow Stop { $0 = SWS_BYPASS_FLOW_STOP; }
+  : Bypass Flow Isokinetic { $0 = SWS_BYPASS_FLOW_ISO; }
   : Time Warp { $0 = SWS_TIME_WARP; }
   : Shutdown Full { $0 = SWS_SHUTDOWN; }
   ;

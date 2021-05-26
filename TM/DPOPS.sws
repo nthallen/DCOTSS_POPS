@@ -12,11 +12,13 @@ SW_Variable: SWStat SW Status
 
   SWS_POPS_STARTUP     30 POPS Startup:             Validate POPS_Startup; break;
   SWS_POPS_SHUTDOWN    31 POPS Shutdown:            Validate POPS_Shutdown; break;
+  SWS_POPS_FLOW_PI     34 POPS Flow PI:             Validate POPS_Flow_PI_Init; break;
   SWS_POPS_FLOW_STOP   32 POPS Flow Stop:           Validate POPS_Flow_Stop; break;
   SWS_BYPASS_FLOW_STOP 33 Bypass Flow Stop:         Validate Bypass_Flow_Stop; break;
+  SWS_BYPASS_FLOW_ISO  35 Bypass Flow Isokinetic:   Validate Bypass_Flow_Iso; break;
 
-  SWS_TIME_WARP      253 Time Warp:                 break;
-  SWS_SHUTDOWN       255 Shutdown Full:             Validate Shutdown; break;
+  SWS_TIME_WARP       253 Time Warp:                break;
+  SWS_SHUTDOWN        255 Shutdown Full:            Validate Shutdown; break;
 
 SW_Variable: <float,LFE_Gain_t> LFE_PGain Set LFE PGain
   : &LFE_gain { $0 = $1; }
