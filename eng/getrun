@@ -82,15 +82,17 @@ for run in $*; do
         nl_error "Cannot retrieve SSP scans without RunType (cal/flight/data/junk/preflt)"
       [ -d $RAW_Dir ] || mkdir $RAW_Dir
       [ -d $RAW_Dir/$run$flt ] || mkdir $RAW_Dir/$run$flt
+      gsecolon=''
+      [ -n "$gse" ] && gsecolon="$gse:"
       if [ $Copy_CSV = yes ]; then
-        do_scp $gse:$HomeDir/anal/$run/*.csv $RAW_Dir/$run$flt
+        do_scp $gsecolon$HomeDir/anal/$run/*.csv $RAW_Dir/$run$flt
         [ $Matlab = yes ] && echo "$RAW_Dir/$run$flt" >>runs.dat
       fi
       if [ -n "$RunType" ]; then
         [ -f $RAW_Dir/$run$flt/$Exp.log ] ||
-          do_scp $gse:$HomeDir/raw/$RunType/$run/$Exp.log $RAW_Dir/$run$flt/$Exp.log
+          do_scp $gsecolon$HomeDir/raw/$RunType/$run/$Exp.log $RAW_Dir/$run$flt/$Exp.log
         [ -f $RAW_Dir/$run$flt/saverun.log ] ||
-          do_scp $gse:$HomeDir/raw/$RunType/$run/saverun.log $RAW_Dir/$run$flt/saverun.log
+          do_scp $gsecolon$HomeDir/raw/$RunType/$run/saverun.log $RAW_Dir/$run$flt/saverun.log
       fi;;
     *) nl_error "Unrecognized option: '$run'";;
   esac

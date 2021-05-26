@@ -54,7 +54,7 @@
 # 1 uDACS_A_elapsed RTC elapsed
 # 1 uDACS_A_curloopdur RTC loop
 # 1 uDACS_A_maxloopdur RTC loop
-  1 POPSPwr:PwrStat:3 POPS Status
+  1 POPSPwr:PwrStat:3 POPS Status %.0lf
 
 # 1 uDACS_B_VSet0 uDACS_B DAC
 # 1 uDACS_B_VSet2 uDACS_B DAC
