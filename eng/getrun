@@ -86,7 +86,7 @@ for run in $*; do
       [ -n "$gse" ] && gsecolon="$gse:"
       if [ $Copy_CSV = yes ]; then
         do_scp $gsecolon$HomeDir/anal/$run/*.csv $RAW_Dir/$run$flt
-        [ $Matlab = yes ] && echo "$RAW_Dir/$run$flt" >>runs.dat
+        echo "$RAW_Dir/$run$flt" >>runs.dat
       fi
       if [ -n "$RunType" ]; then
         [ -f $RAW_Dir/$run$flt/$Exp.log ] ||
@@ -98,7 +98,30 @@ for run in $*; do
   esac
 done
 
-[ -f runs.dat ] && [ "$Matlab" = "yes" ] && matlab -sd `cygpath -w $PWD` -r $StartupScript
+if [ -f runs.dat ] && [ "$Matlab" = "yes" ]; then
+  case `uname -s` in
+    CYGWIN_NT*) pwd_wrap="`cygpath -w $PWD`";;
+    *) pwd_wrap=$PWD;;
+  esac
+
+  # Now locate matlab and run it, specifying this directory and the
+  # name of the newly created set script
+  S=`which matlab 2>/dev/null`
+  if [ -n "$S" ]; then
+    matlab=matlab
+  else
+    for path in /Applications/MATLAB*; do
+      [ -e $path/bin/matlab ] && matlab=$path/bin/matlab
+    done
+  fi
+
+  if [ -n "$matlab" ]; then
+    eval $matlab -sd '$pwd_wrap' -r $StartupScript
+  else
+    nl_error "Unable to locate Matlab executable"
+  fi
+fi
+
 for run in $*; do
   case $run in
     -f) :;;
