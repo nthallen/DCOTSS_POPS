@@ -19,7 +19,7 @@ TM typedef float HPS_Temp_t { text "%6.2f"; }
 TM typedef double HPS_MBAR;
 TM typedef float HPS_P_t { text "%7.2f"; convert HPS_MBAR; }
   calibration (HPS_P_t, HPS_MBAR) { 0, 0, 1, 68.9476 }
-TM typedef float HPS_dP_t { text "%6.4f"; convert HPS_MBAR; }
+TM typedef float HPS_dP_t { text "%7.4f"; convert HPS_MBAR; }
   calibration (HPS_dP_t, HPS_MBAR) { 0, 0, 1, 2.4884 }
 
 TM 1 Hz uDACS_DAC_t BPmpV; /* was uDACS_B_VSet1 */
