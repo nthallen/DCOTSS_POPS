@@ -69,8 +69,8 @@ uDACS_CELCIUS RingT; Invalidate RingT;
 TM typedef double uDACS_Velocity { text "%5.1lf"; }
 uDACS_Velocity PD_Vel; Invalidate PD_Vel;
 { double r;
-  r = HPS_P/(287.058*RingT);
-  PD_Vel = sqrt(2*HPS_dP/r);
+  r = convert(HPS_P)/(287.058*(RingT+273.15));
+  PD_Vel = sqrt(2*convert(HPS_dP)/r);
   Validate PD_Vel;
 }
 
@@ -84,7 +84,8 @@ uDACS_nccm PD_nccm; Invalidate PD_nccm;
    * Area * Vel = cc/min = ccm
    * ccm * (P/P0) * (T0/T) = nccm
    */
-  PD_nccm = 7.85E-3 * PD_Vel * 100/60 * (HPS_P/P0) * (T0/RingT);
+  PD_nccm = 7.85E-3 * PD_Vel * 100/60 *
+    (convert(HPS_P)/P0) * (T0/(RingT+273.15));
   Validate PD_nccm;
 }
 
