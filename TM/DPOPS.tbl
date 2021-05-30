@@ -25,10 +25,12 @@ POPS {
   Temp:     (POPS_Temp,8)   C;
 }
 
-InletP {
-  HBox { +-; Title: "Inlet P"; -+ };
+Inlet {
+  HBox { +-; Title: "Inlet"; -+ };
+  RingT:    (RingT,7)    C;
   HPS_P:    (HPS_P,7)    mbar;
-# InltBP:   (InltBP,9)   mbar;
+  Vel:      (PD_Vel,5)   "m/s";
+  Flow:     (PD_nccm,6)  nccm;
 }
 
 Pumps {
@@ -54,12 +56,12 @@ System {
 { HBox {
     |+;
     { [BMFC];
-      [InletP];
-      [Pumps];
+      [Inlet];
     }; |+; {
       [PMFC];
       [POPS];
     }; |+; {
+      [Pumps];
       [System];
     }; |+
   };
