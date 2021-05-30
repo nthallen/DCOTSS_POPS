@@ -80,11 +80,11 @@ uDACS_nccm PD_nccm; Invalidate PD_nccm;
   P0 = 1013.25;
   T0 = 273.15;
   /* Area = 7.85E-3 cm^2 (1mm ID)
-   * Vel = PD_Vel m/s * 100cm/1m * 1m/60s = cm/min
+   * Vel = PD_Vel m/sec * 100cm/1m * 60sec/min = cm/min
    * Area * Vel = cc/min = ccm
    * ccm * (P/P0) * (T0/T) = nccm
    */
-  PD_nccm = 7.85E-3 * PD_Vel * 100/60 *
+  PD_nccm = 7.85E-3 * PD_Vel * 100 * 60 *
     (convert(HPS_P)/P0) * (T0/(RingT+273.15));
   Validate PD_nccm;
 }
