@@ -74,7 +74,7 @@ uDACS_Velocity PD_Vel; Invalidate PD_Vel;
   Validate PD_Vel;
 }
 
-TM typedef double uDACS_nccm { text "%6.1lf"; }
+TM typedef double uDACS_nccm { text "%6.3lf"; }
 uDACS_nccm PD_nccm; Invalidate PD_nccm;
 { double P0, T0;
   P0 = 1013.25;
