@@ -19,7 +19,7 @@ State Startup {
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
   Validate POPS_Flow_PI_Init;
-  Validate Bypass_Flow_Iso;
+# Validate Bypass_Flow_Iso;
 }
 
 State Shutdown {
