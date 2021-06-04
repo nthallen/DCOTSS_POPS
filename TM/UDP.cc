@@ -5,11 +5,11 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include "UDP.h"
-#include "nortlib.h"
+#include "nl.h"
 #include "nl_assert.h"
 
 UDPbcast::UDPbcast(const char *broadcast_ip,
-                   const char *broadcast_portm,
+                   const char *broadcast_port,
                    int buflen)
     : buf(0),
       buflen(buflen),
@@ -27,14 +27,14 @@ UDPbcast::UDPbcast(const char *broadcast_ip,
 int UDPbcast::UDP_init() {
   bcast_sock = socket(AF_INET, SOCK_DGRAM, 0);
   if (bcast_sock == -1) {
-    nl_error(nl_response, "Unable to create UDP socket: %s", strerror(errno));
+    msg(nl_response, "Unable to create UDP socket: %s", strerror(errno));
     return 1;
   }
   int broadcastEnable = 1;
   int ret = setsockopt(bcast_sock, SOL_SOCKET, SO_BROADCAST,
     &broadcastEnable, sizeof(broadcastEnable));
   if (ret == -1) {
-    nl_error(nl_response, "setsockopt failed: %s", strerror(errno));
+    msg(nl_response, "setsockopt failed: %s", strerror(errno));
     return 1;
   }
   struct addrinfo hints, *res;
@@ -47,7 +47,7 @@ int UDPbcast::UDP_init() {
   hints.ai_addr = 0;
   hints.ai_next = 0;
   if (getaddrinfo(broadcast_ip, broadcast_port, &hints, &res)) {
-    nl_error(nl_response, "getaddrinfo failed: %s", strerror(errno));
+    msg(nl_response, "getaddrinfo failed: %s", strerror(errno));
     return 1;
   }
   nl_assert(res->ai_next == 0);
@@ -84,11 +84,11 @@ int UDPbcast::Broadcast(const char *fmt, ...) {
   va_list args;
   int msglen;
   va_start(args, fmt);
-  msglen = vsnprintf(buf, 80, fmt, args);
+  msglen = vsnprintf(buf, buflen, fmt, args);
   va_end(args);
   if (msglen >= buflen) {
     if (!ov_status) {
-      nl_error(2, "UDP Broadcast buffer overflow");
+      msg(2, "UDP Broadcast buffer overflow");
       ov_status = true;
     }
     return 1; // Don't broadcast a truncated message
@@ -96,13 +96,13 @@ int UDPbcast::Broadcast(const char *fmt, ...) {
   if (ok_status) {
     int nb = sendto(bcast_sock, buf, msglen, 0, (sockaddr*)&s, addrlen);
     if (nb < 0) {
-      nl_error(2, "sendto() returned error %d: %s", errno, strerror(errno));
+      msg(2, "sendto() returned error %d: %s", errno, strerror(errno));
       ok_status = false;
       close(bcast_sock);
       bcast_sock = -1;
       return 1;
     } else if (nb < msglen) {
-      nl_error(2, "sendto() expected %d, returned %d", msglen, nb);
+      msg(2, "sendto() expected %d, returned %d", msglen, nb);
       return 1;
     }
   } else {
@@ -132,4 +132,44 @@ const char *UDPbcast::ISO8601(double utc) {
     tms->tm_min,
     tms->tm_sec + futc);
   return buf;
+}
+
+UDPcsv_file::UDPcsv_file(unsigned int n_cols, const char *nan_text)
+    : csv_file("", n_cols, nan_text),
+      UDP(0),
+      obuf(0),
+      obufsize(0),
+      ovflow_reported(false),
+      n_ovflow(0) {
+}
+
+void UDPcsv_file::init(UDPbcast *UDPb, int obufsize) {
+  UDP = UDPb;
+  this->obufsize = obufsize;
+  obuf = new char[obufsize];
+}
+
+void UDPcsv_file::transmit(const char *hdr, const char *iso8601) {
+  int nc = 0;
+  nc += snprintf(&obuf[nc], obufsize-nc, "%s,%s", hdr, iso8601);
+  for (unsigned int i = 1; i < cols.size(); ++i) {
+    if (cols[i]) {
+      nc += snprintf(&obuf[nc], obufsize-nc, ",%s", cols[i]->output());
+      cols[i]->reset();
+    } else if (nc+1 < obufsize) {
+      obuf[nc++] = ',';
+      obuf[nc] = '\0';
+    } else ++nc;
+  }
+  nc += snprintf(&obuf[nc], obufsize-nc, "\r\n");
+  if (nc < obufsize) {
+    // UDP->Broadcast("%s", obuf);
+    msg(0, "%s", obuf);
+  } else {
+    ++n_ovflow;
+    if (!ovflow_reported) {
+      msg(2, "UDP output buffer overflow: nc=%d", nc);
+      ovflow_reported = true;
+    }
+  }
 }

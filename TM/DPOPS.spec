@@ -35,6 +35,10 @@ DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
 DPOPSdisp : DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
+UDPext : UDP.tmc UDP.cc
 doit : DPOPS.doit
 %%
-CXXFLAGS=-Wall -g
+# This matches the current definitions in monarch dasio
+# and is necessary to see addrinfo/getaddrinfo needed for
+# UDP.
+CXXFLAGS=-Wall -g -D_POSIX_C_SOURCE=200809L

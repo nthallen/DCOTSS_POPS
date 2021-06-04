@@ -28,6 +28,11 @@ DPOPSalgo.cc
 DPOPSalgooui.cc
 DPOPSalgo.o
 DPOPSalgooui.o
+UDPext.cc
+UDPextoui.cc
+UDPext.o
+UDP.o
+UDPextoui.o
 doit.dep
 DPOPScltnc.o
 DPOPScltncoui.cc
@@ -53,6 +58,7 @@ DPOPSsrvr
 DPOPSdispnc
 uDACSdispnc
 DPOPSalgo
+UDPext
 doit
 DPOPScltnc
 DPOPSengext
