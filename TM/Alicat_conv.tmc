@@ -1,0 +1,14 @@
+/* Alicat_conv.tmc
+ * Low pass filtering for BFMC_MassFlow
+ */
+%{
+  #include "LowPass.h"
+  LowPass BPLP(0);
+%}
+
+/* Bypass Mass Flow with Low Pass Filtering */
+Alicat_Flow1_t BMFC_MF_LP; Invalidate BMFC_MF_LP;
+{ BMFC_MF_LP = LowPassSample(BPLP, BMFC_MassFlow);
+  Validate BMFC_MF_LP;
+}
+LowPassSetPeriod(BPLP, BPmp_LPFP);

@@ -1,5 +1,5 @@
-function pdpopsanccm(varargin);
-% pdpopsanccm( [...] );
+function pdpopsalicatnccm(varargin);
+% pdpopsalicatnccm( [...] );
 % Alicat nccm
 h = timeplot({'BMFC_Set','BMFC_MassFlow','PMFC_Set','PMFC_MassFlow'}, ...
       'Alicat nccm', ...

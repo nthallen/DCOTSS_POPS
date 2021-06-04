@@ -11,6 +11,8 @@ State Init {
     > MFC POPS Flow Setpoint 0 nccm
     > Set LFE PGain -4.0
     > Set LFE IGain -9.0
+    > Set Bypass Pump PGain 0
+    > Set Bypass Pump IGain 0
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -205,25 +207,51 @@ State POPS_Flow_Off {}
 # -----------------------------------------------------------------------------
 Partition
 
+%{
+  double BP_Set = 800.; // ccm
+  double BP_Gp = -4.0;  // Proportional Gain
+  double BP_Gi = -1.0;  // Integral Gain
+  double BP_I = 0.;     // Integral
+  double BP_err;
+  double BP_MFset;
+%}
+
+{ BP_Gp = BPmp_PGain; }
+{ BP_Gi = BPmp_IGain; }
+
 State Bypass_Flow_Idle {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
+  > MFC Bypass Flow SetPoint 5000 nccm
+}
+
+State Bypass_Flow_Iso_Init {
+  { BP_I = 0;
+    Validate Bypass_Flow_Iso;
+  }
 }
 
 State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
-  { double Fm_SPX, Fm_BMFC;
+  { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
     Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
-    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX /* + SMFC_MassFlow */;
-    if (Fm_BMFC < 10) {
-      if (BPmpS) {
-        ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");
-      }
-      if (Fm_BMFC < 0) Fm_BMFC = 0;    
+    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
+    if (Fm_BMFC < 0) Fm_BMFC = 0;
+    else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
+    
+    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
+    Fm_err_BMFC = BMFC_MF_LP - Fm_BMFC;
+    BP_I = BP_I + Fm_err_BMFC;
+    Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
+      (T0/(RingT+273.15))*(HPS_P/P0);
+
+    if (Vset < 0) Vset = 0;
+    else if (Vset > 5) Vset = 5;  
+    if (BPmpS && Vset < 0.5) {
+      ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");
     }
-    if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     ci_sendfcmd(Cmd_Send_Quiet,
-      "MFC Bypass Flow SetPoint %.1lf nccm\n", Fm_BMFC);
-    if (Fm_BMFC > 10 && !BPmpS) {
+      "Set Bypass Pump Speed %.2lf Volts\n", Vset);
+    if (!BPmpS && Vset >= 0.5) {
       ci_sendfcmd(Cmd_Send, "Pump Bypass On\n");
     }
   }

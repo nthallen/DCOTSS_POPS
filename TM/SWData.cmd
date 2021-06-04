@@ -14,6 +14,9 @@
   : SW Status &SWStat { SWData.SWStat = $3; }
   : Set LFE PGain &LFE_PGain { SWData.LFE_PGain = $4; }
   : Set LFE IGain &LFE_IGain { SWData.LFE_IGain = $4; }
+  : Set Bypass Pump PGain &BPmp_PGain { SWData.BPmp_PGain = $5; }
+  : Set Bypass Pump IGain &BPmp_IGain { SWData.BPmp_IGain = $5; }
+  : Set Bypass Pump Filter Period &BPmp_LPFP { SWData.BPmp_LPFP = $6; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -34,4 +37,13 @@
   ;
 &LFE_IGain <float>
   : &LFE_gain { $0 = $1; }
+  ;
+&BPmp_PGain <float>
+  : &LFE_gain { $0 = $1; }
+  ;
+&BPmp_IGain <float>
+  : &LFE_gain { $0 = $1; }
+  ;
+&BPmp_LPFP <uint8_t>
+  : &LPFP { $0 = $1; }
   ;

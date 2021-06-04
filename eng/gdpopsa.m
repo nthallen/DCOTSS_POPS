@@ -1,5 +1,5 @@
 function fig = gdpopsa(varargin);
 % gdpopsa(...)
-% Alicat
-ffig = ne_group(varargin,'Alicat','pdpopsanccm','pdpopsaccm');
+% Algo
+ffig = ne_group(varargin,'Algo','pdpopsasws','pdpopsag','pdpopsaf','pdpopsamf','pdpopsalp');
 if nargout > 0 fig = ffig; end

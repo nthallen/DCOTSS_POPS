@@ -2,3 +2,4 @@
 1.7.1 5/10/2021 Delete uDACS A RTC channels
 1.7.2 5/24/2021 Delete Sheath MFC
 1.7.3 5/26/2021 Add LFE_PGain, LFE_IGain
+1.7.4 6/03/2021 Add BPmp_PGain, BPmp_IGain

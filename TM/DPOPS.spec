@@ -22,6 +22,7 @@ swsbase = DPOPS.sws
 
 Module TMbase
 Module alicat src=alicat.txt
+tmcbase = Alicat_conv.tmc LowPass.cc
 Module POPS
 
 TGTDIR = /home/DPOPS

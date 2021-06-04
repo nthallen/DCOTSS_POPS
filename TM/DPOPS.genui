@@ -2,5 +2,12 @@ HEADER DCOTSS POPS
 MNEMONIC dpops
 HOMEDIR DPOPS_DATA_DIR
 
- 1 LFE_PGain LFE Gains
- 1 LFE_IGain LFE Gains
+ 1 SWStat        Algo SWStat
+ 1 LFE_PGain     Algo Gains
+ 1 LFE_IGain     Algo Gains
+ 1 BPmp_PGain    Algo Gains
+ 1 BPmp_IGain    Algo Gains
+ 1 BPmp_IGain    Algo Filter
+ 1 BMFC_MassFlow Algo MFfilt
+ 1 BMFC_MF_LP    Algo MFfilt
+ 1 BPmp_LPFP     Algo LPper

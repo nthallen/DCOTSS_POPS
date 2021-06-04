@@ -3,3 +3,6 @@ TM "Receive" SWData 0;
 TM 1 Hz UCHAR SWStat; collect SWStat = SWData.SWStat;
 TM 1 Hz LFE_Gain_t LFE_PGain; collect LFE_PGain = SWData.LFE_PGain;
 TM 1 Hz LFE_Gain_t LFE_IGain; collect LFE_IGain = SWData.LFE_IGain;
+TM 1 Hz LFE_Gain_t BPmp_PGain; collect BPmp_PGain = SWData.BPmp_PGain;
+TM 1 Hz LFE_Gain_t BPmp_IGain; collect BPmp_IGain = SWData.BPmp_IGain;
+TM 1 Hz BPLPF_t BPmp_LPFP; collect BPmp_LPFP = SWData.BPmp_LPFP;
