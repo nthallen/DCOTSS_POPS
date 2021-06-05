@@ -21,7 +21,7 @@ State Startup {
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
   Validate POPS_Flow_PI_Init;
-# Validate Bypass_Flow_Iso;
+  Validate Bypass_Flow_Iso;
 }
 
 State Shutdown {
@@ -231,10 +231,15 @@ State Bypass_Flow_Iso_Init {
 }
 
 State Bypass_Flow_Iso {
+      > MFC Bypass Flow SetPoint 5000 nccm
+      Hold until (BMFC_Set > 4999) or 3
+      else Validate Bypass_Flow_Iso;
+   +1 > Pump Bypass On
+  
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
     Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
-    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
+    Fm_BMFC = 2*PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     
@@ -246,14 +251,8 @@ State Bypass_Flow_Iso {
 
     if (Vset < 0) Vset = 0;
     else if (Vset > 5) Vset = 5;  
-    if (BPmpS && Vset < 0.5) {
-      ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");
-    }
     ci_sendfcmd(Cmd_Send_Quiet,
       "Set Bypass Pump Speed %.2lf Volts\n", Vset);
-    if (!BPmpS && Vset >= 0.5) {
-      ci_sendfcmd(Cmd_Send, "Pump Bypass On\n");
-    }
   }
 }
 
