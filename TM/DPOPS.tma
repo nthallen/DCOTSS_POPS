@@ -11,8 +11,8 @@ State Init {
     > MFC POPS Flow Setpoint 0 nccm
     > Set LFE PGain -0.0581
     > Set LFE IGain -0.131
-    > Set Bypass Pump PGain 0
-    > Set Bypass Pump IGain 0
+    > Set Bypass Pump PGain -0.000125
+    > Set Bypass Pump IGain 0.0001
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -250,7 +250,7 @@ State Bypass_Flow_Iso {
     BP_I = BP_I + Fm_err_BMFC;
     if (++BP_n_update >= BPmp_Per) {
       Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
-        (T0/(RingT+273.15))*(HPS_P/P0);
+        (T0/(RingT+273.15))*(convert(HPS_P)/P0);
 
       if (Vset < 0) Vset = 0;
       else if (Vset > 5) Vset = 5;  
