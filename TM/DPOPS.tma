@@ -21,7 +21,7 @@ State Startup {
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
   Validate POPS_Flow_PI_Init;
-  Validate Bypass_Flow_Iso;
+  Validate Bypass_Flow_Iso_Init;
 }
 
 State Shutdown {
@@ -175,7 +175,7 @@ State POPS_Flow_PI {
     LFE_err = POPS_ccm - LFE_Set;
     LFE_I = LFE_I + LFE_err;
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
-      (T0/(RingT+273.15))*(HPS_P/P0);
+      (T0/(RingT+273.15))*(convert(HPS_P)/P0);
     if (LFE_MFset < 10) {
       if (PPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
@@ -240,7 +240,7 @@ State Bypass_Flow_Iso {
   
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
-    Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
+    Fm_SPX = 120*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
     Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
