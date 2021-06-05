@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   TM->connect();
   ELoop.add_child(TM);
   POPS_client *clt = new POPS_client();
-  clt->connect();
+  clt->POPS_connect();
   ELoop.add_child(clt);
   msg(0, "Starting: V3.0");
   ELoop.event_loop();
@@ -286,8 +286,17 @@ POPS_client::POPS_client() :
   flags |= gflag(0);
 }
 
+bool POPS_client::POPS_connect() {
+  POPS.Srvr = 0;
+  conn_fail_reported = true;
+  if (connect()) return true;
+  TO.Set(5,0);
+  flags |= Fl_Timeout;
+  return false;
+}
+
 bool POPS_client::app_connected() {
-  iwrite("V\n");
+  forward("V\n");
   ++srvr_Stale;
   return false;
 }
@@ -311,6 +320,8 @@ bool POPS_client::app_input() {
       }
     }
   }
+  TO.Clear();
+  flags &= ~Fl_Timeout;
   srvr_Stale = 0;
   report_ok(nc);
   return false;
@@ -318,19 +329,32 @@ bool POPS_client::app_input() {
 
 bool POPS_client::forward(const uint8_t *cmd) {
   if (is_negotiated()) {
-    msg(MSG_DEBUG, "%s: Forwarding command %c", iname, cmd[0]);
+    msg(MSG_DBG(1), "%s: Forwarding command %c", iname, cmd[0]);
     iwrite((const char *)cmd);
+    TO.Set(3,0);
+    flags |= Fl_Timeout;
   } else {
     msg(MSG_ERROR, "%s: command issued before comms established", iname);
   }
   return false;
 }
 
+/**
+ * We should only get here if socket_state == Socket_connected.
+ * Timeouts while connecting are handled by Socket::ProcessData().
+ * This timeout occurs if we timeout during a transaction with the
+ * server. Our response as of now will be to immediately tear down
+ * the connection, reset the reported server state to Init and
+ * begin the cycle of attempting a new connection.
+ */
+bool POPS_client::process_timeout() {
+  TO.Clear();
+  close();
+  return POPS_connect();
+}
+
 bool POPS_client::app_process_eof() {
-  connect_later();
-  if (POPS.Srvr != 3)
-    POPS.Srvr = 0;
-  return false;
+  return POPS_connect();
 }
 
 bool POPS_client::tm_sync() {
@@ -343,6 +367,10 @@ bool POPS_client::tm_sync() {
       msg(2, "%s: srvr_Stale=%d while connected", iname, srvr_Stale);
   }
   return false;
+}
+
+bool POPS_client::connect_failed() {
+  return POPS_connect();
 }
 
 POPS_client *POPS_client::instance = 0;

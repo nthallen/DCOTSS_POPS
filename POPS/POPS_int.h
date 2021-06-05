@@ -49,13 +49,19 @@ class POPS_Cmd : public DAS_IO::Cmd_reader {
 class POPS_client : public DAS_IO::Client {
   public:
     POPS_client();
+    bool POPS_connect();
     bool app_connected();
     bool app_input();
     bool forward(const uint8_t *cmd);
+    inline bool forward(const char *cmd) {
+      return forward((const uint8_t *)cmd);
+    }
     bool app_process_eof();
+    bool process_timeout();
     static POPS_client *instance;
   protected:
     bool tm_sync();
+    bool connect_failed();
   private:
     uint8_t srvr_Stale;
 };
