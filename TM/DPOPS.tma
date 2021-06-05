@@ -250,7 +250,7 @@ State Bypass_Flow_Iso {
     BP_I = BP_I + Fm_err_BMFC;
     if (++BP_n_update >= BPmp_Per) {
       Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
-        (T0/(RingT+273.15))*(HPS_P/P0);
+        (T0/(RingT+273.15))*(convert(HPS_P)/P0);
 
       if (Vset < 0) Vset = 0;
       else if (Vset > 5) Vset = 5;  
