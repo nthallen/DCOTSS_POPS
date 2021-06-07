@@ -7,3 +7,6 @@
 &SimVel <uint8_t>
   : %d (Enter Simulated Velocity in m/s) m/s { $0 = $1 < 0 ? 0 : $1; }
   ;
+&BPPer <uint8_t>
+  : %d (Enter PI Loop Period in secs > 0) secs { $0 = $1 < 0 ? 0 : $1; }
+  ;

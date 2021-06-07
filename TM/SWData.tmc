@@ -7,3 +7,4 @@ TM 1 Hz BP_Gain_t BPmp_PGain; collect BPmp_PGain = SWData.BPmp_PGain;
 TM 1 Hz BP_Gain_t BPmp_IGain; collect BPmp_IGain = SWData.BPmp_IGain;
 TM 1 Hz BPLPF_t BPmp_LPFP; collect BPmp_LPFP = SWData.BPmp_LPFP;
 TM 1 Hz BPLPF_t Sim_Vel; collect Sim_Vel = SWData.Sim_Vel;
+TM 1 Hz BPLPF_t BPmp_Per; collect BPmp_Per = SWData.BPmp_Per;
