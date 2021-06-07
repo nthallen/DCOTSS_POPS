@@ -239,7 +239,7 @@ State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
     Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
-    Fm_BMFC = 2*PD_nccm - PMFC_MassFlow - Fm_SPX;
+    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     

@@ -17,6 +17,7 @@
   : Set Bypass Pump PGain &BPmp_PGain { SWData.BPmp_PGain = $5; }
   : Set Bypass Pump IGain &BPmp_IGain { SWData.BPmp_IGain = $5; }
   : Set Bypass Pump Filter Period &BPmp_LPFP { SWData.BPmp_LPFP = $6; }
+  : Set Simulated Velocity &Sim_Vel { SWData.Sim_Vel = $4; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -46,4 +47,7 @@
   ;
 &BPmp_LPFP <uint8_t>
   : &LPFP { $0 = $1; }
+  ;
+&Sim_Vel <uint8_t>
+  : &SimVel { $0 = $1; }
   ;

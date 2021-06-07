@@ -9,6 +9,7 @@ typedef struct __attribute__((__packed__)) {
   float BPmp_PGain;
   float BPmp_IGain;
   uint8_t BPmp_LPFP;
+  uint8_t Sim_Vel;
 } SWData_t;
 extern SWData_t SWData;
 

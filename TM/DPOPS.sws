@@ -31,3 +31,5 @@ SW_Variable: <float,BP_Gain_t> BPmp_IGain Set Bypass Pump IGain
   : &LFE_gain { $0 = $1; }
 SW_Variable: <uint8_t,BPLPF_t> BPmp_LPFP Set Bypass Pump Filter Period
   : &LPFP { $0 = $1; }
+SW_Variable: <uint8_t,BPLPF_t> Sim_Vel Set Simulated Velocity
+  : &SimVel { $0 = $1; }
