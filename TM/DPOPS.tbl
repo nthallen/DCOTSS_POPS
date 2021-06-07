@@ -7,8 +7,8 @@ BMFC {
   MFf:   (BMFC_MF_LP,7) nccm;
   LPFP:   (BPmp_LPFP,3);
   BPmpV:      (BPmpV,6) V;
-  PGain: (BPmp_PGain,7);
-  IGain: (BPmp_IGain,7);
+  PGain: (BPmp_PGain,9);
+  IGain: (BPmp_IGain,9);
 }
 
 PMFC {

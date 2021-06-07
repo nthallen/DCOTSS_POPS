@@ -25,9 +25,9 @@ SW_Variable: <float,LFE_Gain_t> LFE_PGain Set LFE PGain
   : &LFE_gain { $0 = $1; }
 SW_Variable: <float,LFE_Gain_t> LFE_IGain Set LFE IGain
   : &LFE_gain { $0 = $1; }
-SW_Variable: <float,LFE_Gain_t> BPmp_PGain Set Bypass Pump PGain
+SW_Variable: <float,BP_Gain_t> BPmp_PGain Set Bypass Pump PGain
   : &LFE_gain { $0 = $1; }
-SW_Variable: <float,LFE_Gain_t> BPmp_IGain Set Bypass Pump IGain
+SW_Variable: <float,BP_Gain_t> BPmp_IGain Set Bypass Pump IGain
   : &LFE_gain { $0 = $1; }
 SW_Variable: <uint8_t,BPLPF_t> BPmp_LPFP Set Bypass Pump Filter Period
   : &LPFP { $0 = $1; }
