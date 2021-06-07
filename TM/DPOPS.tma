@@ -214,6 +214,8 @@ Partition
   double BP_I = 0.;     // Integral
   double BP_err;
   double BP_MFset;
+  #define BP_update_period 1
+  int BP_n_update;
 %}
 
 { BP_Gp = BPmp_PGain; }
@@ -226,6 +228,7 @@ State Bypass_Flow_Idle {
 
 State Bypass_Flow_Iso_Init {
   { BP_I = 0;
+    BP_n_update = BP_update_period-1;
     Validate Bypass_Flow_Iso;
   }
 }
@@ -246,13 +249,16 @@ State Bypass_Flow_Iso {
     /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
     Fm_err_BMFC = BMFC_MF_LP - Fm_BMFC;
     BP_I = BP_I + Fm_err_BMFC;
-    Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
-      (T0/(RingT+273.15))*(HPS_P/P0);
+    if (++BP_n_update >= BP_update_period) {
+      Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
+        (T0/(RingT+273.15))*(HPS_P/P0);
 
-    if (Vset < 0) Vset = 0;
-    else if (Vset > 5) Vset = 5;  
-    ci_sendfcmd(Cmd_Send_Quiet,
-      "Set Bypass Pump Speed %.2lf Volts\n", Vset);
+      if (Vset < 0) Vset = 0;
+      else if (Vset > 5) Vset = 5;  
+      ci_sendfcmd(Cmd_Send_Quiet,
+        "Set Bypass Pump Speed %.2lf Volts\n", Vset);
+      BP_n_update = 0;
+    }
   }
 }
 
