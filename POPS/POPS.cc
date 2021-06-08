@@ -47,7 +47,7 @@ UserPkts_UDP::UserPkts_UDP(int udp_port)
   Bind(udp_port);
   // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()
-  flags |= gflag(0);
+  // flags |= gflag(0);
 }
 
 bool UserPkts_UDP::protocol_input() {
@@ -156,10 +156,10 @@ bool UserPkts_UDP::protocol_input() {
   return false;
 }
 
-bool UserPkts_UDP::tm_sync() {
-  if (POPS.Stale < 255) ++POPS.Stale;
-  return false;
-}
+// bool UserPkts_UDP::tm_sync() {
+  // if (POPS.Stale < 255) ++POPS.Stale;
+  // return false;
+// }
 
 bool UserPkts_UDP::process_eof() {
   msg(0, "%s: process_eof(): Re-binding UDP port %d",
@@ -361,6 +361,7 @@ bool POPS_client::app_process_eof() {
 
 bool POPS_client::tm_sync() {
   msg(MSG_DBG(1), "%s: POPS_client::tm_sync()", iname);
+  if (POPS.Stale < 255) ++POPS.Stale;
   if (POPS.Stale > 2 && socket_state == Socket_connected) {
     if (srvr_Stale == 0)
       return app_connected();

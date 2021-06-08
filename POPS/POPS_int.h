@@ -24,7 +24,7 @@ class UserPkts_UDP : public DAS_IO::Interface {
     bool protocol_input();
     bool process_eof();
   protected:
-    bool tm_sync();
+    //bool tm_sync();
   private:
     void Bind(int port);
     int fillbuf();
