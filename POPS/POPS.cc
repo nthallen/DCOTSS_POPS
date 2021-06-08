@@ -373,8 +373,9 @@ bool POPS_client::tm_sync() {
   return false;
 }
 
-// bool POPS_client::connect_failed() {
-  // return POPS_connect();
-// }
+bool POPS_client::connect_failed() {
+  msg(MSG_DBG(2), "%s: connect_failed()", iname);
+  return false;
+}
 
 POPS_client *POPS_client::instance = 0;

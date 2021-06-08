@@ -60,6 +60,7 @@ class POPS_client : public DAS_IO::Client {
     static POPS_client *instance;
   protected:
     bool tm_sync();
+    bool connect_failed();
   private:
     uint8_t srvr_Stale;
 };
