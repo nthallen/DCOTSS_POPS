@@ -350,6 +350,7 @@ bool POPS_client::forward(const uint8_t *cmd) {
  */
 bool POPS_client::process_timeout() {
   TO.Clear();
+  POPS.Srvr = 0;
   return reset();
 }
 
@@ -359,6 +360,7 @@ bool POPS_client::app_process_eof() {
 }
 
 bool POPS_client::tm_sync() {
+  msg(MSG_DBG(1), "%s: POPS_client::tm_sync()", iname);
   if (POPS.Stale > 2 && socket_state == Socket_connected) {
     if (srvr_Stale == 0)
       return app_connected();
