@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
   TM->connect();
   ELoop.add_child(TM);
   POPS_client *clt = new POPS_client();
-  clt->POPS_connect();
+  clt->connect();
   ELoop.add_child(clt);
   msg(0, "Starting: V3.0");
   ELoop.event_loop();
@@ -283,17 +283,18 @@ POPS_client::POPS_client() :
   nl_assert(POPS_client::instance == 0);
   POPS_client::instance = this;
   set_retries(-1, 1, 1);
+  set_connect_timeout(5,0);
   flags |= gflag(0);
 }
 
-bool POPS_client::POPS_connect() {
-  POPS.Srvr = 0;
-  conn_fail_reported = true;
-  if (connect()) return true;
-  TO.Set(5,0);
-  flags |= Fl_Timeout;
-  return false;
-}
+// bool POPS_client::POPS_connect() {
+  // POPS.Srvr = 0;
+  // conn_fail_reported = true;
+  // if (connect()) return true;
+  // TO.Set(5,0);
+  // flags |= Fl_Timeout;
+  // return false;
+// }
 
 bool POPS_client::app_connected() {
   forward("V\n");
@@ -349,12 +350,12 @@ bool POPS_client::forward(const uint8_t *cmd) {
  */
 bool POPS_client::process_timeout() {
   TO.Clear();
-  close();
-  return POPS_connect();
+  return reset();
 }
 
 bool POPS_client::app_process_eof() {
-  return POPS_connect();
+  connect_later(5,0);
+  return false;
 }
 
 bool POPS_client::tm_sync() {
@@ -369,8 +370,8 @@ bool POPS_client::tm_sync() {
   return false;
 }
 
-bool POPS_client::connect_failed() {
-  return POPS_connect();
-}
+// bool POPS_client::connect_failed() {
+  // return POPS_connect();
+// }
 
 POPS_client *POPS_client::instance = 0;
