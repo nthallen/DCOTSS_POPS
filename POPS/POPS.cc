@@ -306,10 +306,12 @@ bool POPS_client::app_input() {
   cp = 0;
   while (cp < nc) {
     if (isdigit(buf[cp])) {
+      uint8_t old_Srvr = POPS.Srvr;
       if (not_uint8(POPS.Srvr) || not_str("\n")) {
         report_err("%s: poorly formed status response", iname);
       }
-      msg(MSG, "%s: POPS.Srvr = %d", iname, POPS.Srvr);
+      if (POPS.Srvr != old_Srvr)
+        msg(MSG_DBG(0), "%s: POPS.Srvr = %d", iname, POPS.Srvr);
     } else {
       while (cp < nc && buf[cp] != '\n') ++cp;
       if (cp < nc) {
@@ -351,6 +353,7 @@ bool POPS_client::forward(const uint8_t *cmd) {
 bool POPS_client::protocol_timeout() {
   TO.Clear();
   POPS.Srvr = 0;
+  msg(MSG_DBG(0), "%s: POPS.Srvr = %d (resetting)", iname, POPS.Srvr);
   return reset();
 }
 
