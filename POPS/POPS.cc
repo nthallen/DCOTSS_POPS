@@ -282,7 +282,7 @@ POPS_client::POPS_client() :
   POPS.Srvr = 0;
   nl_assert(POPS_client::instance == 0);
   POPS_client::instance = this;
-  set_retries(-1, 1, 1);
+  set_retries(-1, 5, 5);
   set_connect_timeout(5,0);
   flags |= gflag(0);
 }
