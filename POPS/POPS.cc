@@ -348,7 +348,7 @@ bool POPS_client::forward(const uint8_t *cmd) {
  * the connection, reset the reported server state to Init and
  * begin the cycle of attempting a new connection.
  */
-bool POPS_client::process_timeout() {
+bool POPS_client::protocol_timeout() {
   TO.Clear();
   POPS.Srvr = 0;
   return reset();
@@ -366,8 +366,8 @@ bool POPS_client::tm_sync() {
     if (srvr_Stale == 0)
       return app_connected();
     else
-      ++srvr_Stale;
-    if (srvr_Stale == 20)
+      if (srvr_Stale < 255) ++srvr_Stale;
+    if (srvr_Stale == 5)
       msg(2, "%s: srvr_Stale=%d while connected", iname, srvr_Stale);
   }
   return false;

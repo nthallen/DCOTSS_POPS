@@ -56,7 +56,7 @@ class POPS_client : public DAS_IO::Client {
       return forward((const uint8_t *)cmd);
     }
     bool app_process_eof();
-    bool process_timeout();
+    bool protocol_timeout();
     static POPS_client *instance;
   protected:
     bool tm_sync();
