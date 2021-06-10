@@ -16,7 +16,7 @@ SW_Variable: SWStat SW Status
   SWS_POPS_FLOW_QPI    26 POPS Flow Quick PI:       Validate POPS_Flow_PI_Quick_Init; break;
   SWS_POPS_FLOW_STOP   32 POPS Flow Stop:           Validate POPS_Flow_Stop; break;
   SWS_BYPASS_FLOW_STOP 33 Bypass Flow Stop:         Validate Bypass_Flow_Stop; break;
-  SWS_BYPASS_FLOW_ISO  35 Bypass Flow Isokinetic:   Validate Bypass_Flow_Iso; break;
+  SWS_BYPASS_FLOW_ISO  35 Bypass Flow Isokinetic:   Validate Bypass_Flow_Iso_Init; break;
 
   SWS_TIME_WARP       253 Time Warp:                break;
   SWS_SHUTDOWN        255 Shutdown Full:            Validate Shutdown; break;
