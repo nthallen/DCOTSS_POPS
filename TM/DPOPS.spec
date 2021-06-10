@@ -4,7 +4,6 @@ tmcbase = uDACS_A.tmc
 tmcbase = uDACS_B.tmc
 tmcbase = T30K75KU_uDACS.tmc
 tmcbase = T30K75KU_uDACS16.tmc
-tmcbase = AD7770_T10K100KU.tmc
 # kluge to define Sim_Vel before referencing it in uDACS_B_conv.tmc
 tmcbase = SWData.tmc
 tmcbase = uDACS_A_conv.tmc uDACS_B_conv.tmc
