@@ -1,11 +1,11 @@
-  1 BMFC_Status Alicat_HK Status
+  1 BMFC_Status Alicat_HK Status %.0lf
   1 BMFC_Stale  Alicat_HK Stale
   1 BMFC_T      Alicat_HK T
   1 BMFC_P      Alicat_HK mbar
   1 BMFC_Set    Alicat nccm
   1 BMFC_MassFlow   Alicat nccm
   1 BMFC_VolFlow   Alicat ccm
-  1 PMFC_Status Alicat_HK Status
+  1 PMFC_Status Alicat_HK Status %.0lf
   1 PMFC_Stale  Alicat_HK Stale
   1 PMFC_T      Alicat_HK T
   1 PMFC_P      Alicat_HK mbar
