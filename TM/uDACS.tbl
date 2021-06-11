@@ -49,7 +49,7 @@ Honey {
   T1:   (HPS1_Temp,6) C;
   AP:   (HPS_P,7)     mbar;
   T2:   (HPS2_Temp,6) C;
-  dP:   (HPS_dP,7)    mbar;
+  dP:   (HPS_dP,8)    mbar;
 }
 
 TMbaseC {
