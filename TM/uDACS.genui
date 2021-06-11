@@ -125,7 +125,7 @@
   1 HPS1_Temp Honeywell HPS_T
   1 HPS2_Temp Honeywell HPS_T
   1 HPS_P Honeywell HPS_P
-  1 HPS_dP Honeywell HPS_dP
+  1 HPS_dP Honeywell HPS_dP %.4lf
 
 # 1 uDACS_B_Raw0 uDACS_B Raw %.0lf
   1 uDACS_B_Raw1 uDACS_B Raw %.0lf
