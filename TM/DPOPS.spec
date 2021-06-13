@@ -23,6 +23,7 @@ Module TMbase
 Module alicat src=alicat.txt
 tmcbase = Alicat_conv.tmc LowPass.cc
 Module POPS
+Module IWG1
 
 TGTDIR = /home/DPOPS
 IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
@@ -34,6 +35,7 @@ DPOPScol : -lsubbuspp
 DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
 DPOPSdisp : DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS.tbl
+IWG1disp : IWG1.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
 UDPext : UDP.tmc UDP.cc
 doit : DPOPS.doit

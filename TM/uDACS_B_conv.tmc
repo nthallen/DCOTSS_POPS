@@ -70,7 +70,8 @@ TM typedef double uDACS_Velocity { text "%5.1lf"; }
 uDACS_Velocity PD_Vel; Invalidate PD_Vel;
 { double r;
   r = convert(HPS_P)/(287.058*(RingT+273.15));
-  PD_Vel = Sim_Vel > 0 ? Sim_Vel : sqrt(2*convert(HPS_dP)/r);
+  PD_Vel = Sim_Vel > 0 ? Sim_Vel :
+    (HPS_dP > 0 ? sqrt(2*convert(HPS_dP)/r) : 0);
   Validate PD_Vel;
 }
 

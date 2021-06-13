@@ -9,10 +9,10 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
-    > Set LFE PGain -0.0581
-    > Set LFE IGain -0.131
-    > Set Bypass Pump PGain -0.000125
-    > Set Bypass Pump IGain 0.0001
+    > Set LFE PGain 0.0581
+    > Set LFE IGain 0.131
+    > Set Bypass Pump PGain 8.744e-5
+    > Set Bypass Pump IGain 9.000e-5
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -141,8 +141,8 @@ Partition
 
 %{
   double LFE_Set = 800.; // ccm
-  double LFE_Gp = -4.0;  // Proportional Gain
-  double LFE_Gi = -1.0;  // Integral Gain
+  double LFE_Gp = 0.0581;  // Proportional Gain
+  double LFE_Gi = 0.131;  // Integral Gain
   double LFE_I = 0.;     // Integral
   double LFE_err;
   double LFE_MFset;
@@ -171,9 +171,15 @@ State POPS_Flow_PI_Quick_Init {
 
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
+  depending on (Pumps_Over_Temp) { Validate POPS_Flow_PI_OT; }
   {
-    LFE_err = POPS_ccm - LFE_Set;
+    LFE_err = LFE_Set - POPS_ccm;
     LFE_I = LFE_I + LFE_err;
+    if (LFE_I*LFE_Gi > 2000) {
+      LFE_I = 2000/LFE_Gi;
+    } else if (LFE_I < 0) {
+      LFE_I = 0;
+    }
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
       (T0/(RingT+273.15))*(convert(HPS_P)/P0);
     if (LFE_MFset < 10) {
@@ -193,10 +199,16 @@ State POPS_Flow_PI {
   }
 }
 
+State POPS_Flow_PI_OT {
+      depending on (Shutdown) { Validate POPS_Flow_Stop; }
+      > Pump POPS Off
+  +1  > MFC POPS Flow SetPoint 0 nccm
+      depending on (Pumps_Watch) { Validate POPS_Flow_PI_Init; }
+}
+
 State POPS_Flow_Stop {
       > Pump POPS Off
   +1  > MFC POPS Flow SetPoint 0 nccm
-#     > MFC Sheath Flow SetPoint 0 nccm
       Validate POPS_Flow_Off;
 }
 
@@ -209,8 +221,8 @@ Partition
 
 %{
   double BP_Set = 800.; // ccm
-  double BP_Gp = -4.0;  // Proportional Gain
-  double BP_Gi = -1.0;  // Integral Gain
+  double BP_Gp = 8.744e-5;  // Proportional Gain
+  double BP_Gi = 9.000e-5;  // Integral Gain
   double BP_I = 0.;     // Integral
   double BP_err;
   double BP_MFset;
@@ -223,6 +235,7 @@ Partition
 State Bypass_Flow_Idle {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   > MFC Bypass Flow SetPoint 5000 nccm
+  > Set Bypass Pump Speed 0 Volts
 }
 
 State Bypass_Flow_Iso_Init {
@@ -239,18 +252,28 @@ State Bypass_Flow_Iso {
    +1 > Pump Bypass On
   
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
-  { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
+  depending on (Pumps_Over_Temp) { Validate Bypass_Flow_Iso_OT; }
+  { double Fm_SPX, Fm_BMFC, Fv_err_BMFC, Vset;
     Fm_SPX = 120*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
     Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     
-    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
-    Fm_err_BMFC = BMFC_MF_LP - Fm_BMFC;
-    BP_I = BP_I + Fm_err_BMFC;
+    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter.
+       Fv_err_BMFC is in ccm.
+       BP_I is in ccm sec, so BP_Gi is in V/(ccm sec)
+       BP_Gp is in V/ccm
+     */
+    Fv_err_BMFC = (Fm_BMFC - BMFC_MF_LP)*
+        ((RingT+273.15)/T0)*(P0/convert(HPS_P));
+    BP_I = BP_I + Fv_err_BMFC;
+    if (BP_Gi*BP_I >= 5) {
+      BP_I = 5/BP_Gi;
+    } else if (BP_I < 0) {
+      BP_I = 0;
+    }
     if (++BP_n_update >= BPmp_Per) {
-      Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
-        (T0/(RingT+273.15))*(convert(HPS_P)/P0);
+      Vset = (BP_Gp * Fv_err_BMFC + BP_Gi* BP_I);
 
       if (Vset < 0) Vset = 0;
       else if (Vset > 5) Vset = 5;  
@@ -261,119 +284,40 @@ State Bypass_Flow_Iso {
   }
 }
 
+State Bypass_Flow_ISO_OT {
+  depending on (Shutdown) { Validate Bypass_Flow_Stop; }
+      > Pump Bypass Off
+      > Set Bypass Pump Speed 0 Volts
+  +1  > MFC Bypass Flow SetPoint 0 nccm
+      depending on (Pumps_Watch) { Validate Bypass_Flow_Iso_Init; }
+}
+
 State Bypass_Flow_Stop {
       > Pump Bypass Off
-  +1  >MFC Bypass Flow SetPoint 0 nccm
+      > Set Bypass Pump Speed 0 Volts
+  +1  > MFC Bypass Flow SetPoint 0 nccm
       Validate Bypass_Flow_Off;
 }
 
 State Bypass_Flow_Off {}
 
 # -----------------------------------------------------------------------------
-# Partition 6: Old stuff
+# Partition 6: Pump Watchdog
 # -----------------------------------------------------------------------------
 
-# State Pumps_Watch {
-#   depending on (PPump_Failed) { Validate Pumps_Failed; }
-#   depending on (BPump_Failed) { Validate Pumps_Failed; }
-#   depending on (BPump_Idle, PPump_Idle) { Validate Pumps_Idle; }
-#   +1:58 Validate Pumps_Step;
-# }
+State Pumps_Watch NoLog {
+  Hold until (PPmpT > 80 || BPmpT > 80);
+  Hold until (PPmpT < 80 && BPmpT < 80) or 5
+  else Validate Pumps_Over_Temp;
+  Validate Pumps_Watch;
+}
 
-# State Pumps_Step {
-#   +1 Validate Pumps_Watch;
-# }
-
-# State Pumps_Failed {
-#   Hold until (PMFC_MassFlow > 0.9 * PMFC_Set &&
-#               BMFC_MassFlow > 0.9 * BMFC_Set);
-#   +1 Validate Pumps_Watch;
-# }
-
-# # Pumps Partition
-# # This should be totally passive except for Shutdown.
-# # When the flow controller setpoints are set above 100 nccm,
-# # The pumps will turn on. This partition will then cycle
-# # between Pumps_Watch and Pumps_Step. If the flow through
-# # either MFC drops below 1/2 the setpoint for 5 seconds,
-# # it will advance to Pumps_Failed, shut off both pumps,
-# # wait 20 minutes, and then restart. The point is to
-# # guarantee 60 seconds of continuous flow at a particular
-# # setpoint before advancing in the mainline algorithm.
-# Partition
-
-# State PPump_Off {
-#   > Pump POPS Off
-#   { if (PMFC_Set < 10)
-#       Validate PPump_Idle; }
-# }
-
-# State PPump_Disable {
-# }
-
-# State PPump_Idle {
-#   Hold until (PMFC_Set >= 10);
-#   Validate PPump_On;
-# }
-
-# State PPump_On {
-#   { if (PMFC_Set < 10)
-#       Validate PPump_Off; }
-#   +1  > Pump POPS On
-#       Validate PPump_Watch;
-# }
-
-# State PPump_Watch {
-#   { if (PMFC_Set < 10)
-#       Validate PPump_Off; }
-#   +1 Hold Until (PMFC_MassFlow < 0.5 * PMFC_Set);
-#   +1 Hold Until (PMFC_MassFlow > 0.9 * PMFC_Set) or 5
-#      else Validate PPump_Failed;
-#      Validate PPump_Watch;
-# }
-
-# State PPump_Failed {
-#   { if (PMFC_Set < 10)
-#       Validate PPump_Off; }
-#           > Pump POPS Off
-#   +20:00  Validate PPump_On;
-# }
-
-# Partition
-
-# State BPump_Off {
-#   > Pump Bypass Off
-#   { if (BMFC_Set < 10)
-#       Validate BPump_Idle; }
-# }
-
-# State BPump_Disable {
-# }
-
-# State BPump_Idle {
-#   Hold until (BMFC_Set >= 10);
-#   Validate BPump_On;
-# }
-
-# State BPump_On {
-#   { if (BMFC_Set < 10)
-#       Validate BPump_Off; }
-#   +1  > Pump Bypass On
-#       Validate BPump_Watch;
-# }
-
-# State BPump_Watch {
-#   { if (BMFC_Set < 10)
-#       Validate BPump_Off; }
-#   +1 Hold Until (BMFC_MassFlow < 0.5 * BMFC_Set);
-#   +1 Hold Until (BMFC_MassFlow > 0.9 * BMFC_Set) or 5
-#      else Validate BPump_Failed;
-#      Validate BPump_Watch;
-# }
-
-# State BPump_Failed {
-#   { if (BMFC_Set < 10)
-#       Validate BPump_Off; }
-#           > Pump Bypass Off
-#   +20:00  Validate BPump_On;
-# }
+State Pumps_Over_Temp {
+  { msg(MSG_ERROR, "Pumps over temperature: PPmpT: %.1lf C  BPmpT: %.1lf C",
+                    convert(PPmpT), convert(BPmpT));
+  }
+  Hold until (PPmpT < 50 && BPmpT < 50);
+  Hold until (PPmpT > 50 || BPmpT > 50) or 5
+  else Validate Pumps_Watch;
+  Validate Pumps_Over_Temp;
+}
