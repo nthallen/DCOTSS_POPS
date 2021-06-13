@@ -23,6 +23,11 @@ uDACSdispnc.cc
 uDACSdispncoui.cc
 uDACSdispnc.o
 uDACSdispncoui.o
+IWG1tblnc.tmc
+IWG1dispnc.cc
+IWG1dispncoui.cc
+IWG1dispnc.o
+IWG1dispncoui.o
 DPOPSalgosws.tma
 DPOPSalgoa.tmc
 DPOPSalgo.cc
@@ -43,6 +48,7 @@ DPOPSengextoui.o
 DPOPStblnc.tmc.dep
 POPStblnc.tmc.dep
 uDACStblnc.tmc.dep
+IWG1tblnc.tmc.dep
 *.err
 POPS.tbl
 *.o
@@ -53,6 +59,7 @@ DPOPScol
 DPOPSsrvr
 DPOPSdispnc
 uDACSdispnc
+IWG1dispnc
 DPOPSalgo
 doit
 DPOPScltnc

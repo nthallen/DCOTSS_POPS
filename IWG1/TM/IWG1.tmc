@@ -80,5 +80,5 @@ Group IWG1 ( TDrift, TDDrift, Lat, Lon, GPS_MSL_Alt, WGS_84_Alt, Press_Alt,
   Sun_Elev_AC = IWG1.Sun_Elev_AC;
   Sun_Az_Grd = IWG1.Sun_Az_Grd;
   Sun_Az_AC = IWG1.Sun_Az_AC;
-  IWG1_Stale = IWG1_obj->stale(255);
+  IWG1_Stale = IWG1_obj->Stale(255);
 }
