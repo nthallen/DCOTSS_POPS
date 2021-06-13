@@ -11,8 +11,8 @@ State Init {
     > MFC POPS Flow Setpoint 0 nccm
     > Set LFE PGain 0.0581
     > Set LFE IGain 0.131
-    > Set Bypass Pump PGain -0.000125
-    > Set Bypass Pump IGain 0.0001
+    > Set Bypass Pump PGain 8.744e-5
+    > Set Bypass Pump IGain 6.995e-5
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -141,8 +141,8 @@ Partition
 
 %{
   double LFE_Set = 800.; // ccm
-  double LFE_Gp = 4.0;  // Proportional Gain
-  double LFE_Gi = 1.0;  // Integral Gain
+  double LFE_Gp = 0.0581;  // Proportional Gain
+  double LFE_Gi = 0.131;  // Integral Gain
   double LFE_I = 0.;     // Integral
   double LFE_err;
   double LFE_MFset;
@@ -214,8 +214,8 @@ Partition
 
 %{
   double BP_Set = 800.; // ccm
-  double BP_Gp = -4.0;  // Proportional Gain
-  double BP_Gi = -1.0;  // Integral Gain
+  double BP_Gp = 8.744e-5;  // Proportional Gain
+  double BP_Gi = 6.995e-5;  // Integral Gain
   double BP_I = 0.;     // Integral
   double BP_err;
   double BP_MFset;
@@ -251,11 +251,11 @@ State Bypass_Flow_Iso {
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     
     /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
-    Fm_err_BMFC = BMFC_MF_LP - Fm_BMFC;
+    Fm_err_BMFC = Fm_BMFC - BMFC_MF_LP;
     BP_I = BP_I + Fm_err_BMFC;
     if (++BP_n_update >= BPmp_Per) {
-      Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
-        (T0/(RingT+273.15))*(convert(HPS_P)/P0);
+      Vset = (BP_Gp * Fm_err_BMFC + BP_Gi* BP_I)*
+        ((RingT+273.15)/T0)*(P0/convert(HPS_P));
 
       if (Vset < 0) Vset = 0;
       else if (Vset > 5) Vset = 5;  
