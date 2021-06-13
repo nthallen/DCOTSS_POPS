@@ -12,7 +12,7 @@ State Init {
     > Set LFE PGain 0.0581
     > Set LFE IGain 0.131
     > Set Bypass Pump PGain 8.744e-5
-    > Set Bypass Pump IGain 6.995e-5
+    > Set Bypass Pump IGain 9.000e-5
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -222,7 +222,7 @@ Partition
 %{
   double BP_Set = 800.; // ccm
   double BP_Gp = 8.744e-5;  // Proportional Gain
-  double BP_Gi = 6.995e-5;  // Integral Gain
+  double BP_Gi = 9.000e-5;  // Integral Gain
   double BP_I = 0.;     // Integral
   double BP_err;
   double BP_MFset;
