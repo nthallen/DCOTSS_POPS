@@ -253,18 +253,27 @@ State Bypass_Flow_Iso {
   
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   depending on (Pumps_Over_Temp) { Validate Bypass_Flow_Iso_OT; }
-  { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
+  { double Fm_SPX, Fm_BMFC, Fv_err_BMFC, Vset;
     Fm_SPX = 120*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
     Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
     
-    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
-    Fm_err_BMFC = Fm_BMFC - BMFC_MF_LP;
-    BP_I = BP_I + Fm_err_BMFC;
-    if (++BP_n_update >= BPmp_Per) {
-      Vset = (BP_Gp * Fm_err_BMFC + BP_Gi* BP_I)*
+    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter.
+       Fv_err_BMFC is in ccm.
+       BP_I is in ccm sec, so BP_Gi is in V/(ccm sec)
+       BP_Gp is in V/ccm
+     */
+    Fv_err_BMFC = (Fm_BMFC - BMFC_MF_LP)*
         ((RingT+273.15)/T0)*(P0/convert(HPS_P));
+    BP_I = BP_I + Fv_err_BMFC;
+    if (BP_Gi*BP_I >= 5) {
+      BP_I = 5/BP_Gi;
+    } else if (BP_I < 0) {
+      BP_I = 0;
+    }
+    if (++BP_n_update >= BPmp_Per) {
+      Vset = (BP_Gp * Fv_err_BMFC + BP_Gi* BP_I);
 
       if (Vset < 0) Vset = 0;
       else if (Vset > 5) Vset = 5;  
