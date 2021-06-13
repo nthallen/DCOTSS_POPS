@@ -60,6 +60,7 @@ fi
   Launch      tm_gen   DPOPScol
   Launch      cmd      DPOPSsrvr -H srvr: -S:
   Launch      -        tmdf
+  Launch      -        IWG1
 
 if [ -n "$RS485" ]; then
 # Launch      -        alicat -a 1:BMFC,2:PMFC,3:SMFC -p $RS485

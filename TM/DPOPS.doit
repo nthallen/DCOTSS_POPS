@@ -1,4 +1,5 @@
 display DPOPSdisp
+display IWG1disp
 client DPOPSclt
 memo
 batchfile interact
