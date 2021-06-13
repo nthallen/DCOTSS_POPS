@@ -1,7 +1,11 @@
 function ui_dpops
 f = ne_dialg('DCOTSS POPS',1);
-f = ne_dialg(f, 'add', 0, 1, 'gdpopslfe', 'LFE' );
-f = ne_dialg(f, 'add', 1, 0, 'pdpopslfeg', 'Gains' );
+f = ne_dialg(f, 'add', 0, 1, 'gdpopsa', 'Algo' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsasws', 'SW Stat' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsag', 'Gains' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsaf', 'Filter' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsamf', 'M Ffilt' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsalp', 'L Pper' );
 f = ne_dialg(f, 'add', 0, 1, 'gdpopsdacsa', 'uDACS A' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsas', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsaais', 'AI Stat' );
@@ -57,9 +61,9 @@ f = ne_dialg(f, 'add', 1, 0, 'pdpopsahks', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsahkstale', 'Stale' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsahkt', 'T' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsahkmbar', 'mbar' );
-f = ne_dialg(f, 'add', 0, 1, 'gdpopsa', 'Alicat' );
-f = ne_dialg(f, 'add', 1, 0, 'pdpopsanccm', 'nccm' );
-f = ne_dialg(f, 'add', 1, 0, 'pdpopsaccm', 'ccm' );
+f = ne_dialg(f, 'add', 0, 1, 'gdpopsalicat', 'Alicat' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsalicatnccm', 'nccm' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsalicatccm', 'ccm' );
 f = ne_listdirs(f, 'DPOPS_DATA_DIR', 15);
 f = ne_dialg(f, 'newcol');
 ne_dialg(f, 'resize');

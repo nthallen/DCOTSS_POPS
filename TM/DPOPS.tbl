@@ -4,6 +4,11 @@ Input "Alicat.tbl";
 BMFC {
   HBox { +-; Title: "Bypass Flow"; -+ };
   [BMFC_vdata];
+  MFf:   (BMFC_MF_LP,7) nccm;
+  LPFP:   (BPmp_LPFP,3);
+  BPmpV:      (BPmpV,6) V;
+  PGain: (BPmp_PGain,9);
+  IGain: (BPmp_IGain,9);
 }
 
 PMFC {
@@ -40,8 +45,8 @@ Pumps {
 }
 
 Gains {
-  LFE_Gp: (LFE_PGain,7);
-  LFE_Gi: (LFE_IGain,7);
+  LFE_Gp:  (LFE_PGain,9);
+  LFE_Gi:  (LFE_IGain,9);
 }
 
 System {

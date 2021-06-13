@@ -6,6 +6,11 @@ typedef struct __attribute__((__packed__)) {
   unsigned char SWStat;
   float LFE_PGain;
   float LFE_IGain;
+  float BPmp_PGain;
+  float BPmp_IGain;
+  uint8_t BPmp_LPFP;
+  uint8_t Sim_Vel;
+  uint8_t BPmp_Per;
 } SWData_t;
 extern SWData_t SWData;
 

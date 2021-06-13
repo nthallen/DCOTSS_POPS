@@ -24,7 +24,7 @@ class UserPkts_UDP : public DAS_IO::Interface {
     bool protocol_input();
     bool process_eof();
   protected:
-    bool tm_sync();
+    //bool tm_sync();
   private:
     void Bind(int port);
     int fillbuf();
@@ -52,10 +52,15 @@ class POPS_client : public DAS_IO::Client {
     bool app_connected();
     bool app_input();
     bool forward(const uint8_t *cmd);
+    inline bool forward(const char *cmd) {
+      return forward((const uint8_t *)cmd);
+    }
     bool app_process_eof();
+    bool protocol_timeout();
     static POPS_client *instance;
   protected:
     bool tm_sync();
+    bool connect_failed();
   private:
     uint8_t srvr_Stale;
 };

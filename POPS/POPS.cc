@@ -47,7 +47,7 @@ UserPkts_UDP::UserPkts_UDP(int udp_port)
   Bind(udp_port);
   // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()
-  flags |= gflag(0);
+  // flags |= gflag(0);
 }
 
 bool UserPkts_UDP::protocol_input() {
@@ -156,10 +156,10 @@ bool UserPkts_UDP::protocol_input() {
   return false;
 }
 
-bool UserPkts_UDP::tm_sync() {
-  if (POPS.Stale < 255) ++POPS.Stale;
-  return false;
-}
+// bool UserPkts_UDP::tm_sync() {
+  // if (POPS.Stale < 255) ++POPS.Stale;
+  // return false;
+// }
 
 bool UserPkts_UDP::process_eof() {
   msg(0, "%s: process_eof(): Re-binding UDP port %d",
@@ -282,12 +282,22 @@ POPS_client::POPS_client() :
   POPS.Srvr = 0;
   nl_assert(POPS_client::instance == 0);
   POPS_client::instance = this;
-  set_retries(-1, 1, 1);
+  set_retries(-1, 5, 5);
+  set_connect_timeout(5,0);
   flags |= gflag(0);
 }
 
+// bool POPS_client::POPS_connect() {
+  // POPS.Srvr = 0;
+  // conn_fail_reported = true;
+  // if (connect()) return true;
+  // TO.Set(5,0);
+  // flags |= Fl_Timeout;
+  // return false;
+// }
+
 bool POPS_client::app_connected() {
-  iwrite("V\n");
+  forward("V\n");
   ++srvr_Stale;
   return false;
 }
@@ -296,10 +306,12 @@ bool POPS_client::app_input() {
   cp = 0;
   while (cp < nc) {
     if (isdigit(buf[cp])) {
+      uint8_t old_Srvr = POPS.Srvr;
       if (not_uint8(POPS.Srvr) || not_str("\n")) {
         report_err("%s: poorly formed status response", iname);
       }
-      msg(MSG, "%s: POPS.Srvr = %d", iname, POPS.Srvr);
+      if (POPS.Srvr != old_Srvr)
+        msg(MSG_DBG(0), "%s: POPS.Srvr = %d", iname, POPS.Srvr);
     } else {
       while (cp < nc && buf[cp] != '\n') ++cp;
       if (cp < nc) {
@@ -311,6 +323,8 @@ bool POPS_client::app_input() {
       }
     }
   }
+  TO.Clear();
+  flags &= ~Fl_Timeout;
   srvr_Stale = 0;
   report_ok(nc);
   return false;
@@ -318,30 +332,52 @@ bool POPS_client::app_input() {
 
 bool POPS_client::forward(const uint8_t *cmd) {
   if (is_negotiated()) {
-    msg(MSG_DEBUG, "%s: Forwarding command %c", iname, cmd[0]);
+    msg(MSG_DBG(1), "%s: Forwarding command %c", iname, cmd[0]);
     iwrite((const char *)cmd);
+    TO.Set(3,0);
+    flags |= Fl_Timeout;
   } else {
     msg(MSG_ERROR, "%s: command issued before comms established", iname);
   }
   return false;
 }
 
+/**
+ * We should only get here if socket_state == Socket_connected.
+ * Timeouts while connecting are handled by Socket::ProcessData().
+ * This timeout occurs if we timeout during a transaction with the
+ * server. Our response as of now will be to immediately tear down
+ * the connection, reset the reported server state to Init and
+ * begin the cycle of attempting a new connection.
+ */
+bool POPS_client::protocol_timeout() {
+  TO.Clear();
+  POPS.Srvr = 0;
+  msg(MSG_DBG(0), "%s: POPS.Srvr = %d (resetting)", iname, POPS.Srvr);
+  return reset();
+}
+
 bool POPS_client::app_process_eof() {
-  connect_later();
-  if (POPS.Srvr != 3)
-    POPS.Srvr = 0;
+  connect_later(5,0);
   return false;
 }
 
 bool POPS_client::tm_sync() {
+  msg(MSG_DBG(1), "%s: POPS_client::tm_sync()", iname);
+  if (POPS.Stale < 255) ++POPS.Stale;
   if (POPS.Stale > 2 && socket_state == Socket_connected) {
     if (srvr_Stale == 0)
       return app_connected();
     else
-      ++srvr_Stale;
-    if (srvr_Stale == 20)
+      if (srvr_Stale < 255) ++srvr_Stale;
+    if (srvr_Stale == 5)
       msg(2, "%s: srvr_Stale=%d while connected", iname, srvr_Stale);
   }
+  return false;
+}
+
+bool POPS_client::connect_failed() {
+  msg(MSG_DBG(2), "%s: connect_failed()", iname);
   return false;
 }
 

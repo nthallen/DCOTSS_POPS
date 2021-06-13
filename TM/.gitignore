@@ -4,6 +4,7 @@ DPOPScol.cc
 tm.dac
 DPOPScoloui.cc
 DPOPScol.o
+LowPass.o
 DPOPScoloui.o
 DPOPScmd.cc
 DPOPScmd.dat

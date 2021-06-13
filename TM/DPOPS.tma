@@ -9,8 +9,10 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
-    > Set LFE PGain -4.0
-    > Set LFE IGain -9.0
+    > Set LFE PGain -0.0581
+    > Set LFE IGain -0.131
+    > Set Bypass Pump PGain -0.000125
+    > Set Bypass Pump IGain 0.0001
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
@@ -19,7 +21,7 @@ State Startup {
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active);
   Validate POPS_Flow_PI_Init;
-# Validate Bypass_Flow_Iso;
+  Validate Bypass_Flow_Iso_Init;
 }
 
 State Shutdown {
@@ -173,7 +175,7 @@ State POPS_Flow_PI {
     LFE_err = POPS_ccm - LFE_Set;
     LFE_I = LFE_I + LFE_err;
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
-      (T0/(RingT+273.15))*(HPS_P/P0);
+      (T0/(RingT+273.15))*(convert(HPS_P)/P0);
     if (LFE_MFset < 10) {
       if (PPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
@@ -205,26 +207,56 @@ State POPS_Flow_Off {}
 # -----------------------------------------------------------------------------
 Partition
 
+%{
+  double BP_Set = 800.; // ccm
+  double BP_Gp = -4.0;  // Proportional Gain
+  double BP_Gi = -1.0;  // Integral Gain
+  double BP_I = 0.;     // Integral
+  double BP_err;
+  double BP_MFset;
+  int BP_n_update;
+%}
+
+{ BP_Gp = BPmp_PGain; }
+{ BP_Gi = BPmp_IGain; }
+
 State Bypass_Flow_Idle {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
+  > MFC Bypass Flow SetPoint 5000 nccm
+}
+
+State Bypass_Flow_Iso_Init {
+  { BP_I = 0;
+    BP_n_update = BPmp_Per-1;
+    Validate Bypass_Flow_Iso;
+  }
 }
 
 State Bypass_Flow_Iso {
+      > MFC Bypass Flow SetPoint 5000 nccm
+      Hold until (BMFC_Set > 4999) or 3
+      else Validate Bypass_Flow_Iso;
+   +1 > Pump Bypass On
+  
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
-  { double Fm_SPX, Fm_BMFC;
-    Fm_SPX = 120*(T0/(RingT+273.15))*(HPS_P/P0);
-    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX /* + SMFC_MassFlow */;
-    if (Fm_BMFC < 10) {
-      if (BPmpS) {
-        ci_sendfcmd(Cmd_Send, "Pump Bypass Off\n");
-      }
-      if (Fm_BMFC < 0) Fm_BMFC = 0;    
-    }
-    if (Fm_BMFC > 5000) Fm_BMFC = 5000;
-    ci_sendfcmd(Cmd_Send_Quiet,
-      "MFC Bypass Flow SetPoint %.1lf nccm\n", Fm_BMFC);
-    if (Fm_BMFC > 10 && !BPmpS) {
-      ci_sendfcmd(Cmd_Send, "Pump Bypass On\n");
+  { double Fm_SPX, Fm_BMFC, Fm_err_BMFC, Vset;
+    Fm_SPX = 120*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
+    Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
+    if (Fm_BMFC < 0) Fm_BMFC = 0;
+    else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
+    
+    /* BMFC_MF_LP is BMFC_MassFlow with a low pass filter */
+    Fm_err_BMFC = BMFC_MF_LP - Fm_BMFC;
+    BP_I = BP_I + Fm_err_BMFC;
+    if (++BP_n_update >= BPmp_Per) {
+      Vset = (BP_Gp * Fm_err_BMFC - BP_Gi* BP_I)*
+        (T0/(RingT+273.15))*(convert(HPS_P)/P0);
+
+      if (Vset < 0) Vset = 0;
+      else if (Vset > 5) Vset = 5;  
+      ci_sendfcmd(Cmd_Send_Quiet,
+        "Set Bypass Pump Speed %.2lf Volts\n", Vset);
+      BP_n_update = 0;
     }
   }
 }
