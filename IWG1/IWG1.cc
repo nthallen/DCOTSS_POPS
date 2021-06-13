@@ -7,35 +7,37 @@
 #include <arpa/inet.h>
 #include <errno.h>
 
-#include "nortlib.h"
+#include "dasio/loop.h"
+#include "dasio/quit.h"
+#include "dasio/appid.h"
+#include "nl.h"
 #include "oui.h"
 #include "IWG1_int.h"
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  { Selector S;
-    IWG1_UDP IWG1;
-    Cmd_Selectee CS;
-    S.add_child(&IWG1);
-    S.add_child(&CS);
-    nl_error(0, "Starting: v1.0");
-    S.event_loop();
+  { Loop L;
+    IWG1_UDP *IWG1 = new IWG1_UDP();
+    L.add_child(IWG1);
+    Quit *Q = new Quit();
+    L.add_child(Q);
+    msg(MSG, "Starting: %s", AppID.rev);
+    L.event_loop();
   }
-  nl_error(0, "Terminating");
+  msg(MSG, "Terminating");
 }
 
-IWG1_UDP::IWG1_UDP() : Ser_Sel( 0, 0, 600 ) {
+IWG1_UDP::IWG1_UDP() : Interface("UDP", 600 ) {
   // Set up TM
-  tm_id = Col_send_init( "IWG1", &IWG1, sizeof(IWG1_data_t), 0);
+  tm = new TM_data_sndr("TM", 0, "IWG1", &IWG1, sizeof(IWG1_data_t));
   // Set up UDP listener
   Bind(7071);
-  flags = Selector::Sel_Read;
-  flush_input();
+  flags = Fl_Read;
+  // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()
 }
 
-int IWG1_UDP::ProcessData(int flag) {
-  if (fillbuf()) return 1;
+bool IWG1_UDP::protocol_input() {
   if (not_str( "IWG1," ) ||
       not_ISO8601(&IWG1.Time) || not_str( ",", 1) ||
       not_nfloat(&IWG1.Lat) || not_str(",", 1) ||
@@ -74,7 +76,7 @@ int IWG1_UDP::ProcessData(int flag) {
     } // else cp == nc, so it was a partial record. See if we will get more.
     return 0;
   }
-  Col_send(tm_id);
+  tm->Send();
   consume(nc);
   return 0;
 }
@@ -144,7 +146,7 @@ void IWG1_UDP::Bind(int port) {
   int err, ioflags;
 
 	if (port == 0)
-    nl_error( 3, "Invalid port in IWG1_UDP: 0" );
+    msg(MSG_FATAL, "Invalid port in IWG1_UDP: 0" );
 	snprintf(service, 10, "%d", port);
 
 	memset(&hints, 0, sizeof(hints));	
@@ -157,23 +159,23 @@ void IWG1_UDP::Bind(int port) {
 						&hints,
 						&results);
 	if (err)
-    nl_error( 3, "IWG1_UDP::Bind: getaddrinfo error: %s", gai_strerror(err) );
+    msg(MSG_FATAL, "IWG1_UDP::Bind: getaddrinfo error: %s", gai_strerror(err) );
 	for(p=results; p!= NULL; p=p->ai_next) {
 		fd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
 		if (fd < 0)
-      nl_error( 2, "IWG1_UPD::Bind: socket error: %s", strerror(errno) );
+      msg(MSG_ERROR, "IWG1_UPD::Bind: socket error: %s", strerror(errno) );
 		else if ( bind(fd, p->ai_addr, p->ai_addrlen) < 0 )
-      nl_error( 2, "IWG1_UDP::Bind: bind error: %s", strerror(errno) );
+      msg(MSG_ERROR, "IWG1_UDP::Bind: bind error: %s", strerror(errno) );
 		else break;
 	}
   if (fd < 0)
-    nl_error(3, "Unable to bind UDP socket");
+    msg(MSG_FATAL, "Unable to bind UDP socket");
     
   ioflags = fcntl(fd, F_GETFL, 0);
   if (ioflags != -1)
     ioflags = fcntl(fd, F_SETFL, ioflags | O_NONBLOCK);
   if (ioflags == -1)
-    nl_error( 3, "Error setting O_NONBLOCK on UDP socket: %s",
+    msg(MSG_FATAL, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
 }
 
@@ -189,7 +191,7 @@ int IWG1_UDP::fillbuf() {
     } else if (errno == EINTR) {
       ++n_eintr;
     } else {
-      nl_error( 2, "IWG1_UDP::fillbuf: recvfrom error: %s", strerror(errno));
+      msg(MSG_ERROR, "IWG1_UDP::fillbuf: recvfrom error: %s", strerror(errno));
       return 1;
     }
     return 0;

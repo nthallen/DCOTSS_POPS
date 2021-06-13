@@ -2,20 +2,23 @@
 #define IWG1_INT_H_INCLUDED
 
 #include <math.h>
-#include "SerSelector.h"
+#include "dasio/interface.h"
+#include "dasio/tm_data_sndr.h"
 #include "IWG1.h"
 
-class IWG1_UDP : public Ser_Sel {
+using namespace DAS_IO;
+
+class IWG1_UDP : public Interface {
   public:
     IWG1_UDP();
-    int ProcessData(int flag);
+    bool protocol_input();
   private:
     void Bind(int port);
     int fillbuf();
     int not_ndigits(int n, int &value);
     int not_ISO8601(double *Time);
     int not_nfloat(float *value);
-    send_id tm_id;
+    TM_data_sndr *tm;
     IWG1_data_t IWG1;
 };
 

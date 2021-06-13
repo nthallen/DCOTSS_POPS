@@ -3,6 +3,7 @@
 <follow> msg
 <include> <stdlib.h>
 
-<package> msghdr_init
-<init>
-  msg_hdr_default = "IWG1";
+<package> appid_default
+<include> "dasio/appid.h"
+<defs>
+  DAS_IO::AppID_t DAS_IO::AppID("IWG1", "IWG1 UDP Receiver", "V2.0");

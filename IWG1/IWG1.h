@@ -3,7 +3,9 @@
 
 #include <time.h>
 
-typedef struct __attribute__((__packed__)) {
+// I usually pack structs used in interprocess (and possibly inter-architecture)
+// communication, but by inspection, this should not require packing.
+typedef struct {
   double Time;
   float Lat;
   float Lon;

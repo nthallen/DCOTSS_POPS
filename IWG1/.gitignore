@@ -1,8 +1,5 @@
 IWG1
-IWG1oui.c
-UserPkts
-UserPktsoui.c
-UserPkts2
-UserPkts2oui.c
+IWG1.exe
+IWG1oui.cc
 *.o
 Examples
