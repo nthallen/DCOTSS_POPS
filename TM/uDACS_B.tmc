@@ -87,6 +87,6 @@ group uDACS_B (
     HPS1_Temp = rvals_to_float(uDACS_B_rvals[12]);
     HPS_P = rvals_to_float(uDACS_B_rvals[14]);
     HPS2_Temp = rvals_to_float(uDACS_B_rvals[16]);
-    HPS_dP = rvals_to_float(uDACS_B_rvals[18]);
+    HPS_dP = -rvals_to_float(uDACS_B_rvals[18]);
   }
 }
