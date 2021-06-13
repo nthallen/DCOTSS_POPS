@@ -9,8 +9,8 @@ State Init {
     > Telemetry Start
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
-    > Set LFE PGain -0.0581
-    > Set LFE IGain -0.131
+    > Set LFE PGain 0.0581
+    > Set LFE IGain 0.131
     > Set Bypass Pump PGain -0.000125
     > Set Bypass Pump IGain 0.0001
     depending on (OFF_GROUND) { Validate Startup; }
@@ -141,8 +141,8 @@ Partition
 
 %{
   double LFE_Set = 800.; // ccm
-  double LFE_Gp = -4.0;  // Proportional Gain
-  double LFE_Gi = -1.0;  // Integral Gain
+  double LFE_Gp = 4.0;  // Proportional Gain
+  double LFE_Gi = 1.0;  // Integral Gain
   double LFE_I = 0.;     // Integral
   double LFE_err;
   double LFE_MFset;
@@ -172,8 +172,13 @@ State POPS_Flow_PI_Quick_Init {
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
   {
-    LFE_err = POPS_ccm - LFE_Set;
+    LFE_err = LFE_Set - POPS_ccm;
     LFE_I = LFE_I + LFE_err;
+    if (LFE_I*LFE_Gi > 2000) {
+      LFE_I = 2000/LFE_Gi;
+    } else if (LFE_I < 0) {
+      LFE_I = 0;
+    }
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
       (T0/(RingT+273.15))*(convert(HPS_P)/P0);
     if (LFE_MFset < 10) {
