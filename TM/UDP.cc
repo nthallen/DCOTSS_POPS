@@ -17,7 +17,8 @@ UDPbcast::UDPbcast(const char *broadcast_ip,
       broadcast_port(broadcast_port),
       bcast_sock(-1),
       ok_status(false),
-      ov_status(false) {
+      ov_status(false),
+      sendto_err_reported(false) {
   buf = new char[buflen];
   UDP_init();
 }
@@ -100,14 +101,23 @@ int UDPbcast::Broadcast(const char *fmt, ...) {
   if (ok_status) {
     int nb = sendto(bcast_sock, buf, msglen, 0, (sockaddr*)&s, addrlen);
     if (nb < 0) {
-      msg(2, "sendto() returned error %d: %s", errno, strerror(errno));
+      if (!sendto_err_reported) {
+        msg(2, "sendto() returned error %d: %s", errno, strerror(errno));
+        sendto_err_reported = true;
+      }
       ok_status = false;
       close(bcast_sock);
       bcast_sock = -1;
       return 1;
     } else if (nb < msglen) {
-      msg(2, "sendto() expected %d, returned %d", msglen, nb);
+      if (!sendto_err_reported) {
+        msg(2, "sendto() expected %d, returned %d", msglen, nb);
+        sendto_err_reported = true;
+      }
       return 1;
+    } else if (sendto_err_reported) {
+      msg(0, "sendto() succeeded");
+      sendto_err_reported = false;
     }
   } else {
     return 1;

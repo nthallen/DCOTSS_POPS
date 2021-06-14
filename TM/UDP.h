@@ -35,6 +35,7 @@ class UDPbcast {
     bool ov_status;
     struct sockaddr_in s;
     socklen_t addrlen;
+    bool sendto_err_reported;
 };
 
 class UDPcsv_file : public csv_file {
