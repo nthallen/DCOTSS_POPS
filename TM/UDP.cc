@@ -15,6 +15,7 @@ UDPbcast::UDPbcast(const char *broadcast_ip,
       buflen(buflen),
       broadcast_ip(broadcast_ip),
       broadcast_port(broadcast_port),
+      bcast_sock(-1),
       ok_status(false),
       ov_status(false) {
   buf = new char[buflen];
@@ -25,37 +26,39 @@ UDPbcast::UDPbcast(const char *broadcast_ip,
  * @return non-zero on error
  */
 int UDPbcast::UDP_init() {
-  bcast_sock = socket(AF_INET, SOCK_DGRAM, 0);
-  if (bcast_sock == -1) {
-    msg(nl_response, "Unable to create UDP socket: %s", strerror(errno));
-    return 1;
+  if (!UDPext_debug) {
+    bcast_sock = socket(AF_INET, SOCK_DGRAM, 0);
+    if (bcast_sock == -1) {
+      msg(nl_response, "Unable to create UDP socket: %s", strerror(errno));
+      return 1;
+    }
+    int broadcastEnable = 1;
+    int ret = setsockopt(bcast_sock, SOL_SOCKET, SO_BROADCAST,
+      &broadcastEnable, sizeof(broadcastEnable));
+    if (ret == -1) {
+      msg(nl_response, "setsockopt failed: %s", strerror(errno));
+      return 1;
+    }
+    struct addrinfo hints, *res;
+    hints.ai_flags = AI_NUMERICHOST;
+    hints.ai_family = PF_INET;
+    hints.ai_socktype = SOCK_DGRAM;
+    hints.ai_protocol = IPPROTO_UDP;
+    hints.ai_addrlen = 0;
+    hints.ai_canonname = 0;
+    hints.ai_addr = 0;
+    hints.ai_next = 0;
+    if (getaddrinfo(broadcast_ip, broadcast_port, &hints, &res)) {
+      msg(nl_response, "getaddrinfo failed: %s", strerror(errno));
+      return 1;
+    }
+    nl_assert(res->ai_next == 0);
+    nl_assert(res->ai_addr != 0);
+    nl_assert(((unsigned)res->ai_addrlen) <= sizeof(s));
+    memcpy(&s, res->ai_addr, res->ai_addrlen);
+    addrlen = res->ai_addrlen;
+    freeaddrinfo(res);
   }
-  int broadcastEnable = 1;
-  int ret = setsockopt(bcast_sock, SOL_SOCKET, SO_BROADCAST,
-    &broadcastEnable, sizeof(broadcastEnable));
-  if (ret == -1) {
-    msg(nl_response, "setsockopt failed: %s", strerror(errno));
-    return 1;
-  }
-  struct addrinfo hints, *res;
-  hints.ai_flags = AI_NUMERICHOST;
-  hints.ai_family = PF_INET;
-  hints.ai_socktype = SOCK_DGRAM;
-  hints.ai_protocol = IPPROTO_UDP;
-  hints.ai_addrlen = 0;
-  hints.ai_canonname = 0;
-  hints.ai_addr = 0;
-  hints.ai_next = 0;
-  if (getaddrinfo(broadcast_ip, broadcast_port, &hints, &res)) {
-    msg(nl_response, "getaddrinfo failed: %s", strerror(errno));
-    return 1;
-  }
-  nl_assert(res->ai_next == 0);
-  nl_assert(res->ai_addr != 0);
-  nl_assert(((unsigned)res->ai_addrlen) <= sizeof(s));
-  memcpy(&s, res->ai_addr, res->ai_addrlen);
-  addrlen = res->ai_addrlen;
-  freeaddrinfo(res);
   ok_status = true;
   return 0;
 }
@@ -79,6 +82,7 @@ bool UDPbcast::ok() { return ok_status; }
  * @return non-zero on error
  */
 int UDPbcast::Broadcast(const char *fmt, ...) {
+  if (UDPext_debug) return 0;
   if (!ok_status && UDP_init())
     return 1;
   va_list args;
@@ -149,9 +153,9 @@ void UDPcsv_file::init(UDPbcast *UDPb, int obufsize) {
   obuf = new char[obufsize];
 }
 
-void UDPcsv_file::transmit(const char *hdr, const char *iso8601) {
+void UDPcsv_file::transmit(const char *hdr, double utime) {
   int nc = 0;
-  nc += snprintf(&obuf[nc], obufsize-nc, "%s,%s", hdr, iso8601);
+  nc += snprintf(&obuf[nc], obufsize-nc, "%s,%s", hdr, UDP->ISO8601(utime));
   for (unsigned int i = 1; i < cols.size(); ++i) {
     if (cols[i]) {
       nc += snprintf(&obuf[nc], obufsize-nc, ",%s", cols[i]->output());
@@ -163,8 +167,10 @@ void UDPcsv_file::transmit(const char *hdr, const char *iso8601) {
   }
   nc += snprintf(&obuf[nc], obufsize-nc, "\r\n");
   if (nc < obufsize) {
-    // UDP->Broadcast("%s", obuf);
-    msg(0, "%s", obuf);
+    if (UDPext_debug)
+      msg(0, "%s", obuf);
+    else
+      UDP->Broadcast("%s", obuf);
   } else {
     ++n_ovflow;
     if (!ovflow_reported) {

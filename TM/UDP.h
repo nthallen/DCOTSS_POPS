@@ -1,5 +1,6 @@
 #ifndef UDP_H_INCLUDED
 #define UDP_H_INCLUDED
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 // #include <sys/un.h>
@@ -13,6 +14,8 @@
 #define STATUS_Warning 8
 #define STATUS_Invalid 16
 #define STATUS_Failed 32
+
+#define TM_CLIENT_FAST true
 
 class UDPbcast {
   public:
@@ -38,7 +41,7 @@ class UDPcsv_file : public csv_file {
   public:
     UDPcsv_file(unsigned int n_cols, const char *nan_text = 0);
     void init(UDPbcast *UDPb, int obufsize);
-    void transmit(const char *hdr, const char *iso8601);
+    void transmit(const char *hdr, double utime); // const char *iso8601);
   protected:
     UDPbcast *UDP;
     char *obuf;
@@ -46,5 +49,7 @@ class UDPcsv_file : public csv_file {
     bool ovflow_reported;
     int n_ovflow;
 };
+
+extern bool UDPext_debug;
 
 #endif
