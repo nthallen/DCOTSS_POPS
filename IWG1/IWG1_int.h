@@ -10,7 +10,7 @@ using namespace DAS_IO;
 
 class IWG1_UDP : public Interface {
   public:
-    IWG1_UDP();
+    IWG1_UDP(TM_data_sndr *tm);
     bool protocol_input();
   private:
     void Bind(int port);
@@ -19,7 +19,6 @@ class IWG1_UDP : public Interface {
     int not_ISO8601(double *Time);
     int not_nfloat(float *value);
     TM_data_sndr *tm;
-    IWG1_data_t IWG1;
 };
 
 #endif

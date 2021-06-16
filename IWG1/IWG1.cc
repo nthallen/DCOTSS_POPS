@@ -14,10 +14,16 @@
 #include "oui.h"
 #include "IWG1_int.h"
 
+IWG1_data_t IWG1;
+
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   { Loop L;
-    IWG1_UDP *IWG1 = new IWG1_UDP();
+    TM_data_sndr *tm =
+      new TM_data_sndr("TM", 0, "IWG1", &IWG1, sizeof(IWG1_data_t));
+    L.add_child(tm);
+    tm->connect();
+    IWG1_UDP *IWG1 = new IWG1_UDP(tm);
     L.add_child(IWG1);
     Quit *Q = new Quit();
     L.add_child(Q);
@@ -27,9 +33,9 @@ int main(int argc, char **argv) {
   msg(MSG, "Terminating");
 }
 
-IWG1_UDP::IWG1_UDP() : Interface("UDP", 600 ) {
-  // Set up TM
-  tm = new TM_data_sndr("TM", 0, "IWG1", &IWG1, sizeof(IWG1_data_t));
+IWG1_UDP::IWG1_UDP(TM_data_sndr *tm)
+    : Interface("UDP", 600 ),
+      tm(tm) {
   // Set up UDP listener
   Bind(7071);
   flags = Fl_Read;
