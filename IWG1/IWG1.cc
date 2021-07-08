@@ -23,10 +23,14 @@ int main(int argc, char **argv) {
       new TM_data_sndr("TM", 0, "IWG1", &IWG1, sizeof(IWG1_data_t));
     L.add_child(tm);
     tm->connect();
+    
     IWG1_UDP *IWG1 = new IWG1_UDP(tm);
     L.add_child(IWG1);
+    
     Quit *Q = new Quit();
     L.add_child(Q);
+    Q->connect();
+
     msg(MSG, "Starting: %s", AppID.rev);
     L.event_loop();
   }
@@ -83,7 +87,7 @@ bool IWG1_UDP::protocol_input() {
     return 0;
   }
   tm->Send();
-  consume(nc);
+  report_ok(nc);
   return 0;
 }
 
