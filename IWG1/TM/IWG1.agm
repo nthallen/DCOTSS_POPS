@@ -10,14 +10,12 @@ mode (default) {
   - : IWG1.tbl:IWG1.tbl.in
   DISTRIB = @MODDIR@/../IWG1
   CPPFLAGS = -I @MODDIR@/..
-
-  %%
-@MODDIR@/../IWG1 :
-	cd @MODDIR@/.. && make IWG1
 }
 
 %%
-.PHONY : clean-IWG1
+.PHONY : clean-IWG1 @MODDIR@/../IWG1
+@MODDIR@/../IWG1 :
+	$(MAKE) --directory=@MODDIR@/..
 clean-dist : clean-IWG1
 clean-IWG1 :
-	cd @MODDIR@/.. && make clean
+	$(MAKE) --directory=@MODDIR@/.. clean
