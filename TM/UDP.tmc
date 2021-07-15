@@ -1,4 +1,5 @@
 %{
+  #include <time.h>
   #include "UDP.h"
   #include "dasio/tmctime.h"
 
@@ -8,6 +9,21 @@
   UDPcsv_file UDPcsv_user(37-1, "");
   UDPcsv_file UDPcsv_status(16-1, "");
   bool UDPext_debug = false;
+  bool gettime_error = false;
+  
+  double system_time() {
+    struct timespec ts;
+    int rv = clock_gettime(CLOCK_REALTIME, &ts);
+    double td = 0.;
+    if (rv == 0) {
+      td = (double)ts.tv_sec + 1e-9*ts.tv_nsec;
+    } else if (!gettime_error) {
+      msg(MSG_ERROR, "clock_gettime returned error %d: %s",
+        errno, strerror(errno));
+      gettime_error = true;
+    }
+    return td;
+  }
 
   void UDPinit() {
     UDPbcast *UDPstatus =
@@ -95,8 +111,11 @@ depending on (h2o_lya_ppm) {
  */
 depending on (1 Hz) {
   int status;
+  double systime;
+  
   status = 3;
   /* if (POPS_Srvr == 2) status |= 3; */
+  systime = system_time();
 
   UDPcsv_status.set_col(3-2,status);
   UDPcsv_status.set_col(4-2, text(POPS_num_cc));
@@ -112,7 +131,7 @@ depending on (1 Hz) {
   UDPcsv_status.set_col(14-2, text(POPS_Bin08));
   UDPcsv_status.set_col(15-2, text(POPS_Bin09));
   UDPcsv_status.set_col(16-2, text(POPS_Bin10));
-  UDPcsv_status.transmit("DPOPS", dtime());
+  UDPcsv_status.transmit("DPOPS", systime); /* dtime() */
 
 
   UDPcsv_user.set_col(3-2, status);
@@ -150,5 +169,5 @@ depending on (1 Hz) {
   UDPcsv_user.set_col(35-2, text(POPS_Bin14));
   UDPcsv_user.set_col(36-2, text(POPS_Bin15));
   UDPcsv_user.set_col(37-2, text(POPS_Bin16));
-  UDPcsv_user.transmit("DPOPS", dtime());
+  UDPcsv_user.transmit("DPOPS", systime); /* dtime() */
 }
