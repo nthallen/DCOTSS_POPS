@@ -86,7 +86,7 @@ group uDACS_A (
     uDACS_A_maxloopdur = uDACS_A_rvals[17];
     */
     
-    Fail = (uDACS_A_rvals[14] & 0x01) | ((uDACS_A_rvals[15] & 0x01)<<4);
+    Fail = (uDACS_A_rvals[14] & 0x01) | (((uDACS_A_rvals[15] & 0x01)^0x01)<<4);
     PwrStat = uDACS_A_rvals[16] & 0xFF;
   }
 }
