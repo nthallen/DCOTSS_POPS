@@ -169,5 +169,5 @@ depending on (1 Hz) {
   UDPcsv_user.set_col(35-2, text(POPS_Bin14));
   UDPcsv_user.set_col(36-2, text(POPS_Bin15));
   UDPcsv_user.set_col(37-2, text(POPS_Bin16));
-  UDPcsv_user.transmit("DPOPS", systime); /* dtime() */
+  UDPcsv_user.transmit("DPOPSU", systime); /* dtime() */
 }
