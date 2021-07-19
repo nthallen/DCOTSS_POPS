@@ -24,6 +24,7 @@
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
   : Set %d { $0 = $2; }
   : Altitude Land { $0 = SWS_LAND; }
+  : POPS Power Up Only { $0 = SWS_POPS_POWER_ON; }
   : POPS Startup { $0 = SWS_POPS_STARTUP; }
   : POPS Shutdown { $0 = SWS_POPS_SHUTDOWN; }
   : POPS Flow PI { $0 = SWS_POPS_FLOW_PI; }

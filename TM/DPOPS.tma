@@ -88,24 +88,17 @@ State POPS_Idle {
 
 State POPS_Startup {
   depending on (Shutdown) { Validate POPS_Shutdown; }
-  > POPS Power On
-  Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
-  else Validate POPS_Power_Cycle;
+  Validate POPS_Pwr_On;
+  Validate POPS_Start;
+}
+
+State  POPS_Start {
+  Hold Until Valid (POPS_Pwr_Is_Up);
   Hold Until (POPS_Srvr == 2) or 1
   else > POPS Start
   Hold Until (POPS_Srvr == 2 && POPS_Stale == 0) or 10
   else Validate POPS_Comms;
   Validate POPS_Is_Active;
-}
-
-State POPS_Is_Active {
-  depending on (Shutdown) { Validate POPS_Shutdown; }
-}
-
-State POPS_Power_Cycle {
-      depending on (Shutdown) { Validate POPS_Shutdown; }
-      > POPS Power Off
-  +30 Validate POPS_Startup;
 }
 
 State POPS_Comms {
@@ -114,25 +107,59 @@ State POPS_Comms {
       { msg(2, "POPS did not respond to Start command"); }
       > POPS Shutdown
       Hold Until (POPS_Srvr == 4) or 10;
-  +30 Validate POPS_Power_Cycle;
+  +30 Validate POPS_Pwr_Cycle;
+      Validate POPS_Start;
+}
+
+State POPS_Is_Active {
+  depending on (Shutdown) { Validate POPS_Shutdown; }
 }
 
 State POPS_Shutdown {
-  +1  { if (!POPSPwr) Validate POPS_Is_Off;
-        else if (POPS_Stale > 3 && (POPS_srvr == 0 || POPS_srvr == 3))
-          Validate POPS_Shutdown1;
-      }
-  +1  > POPS Shutdown
-      Hold Until (POPS_srvr == 3 && POPS_Stale > 3) or 10;
-  +30 Validate POPS_Shutdown1;
-}
-
-State POPS_Shutdown1 {
-      > POPS Power Off
-  +1  Validate POPS_Is_Off;
+  Validate POPS_Pwr_Off;
+  Hold until valid (POPS_Pwr_Is_Off);
+  Validate POPS_Is_Off;
 }
 
 State POPS_Is_Off {}
+
+# -----------------------------------------------------------------------------
+# Partition 4: POPS Power
+# -----------------------------------------------------------------------------
+Partition
+
+State POPS_Pwr_Idle {}
+
+State POPS_Pwr_On {
+  > POPS Power On
+  Hold Until (POPS_Srvr == 1 || POPS_Srvr == 2) or 2:00
+  else Validate POPS_Pwr_Cycle;
+  Validate POPS_Pwr_Is_Up;
+}
+
+State POPS_Pwr_Cycle {
+      > POPS Power Off
+  +30 Validate POPS_Pwr_On;
+}
+
+State POPS_Pwr_Is_Up {}
+
+State POPS_Pwr_Off {
+  +1  { if (!POPSPwr) Validate POPS_Pwr_Is_Off;
+        else if (POPS_Stale > 3 && (POPS_srvr == 0 || POPS_srvr == 3))
+          Validate POPS_Pwr_Off1;
+      }
+  +1  > POPS Shutdown
+      Hold Until (POPS_srvr == 3 && POPS_Stale > 3) or 10;
+  +30 Validate POPS_Pwr_Off1;
+}
+
+State POPS_Pwr_Off1 {
+      > POPS Power Off
+  +1  Validate POPS_Pwr_Is_Off;
+}
+
+State POPS_Pwr_Is_Off {}
 
 # -----------------------------------------------------------------------------
 # Partition 4: POPS Flow

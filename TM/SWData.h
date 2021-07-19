@@ -16,6 +16,7 @@ extern SWData_t SWData;
 
 #define SWS_TAKEOFF 1
 #define SWS_LAND 4
+#define SWS_POPS_POWER_ON 36
 #define SWS_POPS_STARTUP 30
 #define SWS_POPS_SHUTDOWN 31
 #define SWS_POPS_FLOW_PI 34

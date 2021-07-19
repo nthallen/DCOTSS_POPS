@@ -10,6 +10,7 @@ SW_Variable: SWStat SW Status
 # SWS_PPUMP_DISABLE    23 Disable POPS Pump Algo:   Validate PPump_Disable; break;
 # SWS_BPUMP_DISABLE    24 Disable Bypass Pump Algo: Validate BPump_Disable; break;
 
+  SWS_POPS_POWER_ON    36 POPS Power Up Only:       Validate POPS_Pwr_On;
   SWS_POPS_STARTUP     30 POPS Startup:             Validate POPS_Startup; break;
   SWS_POPS_SHUTDOWN    31 POPS Shutdown:            Validate POPS_Shutdown; break;
   SWS_POPS_FLOW_PI     34 POPS Flow PI:             Validate POPS_Flow_PI_Init; break;
