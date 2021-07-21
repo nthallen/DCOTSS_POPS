@@ -19,9 +19,9 @@ State Init {
 State Startup {
   depending on (ON_GROUND) { Validate Shutdown; }
   Validate POPS_Startup;
-  Hold until valid (POPS_Is_Active);
-  Validate POPS_Flow_PI_Init;
+  Hold until valid (POPS_Is_Active) or 4:00;
   Validate Bypass_Flow_Iso_Init;
+# Validate POPS_Flow_PI_Init;
 }
 
 State Shutdown {
@@ -93,6 +93,7 @@ State POPS_Startup {
 }
 
 State  POPS_Start {
+  depending on (Shutdown) { Validate POPS_Shutdown; }
   Hold Until Valid (POPS_Pwr_Is_Up);
   Hold Until (POPS_Srvr == 2) or 1
   else > POPS Start
@@ -103,21 +104,25 @@ State  POPS_Start {
 
 State POPS_Comms {
       depending on (Shutdown) { Validate POPS_Shutdown; }
-      # POPS did not respond to Start command
       { msg(2, "POPS did not respond to Start command"); }
       > POPS Shutdown
-      Hold Until (POPS_Srvr == 4) or 10;
+      Hold Until (POPS_Srvr == 3) or 10;
   +30 Validate POPS_Pwr_Cycle;
       Validate POPS_Start;
 }
 
 State POPS_Is_Active {
   depending on (Shutdown) { Validate POPS_Shutdown; }
+  { if (POPS_Srvr != 2) {
+      msg(MSG_ERROR, "POPS no longer Active, will restart");
+      Validate POPS_Start;
+    }
+  }
 }
 
 State POPS_Shutdown {
   Validate POPS_Pwr_Off;
-  Hold until valid (POPS_Pwr_Is_Off);
+  Hold until valid (POPS_Pwr_Is_Off) or 50;
   Validate POPS_Is_Off;
 }
 
@@ -142,11 +147,17 @@ State POPS_Pwr_Cycle {
   +30 Validate POPS_Pwr_On;
 }
 
-State POPS_Pwr_Is_Up {}
+State POPS_Pwr_Is_Up {
+  { if (POPS_Srvr == 0) {
+      msg(MSG_ERROR, "POPS_Pwr: apparently rebooting");
+      Validate POPS_Pwr_On;
+    }
+  }
+}
 
 State POPS_Pwr_Off {
   +1  { if (!POPSPwr) Validate POPS_Pwr_Is_Off;
-        else if (POPS_Stale > 3 && (POPS_srvr == 0 || POPS_srvr == 3))
+        else if (POPS_Stale > 30 && (POPS_srvr == 0 || POPS_srvr == 3))
           Validate POPS_Pwr_Off1;
       }
   +1  > POPS Shutdown
@@ -162,7 +173,7 @@ State POPS_Pwr_Off1 {
 State POPS_Pwr_Is_Off {}
 
 # -----------------------------------------------------------------------------
-# Partition 4: POPS Flow
+# Partition 5: POPS Flow
 # -----------------------------------------------------------------------------
 Partition
 
@@ -182,6 +193,9 @@ Partition
 
 State POPS_Flow_Idle {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
+      > Pump POPS Off
+  +1  > MFC POPS Flow SetPoint 0 nccm
+  { if ( POPS_Srvr == 2) Validate POPS_Flow_PI_Init; }
 }
 
 State POPS_Flow_PI_Init {
@@ -199,6 +213,7 @@ State POPS_Flow_PI_Quick_Init {
 State POPS_Flow_PI {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
   depending on (Pumps_Over_Temp) { Validate POPS_Flow_PI_OT; }
+  { if (POPS_Srvr != 2) Validate POPS_Flow_Idle; }
   {
     LFE_err = LFE_Set - POPS_ccm;
     LFE_I = LFE_I + LFE_err;
@@ -242,7 +257,7 @@ State POPS_Flow_Stop {
 State POPS_Flow_Off {}
 
 # -----------------------------------------------------------------------------
-# Partition 5: Bypass Flow
+# Partition 6: Bypass Flow
 # -----------------------------------------------------------------------------
 Partition
 
@@ -329,7 +344,7 @@ State Bypass_Flow_Stop {
 State Bypass_Flow_Off {}
 
 # -----------------------------------------------------------------------------
-# Partition 6: Pump Watchdog
+# Partition 7: Pump Watchdog
 # -----------------------------------------------------------------------------
 
 State Pumps_Watch NoLog {
