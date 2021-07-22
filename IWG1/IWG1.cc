@@ -126,10 +126,11 @@ int IWG1_UDP::not_ISO8601(double *Time) {
   buft.tm_year -= 1900;
   buft.tm_mon -= 1;
   buft.tm_sec = 0;
+  buft.tm_isdst = 0;
   ltime = mktime(&buft);
   if (ltime == (time_t)(-1))
     report_err("mktime returned error");
-  else *Time = ltime + secs;
+  else *Time = (double)ltime + secs;
   return 0;
 }
 
