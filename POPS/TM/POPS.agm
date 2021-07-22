@@ -2,6 +2,7 @@ ModuleDef POPS [ tbl_name= ] {
 }
 
 tmcbase = POPS.tmc
+tmcbase = POPS_conv.tmc
 colbase = POPS_col.tmc
 cmdbase = POPS.cmd
 genuibase = POPS.genui

@@ -24,6 +24,7 @@
 	  Bin06:  (POPS_Bin06,8);
 	  Bin07:  (POPS_Bin07,8);
 	  Bin08:  (POPS_Bin08,8);
+    Surf:   (POPS_Surf_Area,8);
 	}; +|+; {
 	  Bin09:  (POPS_Bin09,8);
 	  Bin10:  (POPS_Bin10,8);
@@ -33,6 +34,7 @@
 	  Bin14:  (POPS_Bin14,8);
 	  Bin15:  (POPS_Bin15,8);
 	  Bin16:  (POPS_Bin16,8);
+    Vol:    (POPS_Vol_Density,8);
 	}
       };
       +-+;
