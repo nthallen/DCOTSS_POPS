@@ -138,7 +138,7 @@ depending on (1 Hz) {
   UDPcsv_user.set_col(4-2, text(POPS_Part_num));
   UDPcsv_user.set_col(5-2, text(POPS_num_cc));
   UDPcsv_user.set_col(6-2, text(POPS_Surf_Area));
-  UDPcsv_user.set_col(7-2, text(POPS_Flow));
+  UDPcsv_user.set_col(7-2, text(POPS_ccm));
   UDPcsv_user.set_col(8-2, text(PMFC_MassFlow));
   UDPcsv_user.set_col(9-2, text(BMFC_MassFlow));
   UDPcsv_user.set_col(10-2, text(PMFC_P));
