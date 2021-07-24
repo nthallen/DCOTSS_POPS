@@ -29,6 +29,6 @@
   1 Wind_Dir Wind Dir
   1 Wind_Speed Wind Speed
   1 Cabin_Press IWG1_Stat CabinPress
-  1 TDDrift IWG1_Stat TDrift
+  1 TDDrift IWG1_Stat TDrift %18le
   1 TDrift IWG1_Stat TDrift
   1 IWG1_Stale IWG1_Stat Stale
