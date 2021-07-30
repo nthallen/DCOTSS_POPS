@@ -29,7 +29,7 @@ TGTDIR = /home/DPOPS
 IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
 DISTRIB = services interact runfile.flight
 DISTRIB = USB_ID.exp
-IDISTRIB = doit
+IDISTRIB = doit POPSdata
 
 DPOPScol : -lsubbuspp
 DPOPSsrvr : -lsubbuspp uDACS_cmd.oui

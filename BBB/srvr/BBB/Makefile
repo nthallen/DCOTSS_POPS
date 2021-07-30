@@ -16,7 +16,7 @@ POPS_srvr : $(OBJ)
 	$(CXX) -o POPS_srvr $(CXXFLAGS) $(OBJ) -lpthread -lrt
 
 install : POPS_srvr
-	cp POPS_srvr start_POPS start_POPS_srvr services $(DESTDIR)
+	cp POPS_srvr POPSstow start_POPS start_POPS_srvr services $(DESTDIR)
 
 clean :
 	rm -f *.o POPS_srvr

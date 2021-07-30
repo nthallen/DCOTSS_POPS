@@ -1,0 +1,75 @@
+#! /bin/bash
+# POPSdata copy <run>
+# POPSdata stow
+# This script is intended to run on the DPOPS Pi
+# It can be placed and run from the login home directory (/home/pi), provided
+# there is a softlink there to /home/DPOPS/Experiment.config
+PATH=/bin:/usr/bin:/usr/local/bin
+. /usr/local/libexec/load_exconfig.sh
+msgProgram=POPSdata
+op=$1
+case "$op" in
+  copy)
+    run=$2
+    rundir=`locate_rundir $run` || exit 1;;
+  stow) :;;
+  *) msgf 3 "Missing or invalid command";;
+esac
+
+if ! ssh pops ls 2>/dev/null >/dev/null; then
+  msgf 0 "Waiting for POPS to boot"
+  i=1
+  while ! ssh pops ls 2>/dev/null >/dev/null; do
+    if [ $i -gt 60 ]; then
+      msgf 0 "Still waiting"
+      i=0
+    else
+      let i=i+1
+    fi
+    sleep 1
+  done
+fi
+
+if [ $op = copy ]; then
+  popsruns=`ssh pops ls -d "/media/uSD/Data/F*" 2>/dev/null` ||
+    msgf 3 "ssh pops ls failed"
+  if [ -n "$popsrun" ]; then
+    msgf 0 "No POPS runs found"
+    exit 0
+  fi
+  rundir=${rundir%:*}/${rundir#*:}
+  [ -d $rundir ] || msgf 4 "rundir '$rundir' not found"
+  if [ -d $rundir/POPS ]; then
+    exists=''
+    nexists=''
+    for prun in $popsruns; do
+      prun=${prun##*/}
+      if [ -e $rundir/POPS/$prun ]; then
+        exists="$exists $prun"
+      else
+        nexists="$nexists $prun"
+      fi
+    done
+    if [ -n "$exists" ]; then
+      msgf 0 "Destination dirs for POPS run(s)$exists already exist"
+      [ -n "$nexists" ] && msgf 0 "POPS run(s)$nexists have not been copied"
+      msgf 3 "Move the existing destination files and retry"
+    fi
+  fi
+  [ -d $rundir/POPS ] || mkdir $rundir/POPS
+  scp -q -r pops:/media/uSD/Data/F* $rundir/POPS
+  exists=''
+  nexists=''
+  for prun in $popsruns; do
+    prun=${prun##*/}
+    if [ -d $rundir/POPS/$prun ]; then
+      exists="$exists $prun"
+    else
+      nexists="$nexists $prun"
+    fi
+  done
+  [ -n "$nexists" ] && msgf 3 "POPS run(s)$nexists was/were not copied"
+  msgf 0 "Successfully copied runs$exists"
+fi
+
+ssh pops SW/bin/POPSstow
