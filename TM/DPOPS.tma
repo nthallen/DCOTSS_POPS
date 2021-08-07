@@ -7,7 +7,7 @@
 # -----------------------------------------------------------------------------
 State Init {
     > Telemetry Start
- +1 > Fail Off
+ +1 > Fail Light Off
  +1 > MFC Bypass Flow Setpoint 0 nccm
     > MFC POPS Flow Setpoint 0 nccm
     > Set LFE PGain 0.0581
