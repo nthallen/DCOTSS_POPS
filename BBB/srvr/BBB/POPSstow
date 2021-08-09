@@ -18,4 +18,6 @@ for run in $runs; do
   mv $run oldData/$dest
 done
 
+echo
+echo "Space on POPS BBB:"
 df -h .
