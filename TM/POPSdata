@@ -13,7 +13,7 @@ case "$op" in
     run=$2
     rundir=`locate_rundir $run` || exit 1;;
   stow) :;;
-  *) msgf 3 "Missing or invalid command";;
+  *) msgf 3 "Missing or invalid command: '%op'. Supported commands are copy and stow";;
 esac
 
 if ! ssh pops ls 2>/dev/null >/dev/null; then
