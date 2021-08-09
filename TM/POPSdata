@@ -31,8 +31,7 @@ if ! ssh pops ls 2>/dev/null >/dev/null; then
 fi
 
 if [ $op = copy ]; then
-  popsruns=`ssh pops ls -d "/media/uSD/Data/F*" 2>/dev/null` ||
-    msgf 3 "ssh pops ls failed"
+  popsruns=`ssh pops ls -d "/media/uSD/Data/F*" 2>/dev/null`
   if [ -n "$popsrun" ]; then
     msgf 0 "No POPS runs found"
     exit 0
