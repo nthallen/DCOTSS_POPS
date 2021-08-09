@@ -72,7 +72,7 @@ if [ $op = copy ]; then
   msgf 0 "Successfully copied runs$exists"
 fi
 
-ssh pops SW/bin/POPSstow
+ssh -q pops SW/bin/POPSstow
 
 echo "Space on Raspberry Pi:"
 df -h .
