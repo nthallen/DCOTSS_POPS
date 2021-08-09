@@ -74,6 +74,7 @@ fi
 
 echo
 msgf 0 "Running POPSstow on POPS"
+echo
 ssh -q pops SW/bin/POPSstow
 
 echo
