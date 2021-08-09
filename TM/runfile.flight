@@ -51,7 +51,7 @@ if [ -n "$uDACS_A" ]; then
 fi
 
 if [ $flight_mode = yes ]; then
-
+  sleep 10
   Launch      tm_bfr   bfr -H bfr: -S:
   Launch      -TMC-    lgr -N `mlf_find LOG` -n lgr
 

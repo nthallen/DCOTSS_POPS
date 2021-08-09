@@ -73,3 +73,6 @@ if [ $op = copy ]; then
 fi
 
 ssh pops SW/bin/POPSstow
+
+echo "Space on Raspberry Pi:"
+df -h .
