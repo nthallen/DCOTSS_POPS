@@ -270,6 +270,7 @@ Partition
   double BP_err;
   double BP_MFset;
   int BP_n_update;
+  double SPX_ccm = 0.;
 %}
 
 { BP_Gp = BPmp_PGain; }
@@ -297,7 +298,7 @@ State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   depending on (Pumps_Over_Temp) { Validate Bypass_Flow_Iso_OT; }
   { double Fm_SPX, Fm_BMFC, Fv_err_BMFC, Vset;
-    Fm_SPX = 30*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
+    Fm_SPX = SPX_ccm*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
     Fm_BMFC = PD_nccm - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
