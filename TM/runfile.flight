@@ -38,8 +38,9 @@ done
                 msg -nflight "Running script runfile.flight"
 
 flight_mode=yes
-# if [ -n "$uDACS_A" ]; then
-  # Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A -s uDACS_A -n uDACS_A
+
+if [ -n "$uDACS_A" ]; then
+  Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A -s uDACS_A -n uDACS_A
   # msgf -V 0 sbswitch -N uDACS_A -Q 1 1
   # sbswitch -N uDACS_A -Q 1 1 && flight_mode=no
   # msgf -V 0 sbswitch report flight_mode=$flight_mode
@@ -48,7 +49,7 @@ flight_mode=yes
     # msgf -V 0 "Waiting for jobs $jobs to terminate"
     # wait $jobs
   # fi
-# fi
+fi
 
 if [ $flight_mode = yes ]; then
   sleep 10
