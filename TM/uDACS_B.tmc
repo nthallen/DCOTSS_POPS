@@ -45,13 +45,15 @@ TM 1 Hz RTC_loopdur_t uDACS_B_maxloopdur;
 TM 1 Hz PumpStat_t HPS_Stat;
 TM 1 Hz HPS_Temp_t HPS1_Temp;
 TM 1 Hz HPS_Temp_t HPS2_Temp;
+TM 1 Hz HPS_Temp_t HPS3_Temp;
 TM 1 Hz HPS_P_t HPS_P;
 TM 1 Hz HPS_dP_t HPS_dP;
+TM 1 Hz HPS_P_t HPS3_P;
 
 group uDACS_B (
     BPmpV, uDACS_B_status, uDACS_B_Raw1, uDACS_B_Raw2,
     uDACS_B_Raw3, uDACS_B_N, uDACS_B_errors, PumpsStat,
-    HPS_Stat, HPS1_Temp, HPS2_Temp, HPS_P, HPS_dP) {
+    HPS_Stat, HPS1_Temp, HPS2_Temp, HPS3_Temp, HPS_P, HPS_dP, HPS3_P) {
   if (uDACS_mread(uDACS_B)) {
   
     /*
@@ -88,5 +90,7 @@ group uDACS_B (
     HPS_P = rvals_to_float(uDACS_B_rvals[14]);
     HPS2_Temp = rvals_to_float(uDACS_B_rvals[16]);
     HPS_dP = -rvals_to_float(uDACS_B_rvals[18]);
+    HPS3_Temp = rvals_to_float(uDACS_B_rvals[20]);
+    HPS3_P = rvals_to_float(uDACS_B_rvals[22]);
   }
 }

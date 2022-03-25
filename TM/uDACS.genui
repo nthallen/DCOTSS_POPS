@@ -1,5 +1,5 @@
-  1 Fail:Fail:0 uDACS_A Status %.0lf
-  1 Mode:Fail:4 uDACS_A Status %.0lf
+  1 Fail:FailMode:0 uDACS_A Status %.0lf
+  1 Mode:FailMode:4 uDACS_A Status %.0lf
   1 MS5607_P MS5607 P
   1 MS5607_T MS5607 T
 # 1 uDACS_A_VSet0 uDACS_A DAC
@@ -55,6 +55,9 @@
 # 1 uDACS_A_curloopdur RTC loop
 # 1 uDACS_A_maxloopdur RTC loop
   1 POPSPwr:PwrStat:3 POPS Status %.0lf
+  
+  1 MMcmd  Moudi Command
+  1 MMstat Moudi Status
 
 # 1 uDACS_B_VSet0 uDACS_B DAC
 # 1 uDACS_B_VSet2 uDACS_B DAC
@@ -120,15 +123,18 @@
   1 PS1_Init:HPS_Stat:0 Honeywell Status %.0lf
   1 PS1_CRC_OK:HPS_Stat:1 Honeywell Status %.0lf
   1 PS2_Init:HPS_Stat:2 Honeywell Status %.0lf
-  1 PS2_CRC_OK:HPS_Stat:0 Honeywell Status %.0lf
+  1 PS2_CRC_OK:HPS_Stat:3 Honeywell Status %.0lf
+  1 PS3_Init:HPS_Stat:4 Honeywell Status %.0lf
+  1 PS3_CRC_OK:HPS_Stat:5 Honeywell Status %.0lf
   
   1 HPS1_Temp Honeywell HPS_T
   1 HPS2_Temp Honeywell HPS_T
-  1 HPS_P Honeywell HPS_P
-  1 HPS_dP Honeywell HPS_dP %.4lf
+  1 HPS3_Temp Honeywell HPS_T
+  1 HPS_P     Honeywell HPS_P
+  1 HPS_dP    Honeywell HPS_dP %.4lf
+  1 HPS3_P    Honeywell HPS_P
 
 # 1 uDACS_B_Raw0 uDACS_B Raw %.0lf
   1 uDACS_B_Raw1 uDACS_B Raw %.0lf
   1 uDACS_B_Raw2 uDACS_B Raw %.0lf
   1 uDACS_B_Raw3 uDACS_B Raw %.0lf
-

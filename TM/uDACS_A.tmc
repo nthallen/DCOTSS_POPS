@@ -4,7 +4,7 @@ TM typedef uint8_t Fail_t { text "%02X"; }
    Fail&0x10 is the mode switch position
    FailText and ModeText are defined in uDACS_A_conv.tmc
  */
-TM 1 Hz Fail_t Fail;
+TM 1 Hz Fail_t FailMode;
 TM 1 Hz PwrStat_t PwrStat;
 
 /* MS5607 P and T */
@@ -59,7 +59,7 @@ group uDACS_A (
     uDACS_A_status, POPST, PPmpT, BPmpT, RPi_T,
     Amb_T, Rov1T, Rov2T, Rov3T, uDACS_A_N,
     /* uDACS_A_elapsed, uDACS_A_curloopdur, uDACS_A_maxloopdur, */
-    Fail, PwrStat) {
+    FailMode, PwrStat) {
   if (uDACS_mread(uDACS_A)) {
     MS5607_P = rvals_to_float(uDACS_A_rvals[0]);
     MS5607_T = rvals_to_float(uDACS_A_rvals[2]);
@@ -86,7 +86,7 @@ group uDACS_A (
     uDACS_A_maxloopdur = uDACS_A_rvals[17];
     */
     
-    Fail = (uDACS_A_rvals[14] & 0x01) | (((uDACS_A_rvals[15] & 0x01)^0x01)<<4);
+    FailMode = (uDACS_A_rvals[14] & 0x01) | (((uDACS_A_rvals[15] & 0x01)^0x01)<<4);
     PwrStat = uDACS_A_rvals[16] & 0xFF;
   }
 }

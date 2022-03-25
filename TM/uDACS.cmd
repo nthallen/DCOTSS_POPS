@@ -66,6 +66,7 @@
   : uDACS_A J34 &pumps_on_off * { uDACS_A_wr(0x30, 4+$3); }
   : uDACS_A POPS Power &pumps_on_off * { uDACS_A_wr(0x30, 6+$4); }
   : POPS Power &pumps_on_off * { uDACS_A_wr(0x30, 6+$3); }
+  : Moudi Valve &pumps_on_off * { uDACS_A_wr(0x30, 8+$3); }
   : Pump Both &pumps_on_off * { uDACS_B_cmd($3); }
   : Pump POPS &pumps_on_off * { uDACS_B_cmd(2+$3); }
   : Pump Bypass &pumps_on_off * { uDACS_B_cmd(4+$3); }

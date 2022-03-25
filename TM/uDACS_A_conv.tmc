@@ -87,11 +87,37 @@ uDACS_sec uDACS_A_elapsed_d; Invalidate uDACS_A_elapsed_d;
 %{
   #define FailText_txt(x) ((x&1)?" On":"Off")
   #define ModeText_txt(x) ((x&1)?"Flt":"Lab")
+  const char *MMcmd_text(uint8_t x) {
+    switch (x) {
+      case 0:  return "-----";
+      case 1:  return "Open2";
+      case 2:  return "Open ";
+      case 3:  return "Close";
+      default: return "*****";
+    }
+  }
+  const char *MMstat_text(uint8_t x) {
+    switch (x) {
+      case 0:  return "------";
+      case 1:  return "Opened";
+      case 2:  return "Opend2";
+      case 3:  return "Closed";
+      default: return "******";
+    }
+  }
 %}
 TM typedef uint8_t FailText_t { text "%3u" FailText_txt(); }
 FailText_t FailText; Invalidate FailText;
-{ FailText = Fail&1; Validate FailText; }
+{ FailText = FailMode&1; Validate FailText; }
 
 TM typedef uint8_t ModeText_t { text "%3u" ModeText_txt(); }
 ModeText_t ModeText; Invalidate ModeText;
-{ ModeText = (Fail>>4)&1; Validate ModeText; }
+{ ModeText = (FailMode>>4)&1; Validate ModeText; }
+
+TM typedef uint8_t MMcmd_t { text "%5u" MMcmd_text(); }
+MMcmd_t MMcmd; Invalidate MMcmd;
+{ MMcmd = (uDACS_A_status>>4)&3; Validate MMcmd; }
+
+TM typedef uint8_t MMstat_t { text "%6u" MMstat_text(); }
+MMstat_t MMstat; Invalidate MMstat;
+{ MMstat = (uDACS_A_status>>6)&3; Validate MMstat; }

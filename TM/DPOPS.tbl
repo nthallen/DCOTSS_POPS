@@ -1,9 +1,8 @@
 Input "TMbase.tbl";
 Input "Alicat.tbl";
 
-BMFC {
+BMFtma {
   HBox { +-; Title: "Bypass Flow"; -+ };
-  [BMFC_vdata];
   MFf:   (BMFC_MF_LP,7) nccm;
   LPFP:   (BPmp_LPFP,3);
   BPmpV:      (BPmpV,6) V;
@@ -11,15 +10,21 @@ BMFC {
   IGain: (BPmp_IGain,9);
 }
 
-PMFC {
-  HBox { +-; Title: "POPS Flow"; -+ };
-  [PMFC_vdata];
-}
+# PMFC {
+#   HBox { +-; Title: "POPS Flow"; -+ };
+#   [PMFC_vdata];
+# }
 
 # SMFC {
 #   HBox { +-; Title: "Sheath Flow"; -+ };
 #   [SMFC_vdata];
 # }
+
+Moudi {
+  HBox { +-; Title: "Mini-Moudi"; -+ };
+  Command: (MMcmd,5);
+  Status:  (MMstat,6);
+}
 
 POPS {
   HBox { +-; Title: POPS; -+ };
@@ -60,11 +65,15 @@ System {
 
 { HBox {
     |+;
-    { [BMFC];
-      [Inlet];
-    }; |+; {
-      [PMFC];
-      [POPS];
+    { [Alicat_flows2];
+      HBox {
+        { [BMFtma];
+          [Moudi];
+        }; |+; {
+          [Inlet];
+          [POPS]
+        }
+      }
     }; |+; {
       [Pumps];
       [System];
