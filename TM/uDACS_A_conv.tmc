@@ -116,8 +116,8 @@ ModeText_t ModeText; Invalidate ModeText;
 
 TM typedef uint8_t MMcmd_t { text "%5u" MMcmd_text(); }
 MMcmd_t MMcmd; Invalidate MMcmd;
-{ MMcmd = (uDACS_A_status>>4)&3; Validate MMcmd; }
+{ MMcmd = (PwrStat>>4)&3; Validate MMcmd; }
 
 TM typedef uint8_t MMstat_t { text "%6u" MMstat_text(); }
 MMstat_t MMstat; Invalidate MMstat;
-{ MMstat = (uDACS_A_status>>6)&3; Validate MMstat; }
+{ MMstat = (PwrStat>>6)&3; Validate MMstat; }
