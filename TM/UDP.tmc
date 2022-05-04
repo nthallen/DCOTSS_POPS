@@ -55,7 +55,7 @@
     UDPbcast *UDPuser =
       // DPOPS is assigned 10.6.1.130
       // Inmarsat user packets go to 10.6.1.10 19001+130
-      new UDPbcast("10.6.1.10", "19131",1000); // ER-2 LAN
+      new UDPbcast("10.6.1.10", "16131",1000); // ER-2 LAN
     UDPcsv_user.init(UDPuser, 1000);
     UDPcsv_user.init_col(3-2,"Status","%.0lf");
     UDPcsv_user.init_col(4-2,"POPS_Part_num");
