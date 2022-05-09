@@ -348,6 +348,7 @@ State Bypass_Flow_Off {}
 # -----------------------------------------------------------------------------
 # Partition 7: Pump Watchdog
 # -----------------------------------------------------------------------------
+Partition
 
 State Pumps_Watch NoLog {
   Hold until (PPmpT > 80 || BPmpT > 80);
@@ -364,4 +365,50 @@ State Pumps_Over_Temp {
   Hold until (PPmpT > 50 || BPmpT > 50) or 5
   else Validate Pumps_Watch;
   Validate Pumps_Over_Temp;
+}
+
+# -----------------------------------------------------------------------------
+# Partition 8: Mini-Moudi
+# -----------------------------------------------------------------------------
+Partition
+
+%{
+  /* The P_moudi_low values define the low altitude/high pressure range for
+     mini-moudi sampling.
+     P_moudi_high values define the high altitude/low pressure range, if
+     applicable.
+     The _op values define a range within which we will open the valve.
+     The _cl values define a range outside of which we will close the valve.
+     The _op range should be entirely within in the _cl range with enough
+     margin to avoid rapid cycling.
+     All P_moudi values are in mbar, to match HPS_P.
+  */
+  #define P_moudi_low_op    140.
+  #define P_moudi_low_cl    145.
+  
+  int moudi_open(double P) {
+    #ifdef P_moudi_high_op
+      return P <= P_moudi_low_op && P >= P_moudi_high_op;
+    #else
+      return P <= P_moudi_low_op;
+    #endif
+  }
+  
+  int moudi_close(double P) {
+    #ifdef P_moudi_high_op
+      return P > P_moudi_low_cl || P < P_moudi_high_cl;
+    #else
+      return P > P_moudi_low_cl;
+    #endif
+  }
+%}
+
+State Moudi_closed {
+  > Moudi Valve off
+  { if (moudi_open(convert(HPS_P))) Validate Moudi_opened; }
+}
+
+State Moudi_opened {
+  > Moudi Valve On
+  { if (moudi_close(convert(HPS_P))) Validate Moudi_closed; }
 }
