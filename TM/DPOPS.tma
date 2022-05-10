@@ -351,18 +351,19 @@ State Bypass_Flow_Off {}
 Partition
 
 State Pumps_Watch NoLog {
-  Hold until (PPmpT > 80 || BPmpT > 80);
-  Hold until (PPmpT < 80 && BPmpT < 80) or 5
-  else Validate Pumps_Over_Temp;
+  Hold until (convert(PPmpT) > 80 || convert(BPmpT) > 80);
+  Hold until (convert(PPmpT) < 80 && convert(BPmpT) < 80) or 5
+  else {
+    msg(MSG_ERROR, "Pumps over temperature: PPmpT: %.1lf C  BPmpT: %.1lf C",
+                    convert(PPmpT), convert(BPmpT));
+    Validate Pumps_Over_Temp;
+  }
   Validate Pumps_Watch;
 }
 
-State Pumps_Over_Temp {
-  { msg(MSG_ERROR, "Pumps over temperature: PPmpT: %.1lf C  BPmpT: %.1lf C",
-                    convert(PPmpT), convert(BPmpT));
-  }
-  Hold until (PPmpT < 50 && BPmpT < 50);
-  Hold until (PPmpT > 50 || BPmpT > 50) or 5
+State Pumps_Over_Temp NoLog {
+  Hold until (convert(PPmpT) < 50 && convert(BPmpT) < 50);
+  Hold until (convert(PPmpT) > 50 || convert(BPmpT) > 50) or 5
   else Validate Pumps_Watch;
   Validate Pumps_Over_Temp;
 }
