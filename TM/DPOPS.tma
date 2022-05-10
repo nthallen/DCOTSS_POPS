@@ -406,10 +406,12 @@ Partition
 
 State Moudi_closed {
   > Moudi Valve off
+  > MFC Moudi Flow Setpoint 0 nccm
   { if (moudi_open(convert(HPS_P))) Validate Moudi_opened; }
 }
 
 State Moudi_opened {
   > Moudi Valve On
+  > MFC Moudi Flow Setpoint 2000 nccm
   { if (moudi_close(convert(HPS_P))) Validate Moudi_closed; }
 }
