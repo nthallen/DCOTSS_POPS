@@ -34,6 +34,7 @@ SW_Variable: <uint8_t,BPLPF_t> BPmp_LPFP Set Bypass Pump Filter Period
   : &LPFP { $0 = $1; }
 SW_Variable: <uint8_t,BPLPF_t> Sim_Vel Set Simulated Velocity
   : &SimVel { $0 = $1; }
-SW_Variable: <uint8_t,BPLPF_t> BPmp_Per set Bypass Pump PI Period
+SW_Variable: <uint8_t,BPLPF_t> BPmp_Per Set Bypass Pump PI Period
   : &BPPer { $0 = $1; }
-
+SW_Variable: <uint8_t,BPLPF_t> IsoKin_pct Set Isokinetic Flow Percentage
+  : &IsoPct { $0 = $1; }

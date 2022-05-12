@@ -18,7 +18,8 @@
   : Set Bypass Pump IGain &BPmp_IGain { SWData.BPmp_IGain = $5; }
   : Set Bypass Pump Filter Period &BPmp_LPFP { SWData.BPmp_LPFP = $6; }
   : Set Simulated Velocity &Sim_Vel { SWData.Sim_Vel = $4; }
-  : set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
+  : Set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
+  : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -55,4 +56,7 @@
   ;
 &BPmp_Per <uint8_t>
   : &BPPer { $0 = $1; }
+  ;
+&IsoKin_pct <uint8_t>
+  : &IsoPct { $0 = $1; }
   ;

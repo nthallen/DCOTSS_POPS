@@ -15,12 +15,13 @@ else
   context_level = 1;
 end
 dfs.start_col;
-dfs.plot('a', 'label', 'Algo', 'plots', {'asws','ag','af','amf','alp'});
+dfs.plot('a', 'label', 'Algo', 'plots', {'asws','ag','af','amf','alp','aip'});
 dfs.plot('asws','label','SW Stat','vars',{'SWStat'});
 dfs.plot('ag','label','Gains','vars',{'LFE_PGain','LFE_IGain','BPmp_PGain','BPmp_IGain'});
 dfs.plot('af','label','Filter','vars',{'BPmp_IGain'});
 dfs.plot('amf','label','M Ffilt','vars',{'BMFC_MassFlow','BMFC_MF_LP'});
 dfs.plot('alp','label','L Pper','vars',{'BPmp_LPFP'});
+dfs.plot('aip','label','Iso Pct','vars',{'IsoKin_pct'});
 dfs.plot('dacsa', 'label', 'uDACS A', 'plots', {'dacsas','dacsaais','dacsat','dacsaain'});
 dfs.plot('dacsas','label','Status','vars',{{'name','Fail','var_name','FailMode','bit_number',0},{'name','Mode','var_name','FailMode','bit_number',4}});
 dfs.plot('dacsaais','label','AI Stat','vars',{'uDACS_A_status'});
