@@ -430,44 +430,54 @@ Partition
   #define LEVEL_LEG_RANGE 200.0
   #define LEVEL_LEG_HIST   50.0
   
-  #define INSIDE_LEVEL_LEG 0
-  #define OUTSIDE_LEVEL_LEG 1
+  #define INSIDE_LEVEL 0
+  #define OUTSIDE_LEVEL 1
+  #define ABOVE_LEVEL 2
+  #define BELOW_LEVEL 3
   
-  int at_level_leg(float Alt, float level, int outside) {
-    if (outside) {
-      return (Alt < level - LEVEL_LEG_RANGE - LEVEL_LEG_HIST ||
-              Alt > level + LEVEL_LEG_RANGE + LEVEL_LEG_HIST);
-    } else {
-      return (Alt > level - LEVEL_LEG_RANGE &&
-              Alt < level + LEVEL_LEG_RANGE);
+  int at_level_leg(float Alt, float level, int condition) {
+    switch (condition) {
+      case INSIDE_LEVEL:
+        return (Alt > level - LEVEL_LEG_RANGE &&
+                Alt < level + LEVEL_LEG_RANGE);
+      case OUTSIDE_LEVEL:
+        return (Alt < level - LEVEL_LEG_RANGE - LEVEL_LEG_HIST ||
+                Alt > level + LEVEL_LEG_RANGE + LEVEL_LEG_HIST);
+      case ABOVE_LEVEL:
+        return (Alt > level);
+      case BELOW_LEVEL:
+        return (Alt < level - LEVEL_LEG_HIST);
+      default:
+        msg(2, "at_level_leg: Invalid condition: %d", condition);
+        return 0;
     }
   }
 %}
 
 State NonIso_Idle {
-  { if (at_level_leg(Press_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL_LEG)) Validate NonIso_Exploration_1; }
+  { if (at_level_leg(Press_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL)) Validate NonIso_Exploration_1; }
   > Set Isokinetic Flow Percentage 100
 }
 
 State NonIso_Exploration_1 {
-  { if (at_level_leg(Press_Alt, LEVEL_LEG1_ALT, OUTSIDE_LEVEL_LEG)) Validate NonIso_Idle; }
-  2:00 > Set Isokinetic Flow Percentage 50
-  2:00 > Set Isokinetic Flow Percentage 100
-  2:00 > Set Isokinetic Flow Percentage 75
-  2:00 Validate NonIso_HalfTime;
+  { if (at_level_leg(Press_Alt, LEVEL_LEG1_ALT, OUTSIDE_LEVEL)) Validate NonIso_Idle; }
+  +2:00 > Set Isokinetic Flow Percentage 50
+  +2:00 > Set Isokinetic Flow Percentage 100
+  +2:00 > Set Isokinetic Flow Percentage 75
+  +2:00 Validate NonIso_HalfTime;
 }
 
 State NonIso_HalfTime {
-  { if (at_level_leg(Press_Alt, LEVEL_LEG2_ALT, INSIDE_LEVEL_LEG)) Validate NonIso_Exploration_2; }
+  { if (at_level_leg(Press_Alt, LEVEL_LEG2_ALT, ABOVE_LEVEL)) Validate NonIso_Exploration_2; }
   > Set Isokinetic Flow Percentage 100
 }
 
 State NonIso_Exploration_2 {
-  { if (at_level_leg(Press_Alt, LEVEL_LEG2_ALT, OUTSIDE_LEVEL_LEG)) Validate NonIso_HalfTime; }
-  2:00 > Set Isokinetic Flow Percentage 50
-  2:00 > Set Isokinetic Flow Percentage 100
-  2:00 > Set Isokinetic Flow Percentage 75
-  2:00 Validate NonIso_Complete;
+  { if (at_level_leg(Press_Alt, LEVEL_LEG2_ALT, BELOW_LEVEL)) Validate NonIso_HalfTime; }
+  +2:00 > Set Isokinetic Flow Percentage 50
+  +2:00 > Set Isokinetic Flow Percentage 100
+  +2:00 > Set Isokinetic Flow Percentage 75
+  +2:00 Validate NonIso_Complete;
 }
 
 State NonIso_Complete {
