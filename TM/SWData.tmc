@@ -9,3 +9,4 @@ TM 1 Hz BPLPF_t BPmp_LPFP; collect BPmp_LPFP = SWData.BPmp_LPFP;
 TM 1 Hz BPLPF_t Sim_Vel; collect Sim_Vel = SWData.Sim_Vel;
 TM 1 Hz BPLPF_t BPmp_Per; collect BPmp_Per = SWData.BPmp_Per;
 TM 1 Hz BPLPF_t IsoKin_pct; collect IsoKin_pct = SWData.IsoKin_pct;
+TM 1 Hz U16Sim_T Sim_Alt; collect Sim_Alt = SWData.Sim_Alt;

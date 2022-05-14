@@ -12,4 +12,5 @@ HOMEDIR DPOPS_DATA_DIR
  1 BMFC_MF_LP    Algo MFfilt
  1 BPmp_LPFP     Algo LPper
  1 IsoKin_pct    Algo IsoPct
+ 1 Sim_Alt       Algo Sim_Alt
  

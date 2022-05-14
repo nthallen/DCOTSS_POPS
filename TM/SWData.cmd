@@ -20,6 +20,7 @@
   : Set Simulated Velocity &Sim_Vel { SWData.Sim_Vel = $4; }
   : Set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
   : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
+  : Set Simulated Altitude &Sim_Alt { SWData.Sim_Alt = $4; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -59,4 +60,7 @@
   ;
 &IsoKin_pct <uint8_t>
   : &IsoPct { $0 = $1; }
+  ;
+&Sim_Alt <uint16_t>
+  : %ld (Enter altitude in ft) { $0 = $1; }
   ;

@@ -7,6 +7,7 @@ f = ne_dialg(f, 'add', 1, 0, 'pdpopsaf', 'Filter' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsamf', 'M Ffilt' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsalp', 'L Pper' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsaip', 'Iso Pct' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpopsasa', 'Sim Alt' );
 f = ne_dialg(f, 'add', 0, 1, 'gdpopsdacsa', 'uDACS A' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsas', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpopsdacsaais', 'AI Stat' );

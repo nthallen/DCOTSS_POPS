@@ -38,3 +38,5 @@ SW_Variable: <uint8_t,BPLPF_t> BPmp_Per Set Bypass Pump PI Period
   : &BPPer { $0 = $1; }
 SW_Variable: <uint8_t,BPLPF_t> IsoKin_pct Set Isokinetic Flow Percentage
   : &IsoPct { $0 = $1; }
+SW_Variable: <uint16_t,U16Sim_T> Sim_Alt Set Simulated Altitude
+  : %ld (Enter altitude in ft) { $0 = $1; }
