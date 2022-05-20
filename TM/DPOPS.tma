@@ -457,8 +457,8 @@ Partition
 %}
 
 State NonIso_Idle {
-  { if (at_level_leg(Press_Alt, Sim_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL))
-      Validate NonIso_Exploration_1; }
+#  { if (at_level_leg(Press_Alt, Sim_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL))
+#      Validate NonIso_Exploration_1; }
   > Set Isokinetic Flow Percentage 100
 }
 
