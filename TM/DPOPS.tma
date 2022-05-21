@@ -425,7 +425,7 @@ Partition
   /*
     Strategy: When we get to the target altitude, start counting
   */
-  #define LEVEL_LEG1_ALT 50000.0
+  #define LEVEL_LEG1_ALT 40000.0
   #define LEVEL_LEG2_ALT 65000.0
   #define LEVEL_LEG_RANGE 200.0
   #define LEVEL_LEG_HIST   50.0
@@ -457,8 +457,8 @@ Partition
 %}
 
 State NonIso_Idle {
-#  { if (at_level_leg(Press_Alt, Sim_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL))
-#      Validate NonIso_Exploration_1; }
+   { if (at_level_leg(Press_Alt, Sim_Alt, LEVEL_LEG1_ALT, INSIDE_LEVEL))
+       Validate NonIso_Exploration_1; }
   > Set Isokinetic Flow Percentage 100
 }
 
@@ -467,7 +467,7 @@ State NonIso_Exploration_1 {
   +2:00 > Set Isokinetic Flow Percentage 50
   +2:00 > Set Isokinetic Flow Percentage 100
   +2:00 > Set Isokinetic Flow Percentage 75
-  +2:00 Validate NonIso_HalfTime;
+  +2:00 Validate NonIso_Complete; # Validate NonIso_HalfTime;
 }
 
 State NonIso_HalfTime {
