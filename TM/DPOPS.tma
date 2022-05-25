@@ -385,7 +385,7 @@ Partition
      All P_moudi values are in mbar, to match HPS_P.
   */
   #define P_moudi_low_op    160.
-  #define P_moudi_low_cl    165.
+  #define P_moudi_low_cl    180.
   
   int moudi_open(double P) {
     #ifdef P_moudi_high_op
@@ -425,7 +425,7 @@ Partition
   /*
     Strategy: When we get to the target altitude, start counting
   */
-  #define LEVEL_LEG1_ALT 40000.0
+  #define LEVEL_LEG1_ALT 30000.0
   #define LEVEL_LEG2_ALT 65000.0
   #define LEVEL_LEG_RANGE 200.0
   #define LEVEL_LEG_HIST   50.0
