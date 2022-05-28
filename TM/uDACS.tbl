@@ -25,6 +25,12 @@ ADC_A {
   { Status: (uDACS_A_status,4) N: (uDACS_A_N,5) };
 }
 
+MS5607 {
+  HBox { +-; Title: MS5607; -+ };
+  P: (MS5607_P,8) mbar;
+  T: (MS5607_T,7) C;
+}
+
 ADC_B {
   HBox { +-; Title: ADC_B; -+ };
 # InltBP: (uDACS_B_stat0,2) (InltBP,9) V;
@@ -78,6 +84,7 @@ TMbaseC {
       [Alicat_hk];
       HBox { HGlue 0+1; { Driver: (Alicat_Stale,3) } }
     }; |+; {
+      [MS5607];
       [TMbaseC];
     }; |+
   };
