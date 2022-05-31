@@ -453,7 +453,7 @@ State Moudi_opened {
   > MFC Moudi Flow Setpoint 2000 nccm
   { if (((IWG1_Stale == 0 && Press_Alt < 99000.) || Sim_Alt > 0) &&
         at_level_leg(Press_Alt, Sim_Alt, ALT_moudi_cl, BELOW_LEVEL))
-      Validate Moudi_opened;
+      Validate Moudi_closed;
   }
 }
 
