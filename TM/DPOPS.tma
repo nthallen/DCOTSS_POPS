@@ -374,54 +374,6 @@ State Pumps_Over_Temp NoLog {
 Partition
 
 %{
-  /* The P_moudi_low values define the low altitude/high pressure range for
-     mini-moudi sampling.
-     P_moudi_high values define the high altitude/low pressure range, if
-     applicable.
-     The _op values define a range within which we will open the valve.
-     The _cl values define a range outside of which we will close the valve.
-     The _op range should be entirely within in the _cl range with enough
-     margin to avoid rapid cycling.
-     All P_moudi values are in mbar, to match HPS_P.
-  */
-  #define P_moudi_low_op    160.
-  #define P_moudi_low_cl    175.
-  
-  int moudi_open(double P) {
-    #ifdef P_moudi_high_op
-      return P <= P_moudi_low_op && P >= P_moudi_high_op;
-    #else
-      return P <= P_moudi_low_op;
-    #endif
-  }
-  
-  int moudi_close(double P) {
-    #ifdef P_moudi_high_op
-      return P > P_moudi_low_cl || P < P_moudi_high_cl;
-    #else
-      return P > P_moudi_low_cl;
-    #endif
-  }
-%}
-
-State Moudi_closed {
-  > Moudi Valve off
-  > MFC Moudi Flow Setpoint 0 nccm
-  { if (moudi_open(convert(HPS_P))) Validate Moudi_opened; }
-}
-
-State Moudi_opened {
-  > Moudi Valve On
-  > MFC Moudi Flow Setpoint 2000 nccm
-  { if (moudi_close(convert(HPS_P))) Validate Moudi_closed; }
-}
-
-# -----------------------------------------------------------------------------
-# Partition 9: Non-isokinetic exploration
-# -----------------------------------------------------------------------------
-Partition
-
-%{
   /*
     Strategy: When we get to the target altitude, start counting
   */
@@ -454,6 +406,63 @@ Partition
         return 0;
     }
   }
+
+  /* The P_moudi_low values define the low altitude/high pressure range for
+     mini-moudi sampling.
+     P_moudi_high values define the high altitude/low pressure range, if
+     applicable.
+     The _op values define a range within which we will open the valve.
+     The _cl values define a range outside of which we will close the valve.
+     The _op range should be entirely within in the _cl range with enough
+     margin to avoid rapid cycling.
+     All P_moudi values are in mbar, to match HPS_P.
+  */
+  #define P_moudi_low_op    160.
+  #define P_moudi_low_cl    175.
+  #define ALT_moudi_op 47000.
+  #define ALT_moudi_cl 46500.
+  
+  int moudi_open(double P) {
+    #ifdef P_moudi_high_op
+      return P <= P_moudi_low_op && P >= P_moudi_high_op;
+    #else
+      return P <= P_moudi_low_op;
+    #endif
+  }
+  
+  int moudi_close(double P) {
+    #ifdef P_moudi_high_op
+      return P > P_moudi_low_cl || P < P_moudi_high_cl;
+    #else
+      return P > P_moudi_low_cl;
+    #endif
+  }
+%}
+
+State Moudi_closed {
+  > Moudi Valve off
+  > MFC Moudi Flow Setpoint 0 nccm
+  { if (((IWG1_Stale == 0 && Press_Alt < 99000.) || Sim_Alt > 0) &&
+        at_level_leg(Press_Alt, Sim_Alt, ALT_moudi_op, ABOVE_LEVEL))
+      Validate Moudi_opened;
+  }
+}
+
+State Moudi_opened {
+  > Moudi Valve On
+  > MFC Moudi Flow Setpoint 2000 nccm
+  { if (((IWG1_Stale == 0 && Press_Alt < 99000.) || Sim_Alt > 0) &&
+        at_level_leg(Press_Alt, Sim_Alt, ALT_moudi_cl, BELOW_LEVEL))
+      Validate Moudi_opened;
+  }
+}
+
+# -----------------------------------------------------------------------------
+# Partition 9: Non-isokinetic exploration
+# -----------------------------------------------------------------------------
+Partition
+
+%{
 %}
 
 State NonIso_Idle {
