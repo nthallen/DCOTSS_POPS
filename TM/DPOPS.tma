@@ -385,7 +385,7 @@ Partition
      All P_moudi values are in mbar, to match HPS_P.
   */
   #define P_moudi_low_op    160.
-  #define P_moudi_low_cl    170.
+  #define P_moudi_low_cl    175.
   
   int moudi_open(double P) {
     #ifdef P_moudi_high_op
