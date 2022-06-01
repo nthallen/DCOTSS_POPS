@@ -419,8 +419,8 @@ Partition
   */
   #define P_moudi_low_op    160.
   #define P_moudi_low_cl    175.
-  #define ALT_moudi_op 47000.
-  #define ALT_moudi_cl 46500.
+  #define ALT_moudi_op 45000.
+  #define ALT_moudi_cl 44500.
   
   int moudi_open(double P) {
     #ifdef P_moudi_high_op
