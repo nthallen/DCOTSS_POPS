@@ -69,6 +69,8 @@ if [ $op = copy ]; then
   done
   [ -n "$nexists" ] && msgf 3 "POPS run(s)$nexists was/were not copied"
   msgf 0 "Successfully copied runs$exists"
+  msgf 0 "Running dircksum $rundir"
+  dircksum -vw $rundir
 fi
 
 echo
