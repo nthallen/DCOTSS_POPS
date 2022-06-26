@@ -9,11 +9,11 @@ State Init {
     > Telemetry Start
  +1 > Fail Light Off
  +1 > MFC Bypass Flow Setpoint 0 nccm
-    > MFC POPS Flow Setpoint 0 nccm
-    > Set LFE PGain 0.0581
-    > Set LFE IGain 0.131
-    > Set Bypass Pump PGain 8.744e-5
-    > Set Bypass Pump IGain 9.000e-5
+ +1 > MFC POPS Flow Setpoint 0 nccm
+ +1 > Set LFE PGain 0.0581
+ +1 > Set LFE IGain 0.131
+ +1 > Set Bypass Pump PGain 8.744e-5
+ +1 > Set Bypass Pump IGain 9.000e-5
     depending on (OFF_GROUND) { Validate Startup; }
 }
 
