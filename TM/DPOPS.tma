@@ -22,7 +22,7 @@ State Startup {
 # Validate POPS_Startup;
 # Hold until valid (POPS_Is_Active) or 4:00;
   Validate Bypass_Flow_Iso_Init;
-  Validate POPS_Flow_Sim;
+  Validate POPS_Flow_Sim_Init;
 # Validate POPS_Flow_PI_Init does not go here. It is automatically started
 #   when POPS comes up.
 }
@@ -257,23 +257,32 @@ State POPS_Flow_Stop {
       Validate POPS_Flow_Off;
 }
 
+State POPS_Flow_Sim_Init {
+    depending on (Shutdown) { Validate POPS_Flow_Sim_Stop; }
+    > MFC POPS Flow SetPoint 1000 nccm
+ +1 > Pump POPS On
+    Validate POPS_Flow_Sim;
+}
+
 State POPS_Flow_Sim {
-  depending on (Shutdown) { Validate POPS_Flow_Sim_Stop; }
-  > MFC POPS Set Control Loop Variable to ccm
-  > MFC POPS Flow SetPoint 1900 ccm
-  depending on (Pumps_Over_Temp) { Validate POPS_Flow_Sim_OT; }
+    depending on (Shutdown) { Validate POPS_Flow_Sim_Stop; }
+    depending on (Pumps_Over_Temp) { Validate POPS_Flow_Sim_OT; }
+    { ci_sendfcmd(Cmd_Send_Quiet,
+        "MFC POPS Flow SetPoint %.1lf nccm\n",
+        1900 * (T0/(PMFC_T+273.15))*(PMFC_P/P0));
+    }
 }
 
 State POPS_Flow_Sim_OT {
       depending on (Shutdown) { Validate POPS_Flow_Sim_Stop; }
       > Pump POPS Off
-  +1  > MFC POPS Flow SetPoint 0 ccm
+  +1  > MFC POPS Flow SetPoint 0 nccm
       depending on (Pumps_Watch) { Validate POPS_Flow_Sim; }
 }
 
 State POPS_Flow_Sim_Stop {
       > Pump POPS Off
-  +1  > MFC POPS Flow SetPoint 0 ccm
+  +1  > MFC POPS Flow SetPoint 0 nccm
       Validate POPS_Flow_Off;
 }
 
