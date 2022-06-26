@@ -6,7 +6,7 @@
   
   void Alicat_set(int ID, float setpoint, int units) {
     uint32_t rawset = *(uint32_t*)&setpoint;
-    if (ID < 1 || ID >= 3) {
+    if (ID < 1 || ID > 3) {
       msg(MSG_ERROR, "Invalid device ID: %d", ID);
       return;
     }
@@ -43,7 +43,7 @@
     // NN is the number of registers
     // DD are the register values
     // All values are in hex
-    if (ID < 1 || ID >= 3) {
+    if (ID < 1 || ID > 3) {
       msg(MSG_ERROR, "Invalid device ID: %d", ID);
       return;
     }
