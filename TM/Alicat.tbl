@@ -85,9 +85,9 @@ MMFC_vdt {
 Alicat_flows {
   HBox { +-; Title: Alicat; -+ };
   ""    >Set<        >Flow<;
-  BMFC: (BMFC_Set,7) (BMFC_VolFlow,7) ccm;
-  PMFC: (PMFC_Set,7) (PMFC_VolFlow,7) ccm;
-  MMFC: (MMFC_Set,7) (MMFC_VolFlow,7) ccm;
+  BMFC: (BMFC_Set,7) (BMFC_MassFlow,7) nccm;
+  PMFC: (PMFC_Set,7) (PMFC_MassFlow,7) nccm;
+  MMFC: (MMFC_Set,7) (MMFC_MassFlow,7) nccm;
   { HGlue 0+1 Stale: (Alicat_Stale,3) }
 }
 
