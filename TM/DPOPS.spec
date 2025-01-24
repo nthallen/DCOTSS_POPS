@@ -28,7 +28,7 @@ Module IWG1
 TGTDIR = /home/DPOPS
 IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
 DISTRIB = services interact runfile.flight
-DISTRIB = USB_ID.exp Rovers.txt
+DISTRIB = USB.id Rovers.txt
 IDISTRIB = doit POPSdata
 
 DPOPScol : -lsubbuspp
