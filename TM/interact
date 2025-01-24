@@ -25,10 +25,10 @@ fi
   Launch      -        IWG1
   Launch      -        UDPext
 
-if [ -n "RS485_port" ]; then
-  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p RS485_port
-# Launch      -        alicat -a 1:BMFC,2:PMFC -p RS485_port
+if [ -n "$RS485_port" ]; then
+  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p $RS485_port
+# Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485_port
 fi
 
-  Launch      -        POPS -v
+  Launch      -        POPS
   Launch      -TMC-    DPOPSalgo -v
