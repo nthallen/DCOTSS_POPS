@@ -1,45 +1,18 @@
-
-RS485=
-uDACS_A=
-uDACS_B=
 id | grep -q '(dialout)' ||
-  msgf 2 "flight not in group dialout: `id`"
-for dev in /dev/ttyUSB*; do
-  if [ -c "$dev" ]; then
-    verb=`$TMBINDIR/USB_ID.exp $dev verbose | tr [:cntrl:] ' '`
-    verb=${verb% }
-    foo=${verb##* }
-    case "$foo" in
-      *=*)
-        port=${foo#*=}
-        device=${foo%=*}
-        eval deviceport="\$$device"
-        if [ -n "$deviceport" ]; then
-          msgf 0 "$device identified on both $deviceport and $port"
-        else
-          eval $foo
-        fi;;
-      *) msgf 0 "port $dev unidentified verb='$verb'";;
-    esac
-  fi
-done
+  msgf 2 "User $(id -un) not in group dialout: `id`"
+id | grep -q '(plugdev)' ||
+  msgf 2 "User $(id -un) not in group plugdev: `id`"
 
-for device in RS485 uDACS_A uDACS_B; do
-  eval deviceport="\$$device"
-  if [ -n "$deviceport" ]; then
-    msgf 0 "$device identified on port $deviceport"
-  else
-    msgf 2 "$device not found"
-  fi
-done
+/usr/local/libexec/usb_enum >USB_def.log
+. ./USB_def.log
 
-if [ -n "$uDACS_A" ]; then
+if [ -n "$uDACS_A_port" ]; then
   Launch      memo     memo -o $Experiment.log -l3
               [ -z "$launch_err" ] &&
                 msg -nflight "Running script runfile.flight"
 
   flight_mode=yes
-  Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A -s uDACS_A -n uDACS_A
+  Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A_port -s uDACS_A -n uDACS_A
   msgf -V 0 sbswitch -N uDACS_A -Q 1 1
   sbswitch -N uDACS_A -Q 1 1 && flight_mode=no
   msgf -V 0 sbswitch report flight_mode=$flight_mode
@@ -57,8 +30,8 @@ if [ $flight_mode = yes ]; then
   Launch      tm_bfr   bfr -H bfr: -S:
   Launch      -TMC-    lgr -N `mlf_find LOG` -n lgr
 
-if [ -n "$uDACS_B" ]; then
-  Launch      uDACS_B  subbusd_serusb -q -p $uDACS_B -s uDACS_B -n uDACS_B
+if [ -n "$uDACS_B_port" ]; then
+  Launch      uDACS_B  subbusd_serusb -q -p $uDACS_B_port -s uDACS_B -n uDACS_B
 fi
 
   Launch      tm_gen   DPOPScol
@@ -67,9 +40,9 @@ fi
   Launch      -        IWG1
   Launch      -        UDPext
 
-if [ -n "$RS485" ]; then
-  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p $RS485
-# Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485
+if [ -n "$RS485_port" ]; then
+  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p $RS485_port
+# Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485_port
 fi
 
   Launch      -        POPS -v

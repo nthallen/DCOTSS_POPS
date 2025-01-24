@@ -4,7 +4,9 @@
   Launch      tm_bfr   bfr -H bfr: -S:
 
 id | grep -q '(dialout)' ||
-  msgf 2 "flight not in group dialout: `id`"
+  msgf 2 "User $(id -un) not in group dialout: `id`"
+id | grep -q '(plugdev)' ||
+  msgf 2 "User $(id -un) not in group plugdev: `id`"
 
 /usr/local/libexec/usb_enum >USB_def.log
 . ./USB_def.log
