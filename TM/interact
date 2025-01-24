@@ -3,46 +3,20 @@
                 msg -nflight "Running script interact"
   Launch      tm_bfr   bfr -H bfr: -S:
 
-RS485=
-uDACS_A=
-uDACS_B=
 id | grep -q '(dialout)' ||
-  msg -n interact "[ERROR] flight not in group dialout: `id`"
-for dev in /dev/ttyUSB*; do
-  verb=`$TMBINDIR/USB_ID.exp $dev verbose | tr [:cntrl:] ' '`
-  verb=${verb% }
-  foo=${verb##* }
-  case "$foo" in
-    *=*)
-      port=${foo#*=}
-      device=${foo%=*}
-      eval deviceport="\$$device"
-      if [ -n "$deviceport" ]; then
-        msg -n interact "$device identified on both $deviceport and $port"
-      else
-        eval $foo
-      fi;;
-    *) msg -n interact "port $dev unidentified verb='$verb'";;
-  esac
-done
+  msgf 2 "flight not in group dialout: `id`"
 
-for device in RS485 uDACS_A uDACS_B; do
-  eval deviceport="\$$device"
-  if [ -n "$deviceport" ]; then
-    msg -n interact "$device identified on port $deviceport"
-  else
-    msg -n interact "[ERROR] $device not found"
-  fi
-done
+/usr/local/libexec/usb_enum >USB_def.log
+. ./USB_def.log
 
   Launch      -TMC-    lgr -N `mlf_find LOG` -n lgr
 
-if [ -n "$uDACS_A" ]; then
-  Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A -s uDACS_A -n uDACS_A
+if [ -n "$uDACS_A_port" ]; then
+  Launch      uDACS_A  subbusd_serusb -q -p $uDACS_A_port -s uDACS_A -n uDACS_A
 fi
 
-if [ -n "$uDACS_B" ]; then
-  Launch      uDACS_B  subbusd_serusb -q -p $uDACS_B -s uDACS_B -n uDACS_B
+if [ -n "$uDACS_B_port" ]; then
+  Launch      uDACS_B  subbusd_serusb -q -p $uDACS_B_port -s uDACS_B -n uDACS_B
 fi
 
   Launch      tm_gen   DPOPScol
@@ -51,9 +25,9 @@ fi
   Launch      -        IWG1
   Launch      -        UDPext
 
-if [ -n "$RS485" ]; then
-  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p $RS485
-# Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485
+if [ -n "RS485_port" ]; then
+  Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p RS485_port
+# Launch      -        alicat -a 1:BMFC,2:PMFC -p RS485_port
 fi
 
   Launch      -        POPS -v
