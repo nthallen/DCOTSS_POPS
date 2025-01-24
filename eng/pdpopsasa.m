@@ -1,4 +1,4 @@
-function pdpopsasa(varargin);
+function pdpopsasa(varargin)
 % pdpopsasa( [...] );
 % Algo Sim Alt
 h = timeplot({'Sim_Alt'}, ...

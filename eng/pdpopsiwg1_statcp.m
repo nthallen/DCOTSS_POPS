@@ -1,4 +1,4 @@
-function pdpopsiwg1_statcp(varargin);
+function pdpopsiwg1_statcp(varargin)
 % pdpopsiwg1_statcp( [...] );
 % IWG1 Stat Cabin Press
 h = timeplot({'Cabin_Press'}, ...

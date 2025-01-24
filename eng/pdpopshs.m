@@ -1,4 +1,4 @@
-function pdpopshs(varargin);
+function pdpopshs(varargin)
 % pdpopshs( [...] );
 % Honeywell Status
 h = ne_dstat({

@@ -1,4 +1,4 @@
-function pdpopsiwg1_stattd(varargin);
+function pdpopsiwg1_stattd(varargin)
 % pdpopsiwg1_stattd( [...] );
 % IWG1 Stat T Drift
 h = timeplot({'TDDrift','TDrift'}, ...

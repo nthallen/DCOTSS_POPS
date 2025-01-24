@@ -1,4 +1,4 @@
-function pdpopsirt(varargin);
+function pdpopsirt(varargin)
 % pdpopsirt( [...] );
 % Inlet Ring T
 h = timeplot({'Ring1T','Ring2T','Ring3T','RingT'}, ...

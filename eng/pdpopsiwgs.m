@@ -1,4 +1,4 @@
-function pdpopsiwgs(varargin);
+function pdpopsiwgs(varargin)
 % pdpopsiwgs( [...] );
 % IWG1 Speed
 h = timeplot({'Grnd_Spd','Indicated_Airspeed','True_Airspeed'}, ...

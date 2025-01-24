@@ -1,4 +1,4 @@
-function pdpopshhpst(varargin);
+function pdpopshhpst(varargin)
 % pdpopshhpst( [...] );
 % Honeywell HPS T
 h = timeplot({'HPS1_Temp','HPS2_Temp','HPS3_Temp'}, ...

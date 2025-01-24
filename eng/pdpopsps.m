@@ -1,4 +1,4 @@
-function pdpopsps(varargin);
+function pdpopsps(varargin)
 % pdpopsps( [...] );
 % Pumps Status
 h = ne_dstat({

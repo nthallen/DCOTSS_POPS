@@ -1,4 +1,4 @@
-function pdpopsiwglon(varargin);
+function pdpopsiwglon(varargin)
 % pdpopsiwglon( [...] );
 % IWG1 Lon
 h = timeplot({'Lon'}, ...

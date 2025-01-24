@@ -1,4 +1,4 @@
-function pdpopswd(varargin);
+function pdpopswd(varargin)
 % pdpopswd( [...] );
 % Wind Dir
 h = timeplot({'Wind_Dir'}, ...

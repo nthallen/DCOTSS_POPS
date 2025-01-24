@@ -1,4 +1,4 @@
-function pdpopsdacsbaics(varargin);
+function pdpopsdacsbaics(varargin)
 % pdpopsdacsbaics( [...] );
 % uDACS B AI Ch S
 h = ne_dstat({

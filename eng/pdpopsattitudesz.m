@@ -1,4 +1,4 @@
-function pdpopsattitudesz(varargin);
+function pdpopsattitudesz(varargin)
 % pdpopsattitudesz( [...] );
 % Attitude SZ
 h = timeplot({'Solar_Zenith','Sun_Elev_AC'}, ...

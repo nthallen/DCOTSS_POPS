@@ -1,4 +1,4 @@
-function pdpopsattitudea(varargin);
+function pdpopsattitudea(varargin)
 % pdpopsattitudea( [...] );
 % Attitude Attack
 h = timeplot({'Angle_of_Attack'}, ...

@@ -1,4 +1,4 @@
-function pdpopsattituder(varargin);
+function pdpopsattituder(varargin)
 % pdpopsattituder( [...] );
 % Attitude Roll
 h = timeplot({'Roll'}, ...

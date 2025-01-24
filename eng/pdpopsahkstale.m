@@ -1,4 +1,4 @@
-function pdpopsahkstale(varargin);
+function pdpopsahkstale(varargin)
 % pdpopsahkstale( [...] );
 % Alicat HK Stale
 h = timeplot({'BMFC_Stale','PMFC_Stale','MMFC_Stale','Alicat_Stale'}, ...

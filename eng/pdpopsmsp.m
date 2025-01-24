@@ -1,4 +1,4 @@
-function pdpopsmsp(varargin);
+function pdpopsmsp(varargin)
 % pdpopsmsp( [...] );
 % MS5607 P
 h = timeplot({'MS5607_P'}, ...

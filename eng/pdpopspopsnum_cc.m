@@ -1,4 +1,4 @@
-function pdpopspopsnum_cc(varargin);
+function pdpopspopsnum_cc(varargin)
 % pdpopspopsnum_cc( [...] );
 % POPS num cc
 h = timeplot({'POPS_num_cc'}, ...

@@ -20,7 +20,7 @@ cmdbase = LFE.cmd
 swsbase = DPOPS.sws
 
 Module TMbase
-Module alicat src=alicat.txt
+Module alicat mode=ignore src=alicat.txt
 tmcbase = Alicat_conv.tmc LowPass.cc
 Module POPS
 Module IWG1

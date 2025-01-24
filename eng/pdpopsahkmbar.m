@@ -1,4 +1,4 @@
-function pdpopsahkmbar(varargin);
+function pdpopsahkmbar(varargin)
 % pdpopsahkmbar( [...] );
 % Alicat HK mbar
 h = timeplot({'BMFC_P','PMFC_P','MMFC_P'}, ...

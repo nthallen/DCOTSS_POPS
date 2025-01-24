@@ -1,4 +1,4 @@
-function fig = gdpopsw(varargin);
+function fig = gdpopsw(varargin)
 % gdpopsw(...)
 % Wind
 ffig = ne_group(varargin,'Wind','pdpopswvv','pdpopswvs','pdpopswd','pdpopsws');

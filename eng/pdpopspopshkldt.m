@@ -1,4 +1,4 @@
-function pdpopspopshkldt(varargin);
+function pdpopspopshkldt(varargin)
 % pdpopspopshkldt( [...] );
 % POPS HK LD Temp
 h = timeplot({'POPS_LDTemp'}, ...

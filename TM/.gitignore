@@ -1,3 +1,8 @@
+Alicat.tmc
+Alicat_col.tmc
+Alicat.cmd
+Alicat.genui
+Alicat.tbl
 POPS.tbl
 POPS
 DPOPScol.cc
@@ -55,6 +60,11 @@ POPStblnc.tmc.dep
 uDACStblnc.tmc.dep
 IWG1tblnc.tmc.dep
 *.err
+Alicat.tmc
+Alicat_col.tmc
+Alicat.cmd
+Alicat.genui
+Alicat.tbl
 POPS.tbl
 *.o
 *.exe

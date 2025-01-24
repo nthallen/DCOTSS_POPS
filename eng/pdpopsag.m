@@ -1,4 +1,4 @@
-function pdpopsag(varargin);
+function pdpopsag(varargin)
 % pdpopsag( [...] );
 % Algo Gains
 h = timeplot({'LFE_PGain','LFE_IGain','BPmp_PGain','BPmp_IGain'}, ...

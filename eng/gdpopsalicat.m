@@ -1,4 +1,4 @@
-function fig = gdpopsalicat(varargin);
+function fig = gdpopsalicat(varargin)
 % gdpopsalicat(...)
 % Alicat
 ffig = ne_group(varargin,'Alicat','pdpopsalicatnccm','pdpopsalicatccm');

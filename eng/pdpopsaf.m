@@ -1,4 +1,4 @@
-function pdpopsaf(varargin);
+function pdpopsaf(varargin)
 % pdpopsaf( [...] );
 % Algo Filter
 h = timeplot({'BPmp_IGain'}, ...

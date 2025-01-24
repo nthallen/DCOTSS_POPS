@@ -1,4 +1,4 @@
-function pdpopspopspn(varargin);
+function pdpopspopspn(varargin)
 % pdpopspopspn( [...] );
 % POPS Part Num
 h = timeplot({'POPS_Part_Num'}, ...

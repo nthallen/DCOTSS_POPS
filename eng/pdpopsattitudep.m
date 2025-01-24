@@ -1,4 +1,4 @@
-function pdpopsattitudep(varargin);
+function pdpopsattitudep(varargin)
 % pdpopsattitudep( [...] );
 % Attitude Pitch
 h = timeplot({'Pitch'}, ...

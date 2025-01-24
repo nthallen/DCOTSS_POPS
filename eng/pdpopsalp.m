@@ -1,4 +1,4 @@
-function pdpopsalp(varargin);
+function pdpopsalp(varargin)
 % pdpopsalp( [...] );
 % Algo L Pper
 h = timeplot({'BPmp_LPFP'}, ...

@@ -1,4 +1,4 @@
-function fig = gdpopsa(varargin);
+function fig = gdpopsa(varargin)
 % gdpopsa(...)
 % Algo
 ffig = ne_group(varargin,'Algo','pdpopsasws','pdpopsag','pdpopsaf','pdpopsamf','pdpopsalp','pdpopsaip','pdpopsasa');

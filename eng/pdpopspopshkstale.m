@@ -1,4 +1,4 @@
-function pdpopspopshkstale(varargin);
+function pdpopspopshkstale(varargin)
 % pdpopspopshkstale( [...] );
 % POPS HK Stale
 h = timeplot({'POPS_Stale','POPS_DrvStale'}, ...

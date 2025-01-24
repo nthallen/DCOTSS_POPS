@@ -1,4 +1,4 @@
-function fig = gdpopstm(varargin);
+function fig = gdpopstm(varargin)
 % gdpopstm(...)
 % T Mbase
 ffig = ne_group(varargin,'T Mbase','pdpopstmtd','pdpopstmcpu','pdpopstmram','pdpopstmd');

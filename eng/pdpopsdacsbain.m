@@ -1,4 +1,4 @@
-function pdpopsdacsbain(varargin);
+function pdpopsdacsbain(varargin)
 % pdpopsdacsbain( [...] );
 % uDACS B AI N
 h = timeplot({'uDACS_B_N'}, ...

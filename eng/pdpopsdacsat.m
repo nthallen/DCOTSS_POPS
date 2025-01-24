@@ -1,4 +1,4 @@
-function pdpopsdacsat(varargin);
+function pdpopsdacsat(varargin)
 % pdpopsdacsat( [...] );
 % uDACS A Temps
 h = timeplot({'POPST','RPi_T','Amb_T','Rov1T','Rov2T','Rov3T'}, ...

@@ -1,4 +1,4 @@
-function pdpopspopsv(varargin);
+function pdpopspopsv(varargin)
 % pdpopspopsv( [...] );
 % POPS Volume
 h = timeplot({'POPS_Vol_Density'}, ...

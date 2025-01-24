@@ -1,4 +1,4 @@
-function pdpopsws(varargin);
+function pdpopsws(varargin)
 % pdpopsws( [...] );
 % Wind Speed
 h = timeplot({'Wind_Speed'}, ...

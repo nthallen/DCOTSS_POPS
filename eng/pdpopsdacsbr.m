@@ -1,4 +1,4 @@
-function pdpopsdacsbr(varargin);
+function pdpopsdacsbr(varargin)
 % pdpopsdacsbr( [...] );
 % uDACS B Raw
 h = timeplot({'uDACS_B_Raw1','uDACS_B_Raw2','uDACS_B_Raw3'}, ...

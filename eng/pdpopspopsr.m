@@ -1,4 +1,4 @@
-function pdpopspopsr(varargin);
+function pdpopspopsr(varargin)
 % pdpopspopsr( [...] );
 % POPS Raw ccs
 h = timeplot({'POPS_Flow'}, ...

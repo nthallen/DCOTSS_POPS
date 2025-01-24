@@ -1,4 +1,4 @@
-function pdpopsdacsas(varargin);
+function pdpopsdacsas(varargin)
 % pdpopsdacsas( [...] );
 % uDACS A Status
 h = ne_dstat({

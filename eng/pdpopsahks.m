@@ -1,4 +1,4 @@
-function pdpopsahks(varargin);
+function pdpopsahks(varargin)
 % pdpopsahks( [...] );
 % Alicat HK Status
 h = timeplot({'BMFC_Status','PMFC_Status','MMFC_Status'}, ...

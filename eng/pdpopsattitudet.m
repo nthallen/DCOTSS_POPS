@@ -1,4 +1,4 @@
-function pdpopsattitudet(varargin);
+function pdpopsattitudet(varargin)
 % pdpopsattitudet( [...] );
 % Attitude Track
 h = timeplot({'Track','True_Hdg'}, ...

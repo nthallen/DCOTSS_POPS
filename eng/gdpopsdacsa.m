@@ -1,4 +1,4 @@
-function fig = gdpopsdacsa(varargin);
+function fig = gdpopsdacsa(varargin)
 % gdpopsdacsa(...)
 % uDACS A
 ffig = ne_group(varargin,'uDACS A','pdpopsdacsas','pdpopsdacsaais','pdpopsdacsat','pdpopsdacsaain');

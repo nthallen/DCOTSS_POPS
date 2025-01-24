@@ -1,4 +1,4 @@
-function pdpopswvv(varargin);
+function pdpopswvv(varargin)
 % pdpopswvv( [...] );
 % Wind Vert Vel
 h = timeplot({'Vert_Velocity'}, ...

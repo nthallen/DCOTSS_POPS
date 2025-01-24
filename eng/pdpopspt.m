@@ -1,4 +1,4 @@
-function pdpopspt(varargin);
+function pdpopspt(varargin)
 % pdpopspt( [...] );
 % Pumps Temps
 h = timeplot({'PPmpT','BPmpT'}, ...

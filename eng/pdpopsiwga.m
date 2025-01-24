@@ -1,4 +1,4 @@
-function pdpopsiwga(varargin);
+function pdpopsiwga(varargin)
 % pdpopsiwga( [...] );
 % IWG1 Alt
 h = timeplot({'GPS_MSL_Alt','Press_Alt','Radar_Alt','WGS_84_Alt'}, ...

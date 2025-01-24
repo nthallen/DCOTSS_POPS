@@ -1,4 +1,4 @@
-function fig = gdpopsp(varargin);
+function fig = gdpopsp(varargin)
 % gdpopsp(...)
 % Pumps
 ffig = ne_group(varargin,'Pumps','pdpopspt','pdpopsps','pdpopspbpv');

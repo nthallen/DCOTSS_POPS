@@ -1,4 +1,4 @@
-function pdpopsmstatus(varargin);
+function pdpopsmstatus(varargin)
 % pdpopsmstatus( [...] );
 % Moudi Status
 h = timeplot({'MMstat'}, ...

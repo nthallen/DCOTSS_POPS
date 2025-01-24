@@ -1,4 +1,4 @@
-function pdpopsaip(varargin);
+function pdpopsaip(varargin)
 % pdpopsaip( [...] );
 % Algo Iso Pct
 h = timeplot({'IsoKin_pct'}, ...

@@ -1,4 +1,4 @@
-function fig = gdpopsh(varargin);
+function fig = gdpopsh(varargin)
 % gdpopsh(...)
 % Honeywell
 ffig = ne_group(varargin,'Honeywell','pdpopshs','pdpopshhpst','pdpopshhpsp','pdpopshhps_dp');

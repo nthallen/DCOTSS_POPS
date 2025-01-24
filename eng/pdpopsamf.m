@@ -1,4 +1,4 @@
-function pdpopsamf(varargin);
+function pdpopsamf(varargin)
 % pdpopsamf( [...] );
 % Algo M Ffilt
 h = timeplot({'BMFC_MassFlow','BMFC_MF_LP'}, ...

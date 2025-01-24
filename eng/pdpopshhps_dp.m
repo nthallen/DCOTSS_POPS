@@ -1,4 +1,4 @@
-function pdpopshhps_dp(varargin);
+function pdpopshhps_dp(varargin)
 % pdpopshhps_dp( [...] );
 % Honeywell HPS dP
 h = timeplot({'HPS_dP'}, ...

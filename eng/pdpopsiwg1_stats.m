@@ -1,4 +1,4 @@
-function pdpopsiwg1_stats(varargin);
+function pdpopsiwg1_stats(varargin)
 % pdpopsiwg1_stats( [...] );
 % IWG1 Stat Stale
 h = timeplot({'IWG1_Stale'}, ...

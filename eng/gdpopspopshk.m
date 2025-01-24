@@ -1,4 +1,4 @@
-function fig = gdpopspopshk(varargin);
+function fig = gdpopspopshk(varargin)
 % gdpopspopshk(...)
 % POPS HK
 ffig = ne_group(varargin,'POPS HK','pdpopspopshkstd','pdpopspopshkldt','pdpopspopshkldm','pdpopspopshkb','pdpopspopshks','pdpopspopshkstale');

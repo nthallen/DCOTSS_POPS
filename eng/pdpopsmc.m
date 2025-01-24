@@ -1,4 +1,4 @@
-function pdpopsmc(varargin);
+function pdpopsmc(varargin)
 % pdpopsmc( [...] );
 % Moudi Command
 h = timeplot({'MMcmd'}, ...

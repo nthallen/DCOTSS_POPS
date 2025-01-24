@@ -1,4 +1,4 @@
-function pdpopspopssurface(varargin);
+function pdpopspopssurface(varargin)
 % pdpopspopssurface( [...] );
 % POPS Surface
 h = timeplot({'POPS_Surf_Area'}, ...

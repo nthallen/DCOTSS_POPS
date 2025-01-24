@@ -1,4 +1,4 @@
-function pdpopsiwgp(varargin);
+function pdpopsiwgp(varargin)
 % pdpopsiwgp( [...] );
 % IWG1 Pres
 h = timeplot({'Dynamic_Press','Static_Press'}, ...

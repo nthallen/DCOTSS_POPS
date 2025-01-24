@@ -1,4 +1,4 @@
-function pdpopsattitudess(varargin);
+function pdpopsattitudess(varargin)
 % pdpopsattitudess( [...] );
 % Attitude Side Slip
 h = timeplot({'Side_slip'}, ...

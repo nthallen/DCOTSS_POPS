@@ -1,4 +1,4 @@
-function pdpopsiwgt(varargin);
+function pdpopsiwgt(varargin)
 % pdpopsiwgt( [...] );
 % IWG1 Temp
 h = timeplot({'Ambient_Temp','Total_Temp','Dew_Point'}, ...

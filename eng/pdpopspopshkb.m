@@ -1,4 +1,4 @@
-function pdpopspopshkb(varargin);
+function pdpopspopshkb(varargin)
 % pdpopspopshkb( [...] );
 % POPS HK Baseline
 h = timeplot({'POPS_Baseline'}, ...

@@ -1,4 +1,4 @@
-function pdpopsasws(varargin);
+function pdpopsasws(varargin)
 % pdpopsasws( [...] );
 % Algo SW Stat
 h = timeplot({'SWStat'}, ...

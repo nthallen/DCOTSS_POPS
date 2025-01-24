@@ -1,4 +1,4 @@
-function pdpopsdacsbai(varargin);
+function pdpopsdacsbai(varargin)
 % pdpopsdacsbai( [...] );
 % uDACS B AI errs
 h = timeplot({'uDACS_B_errors'}, ...

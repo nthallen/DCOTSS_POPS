@@ -1,4 +1,4 @@
-function pdpopspopsd(varargin);
+function pdpopspopsd(varargin)
 % pdpopspopsd( [...] );
 % POPS Drift
 h = timeplot({'POPS_Tdrift'}, ...

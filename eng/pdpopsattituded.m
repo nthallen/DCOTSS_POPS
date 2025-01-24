@@ -1,4 +1,4 @@
-function pdpopsattituded(varargin);
+function pdpopsattituded(varargin)
 % pdpopsattituded( [...] );
 % Attitude Drift
 h = timeplot({'Drift'}, ...

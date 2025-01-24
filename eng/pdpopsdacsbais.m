@@ -1,4 +1,4 @@
-function pdpopsdacsbais(varargin);
+function pdpopsdacsbais(varargin)
 % pdpopsdacsbais( [...] );
 % uDACS B AI Stat
 h = timeplot({'uDACS_B_status'}, ...

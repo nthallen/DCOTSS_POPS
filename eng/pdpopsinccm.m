@@ -1,4 +1,4 @@
-function pdpopsinccm(varargin);
+function pdpopsinccm(varargin)
 % pdpopsinccm( [...] );
 % Inlet NCCM
 h = timeplot({'PD_nccm'}, ...

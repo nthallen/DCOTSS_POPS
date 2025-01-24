@@ -6,7 +6,7 @@
 # --------------------
 # 
 # This script can be run from a Windows Cmd shell as:
-# > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-dpops-install.ps1
+# > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-DPOPS-install.ps1
 #
 # ---------
 # Uninstall:
@@ -14,7 +14,7 @@
 #
 # If you would like to reverse the actions of this script
 # (i.e. delete the flight group), you can issue the command:
-# > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-dpops-install.ps1 -uninstall
+# > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-DPOPS-install.ps1 -uninstall
 
 param (
   [switch]$uninstall = $false,
@@ -170,7 +170,7 @@ $setup_script = @'
 function print_usage {
 cat 1>&2 <<'EOF'
 # Usage:
-#   ./monarch-dpops-install.sh [ -E moudi:nthallen/keutsch-moudi.git ] [-n] [-h] [-S]
+#   ./monarch-DPOPS-install.sh [ -E moudi:nthallen/keutsch-moudi.git ] [-n] [-h] [-S]
 #
 # -E <basename>:<URL>
 #    Also install the instrument source code. <basename> is the
@@ -218,7 +218,7 @@ function wrap_path {
   esac
 }
 
-exp_option='dpops:nthallen/DCOTSS_POPS.git'
+exp_option='DPOPS:nthallen/DCOTSS_POPS.git'
 exp_base=''
 exp_url=''
 testmode=no
@@ -250,18 +250,18 @@ if [ $machine = Cygwin ]; then
     cygperm=`stat --format='%a' "$cyglnk"`
     [ "$cygperm" = "775" ] || {
       chmod 0775 "$cyglnk"
-      echo "monarch-dpops-install.sh: Permission fix applied for Cygwin Start Menu Link"
+      echo "monarch-DPOPS-install.sh: Permission fix applied for Cygwin Start Menu Link"
     }
   fi
   # Apply vi annoyance fix if it isn't already present
   [ -f ~/.exrc ] || {
     touch ~/.exrc
-    echo "monarch-dpops-install.sh: Installed vi startup error mitigation"
+    echo "monarch-DPOPS-install.sh: Installed vi startup error mitigation"
   }
   # Verify that the monarch group flight exists and user is a member
   id | grep -q '(flight)' || {
     if id | grep -q "(`hostname`+flight)"; then
-      echo "monarch-dpops-install.sh: The flight group 'flight' has been created,"
+      echo "monarch-DPOPS-install.sh: The flight group 'flight' has been created,"
       echo "but it is manifested under Cygwin here as '`hostname`+flight'."
       if [ -f /etc/group ]; then
         echo "It looks like you may already have a mitigation in place in"
@@ -276,10 +276,10 @@ if [ $machine = Cygwin ]; then
       echo "This script was executed as '$0'"
       echo "from the directory '$PWD'"
     else
-      echo "monarch-dpops-install.sh: user '$myuser' does not appear to be a member"
-      echo "of group 'flight'. If you have not run cygwin-monarch-dpops-install.ps1,"
+      echo "monarch-DPOPS-install.sh: user '$myuser' does not appear to be a member"
+      echo "of group 'flight'. If you have not run cygwin-monarch-DPOPS-install.ps1,"
       echo "do so now. Otherwise try restarting the system and then rerun"
-      echo "cygwin-monarch-dpops-install.ps1."
+      echo "cygwin-monarch-DPOPS-install.ps1."
     fi
     echo
     echo -n "Hit Enter to terminate:"
@@ -325,17 +325,17 @@ else
   if grep -q "^flight:" /etc/passwd; then
     echo "monarch_install.sh: flight user already exists"
   else
-    echo "monarch-dpops-install.sh: Need to create user flight and group flight"
+    echo "monarch-DPOPS-install.sh: Need to create user flight and group flight"
     $sudo addgroup flight
-    echo "monarch-dpops-install.sh: flight group created"
+    echo "monarch-DPOPS-install.sh: flight group created"
     $sudo adduser --disabled-password --gecos "flight user" --no-create-home --ingroup flight flight
-    echo "monarch-dpops-install.sh: flight user created"
+    echo "monarch-DPOPS-install.sh: flight user created"
   fi
   id -Gn | grep -q '\bflight\b' ||
     $sudo adduser $myuser flight
 fi
 id -Gn | grep -q '\bflight\b' || {
-  echo "monarch-dpops-install.sh: user '$myuser' does not appear to be a member"
+  echo "monarch-DPOPS-install.sh: user '$myuser' does not appear to be a member"
   echo "of group 'flight'. If this script just created group flight,"
   echo "you will need to close your terminal session, open another, and"
   echo "rerun this script in order to complete the installation"
@@ -346,7 +346,7 @@ id -Gn | grep -q '\bflight\b' || {
 }
 
 umask 02
-echo "monarch-dpops-install.sh: checking permissions on /usr/local/src"
+echo "monarch-DPOPS-install.sh: checking permissions on /usr/local/src"
 [ -d /usr/local/src ] || $sudo mkdir -p -m 02775 /usr/local/src
 uls_g=`stat --format '%G' /usr/local/src`
 [ "$uls_g" = "flight" ] || $sudo chgrp flight /usr/local/src
@@ -483,14 +483,15 @@ echo
 if [ $machine = Linux ]; then
   release=`cat /etc/issue`
   case "$release" in
-    Ubuntu*) distro=Ubuntu;;
+    Debian*) distro=Debian;;
+    Ubuntu*) distro=Debian;;
     *) distro=Unclear;;
   esac
-  if [ $distro = Ubuntu ]; then
-    echo "monarch-dpops-install.sh: Checking prerequisites"
-    sudo apt install cmake doxygen graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen
+  if [ $distro = Debian ]; then
+    echo "monarch-DPOPS-install.sh: Checking prerequisites"
+    sudo apt install cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen
   else
-    echo "monarch-dpops-install.sh: Not specifically configured for release '$release'."
+    echo "monarch-DPOPS-install.sh: Not specifically configured for release '$release'."
     echo "Need to determine how to add packages to meet build prerequisites."
     echo "The following tools are required:"
     echo "  cmake git gdb gcc g++ bison flex libncurses-dev screen"
@@ -715,9 +716,9 @@ EOF
 
 fi
 '@
-$setup_script | Out-File -FilePath "./monarch-dpops-install.sh" -NoNewLine -Encoding ASCII
+$setup_script | Out-File -FilePath "./monarch-DPOPS-install.sh" -NoNewLine -Encoding ASCII
 
-Write-Output "`nStarting standard install script: /usr/local/src/monarch-dpops-install.sh`n"
+Write-Output "`nStarting standard install script: /usr/local/src/monarch-DPOPS-install.sh`n"
 
 # -Wait won't work here, because mintty.exe doesn't really exit until ssh-agent does
-start-process C:\cygwin64\bin\mintty.exe -argumentlist "-h always /bin/bash --login /usr/local/src/monarch-dpops-install.sh -S $exp_option"
+start-process C:\cygwin64\bin\mintty.exe -argumentlist "-h always /bin/bash --login /usr/local/src/monarch-DPOPS-install.sh -S $exp_option"

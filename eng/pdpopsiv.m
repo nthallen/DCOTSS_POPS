@@ -1,4 +1,4 @@
-function pdpopsiv(varargin);
+function pdpopsiv(varargin)
 % pdpopsiv( [...] );
 % Inlet Velocity
 h = timeplot({'PD_Vel'}, ...

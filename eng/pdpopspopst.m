@@ -1,4 +1,4 @@
-function pdpopspopst(varargin);
+function pdpopspopst(varargin)
 % pdpopspopst( [...] );
 % POPS T
 h = timeplot({'POPS_Temp'}, ...

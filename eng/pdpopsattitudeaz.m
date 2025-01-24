@@ -1,4 +1,4 @@
-function pdpopsattitudeaz(varargin);
+function pdpopsattitudeaz(varargin)
 % pdpopsattitudeaz( [...] );
 % Attitude AZ
 h = timeplot({'Sun_Az_AC'}, ...
