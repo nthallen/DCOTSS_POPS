@@ -45,7 +45,7 @@ if [ -n "$RS485_port" ]; then
 # Launch      -        alicat -a 1:BMFC,2:PMFC -p $RS485_port
 fi
 
-  Launch      -        POPS -v
+  Launch      -        POPS
   Launch      -TMC-    DPOPSalgo -v
 
 fi
