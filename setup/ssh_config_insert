@@ -1,0 +1,8 @@
+
+### Begin DPOPS ssh_config_insert ###
+# Match all is necessary to close any preceding host blocks
+
+Match all
+include /etc/monarch/DPOPS/ssh_config
+
+### End DPOPS ssh_config_insert ###
