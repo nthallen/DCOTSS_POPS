@@ -1,0 +1,7 @@
+# POPS sources for SABRE
+# 10.11.96.1,132 were active during the last deployment on the WB-57
+# 128.103.203.241 is the Harvard server
+# and the debian pool (in chrony.conf) is good for anywhere else.
+server 10.11.96.132 minpoll 0 maxpoll 6 iburst prefer
+server 10.11.96.1 minpoll 0 maxpoll 6 iburst prefer
+server 128.103.203.241 minpoll 0 maxpoll 6 iburst prefer
