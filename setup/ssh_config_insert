@@ -1,4 +1,3 @@
-
 ### Begin DPOPS ssh_config_insert ###
 # Match all is necessary to close any preceding host blocks
 
