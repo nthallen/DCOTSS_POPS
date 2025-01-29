@@ -9,10 +9,10 @@ repos="monarch:/usr/local/src/monarch/git DPOPS:/home/DPOPS/src"
 
 if [ $(id -un) = git ]; then
   # Setup the bare repos if they don't already exist
-  cd /srv/git
   for repo in $repos; do
+    cd /srv/git
     reponame=${repo%:*}
-    if [ -d $reponame -a -d $reponame.git/.git ]; then
+    if [ -d $reponame ]; then
       echo "Bare git repository for $reponame already exists"
     else
       mkdir $reponame.git
@@ -36,18 +36,19 @@ else
     # Should look like:
     #   $host *git@$githost:/srv/git/$reponame.git (fetch)
     #   $host *git@$githost:/srv/git/$reponame.git (push)
-    nmatch = $(git remote -v | grep -P "^$host\tgit@$githost:/srv/git/$reponame.git" | wc -l)
+    nmatch=$(git remote -v | grep -P "^$host\tgit@$githost:/srv/git/$reponame.git" | wc -l)
     if [ "$nmatch" = 2 ]; then
       echo "$repodir: Git remote for $host is already defined"
-    elif git remote -v | grep -qP "^$host\t"
+    elif git remote -v | grep -qP "^$host\t"; then
       echo "$repodir: Git remote for $host defined with different URL"
     else
       # So we don't have a $githost remote. What do we have?
       # Assuming 'origin' for the moment
       gitmain=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
-      if git remote show origin | grep -q "$gitmain merges with remote $gitmain"; then
+      if git remote show origin |
+           grep -q "$gitmain merges with remote $gitmain"; then
         # We have a sensible gitmain branch that matches origin
-        git remote add $host "git@githost:/srv/git/$reponame.git"
+        git remote add $host "git@$githost:/srv/git/$reponame.git"
         git push $host $gitmain
       fi
     fi
