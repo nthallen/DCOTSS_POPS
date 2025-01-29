@@ -198,23 +198,7 @@ State POPS_Flow_Idle {
   depending on (Shutdown) { Validate POPS_Flow_Stop; }
       > Pump POPS Off
   +1  > MFC POPS Flow SetPoint 0 nccm
-# { if ( POPS_Srvr == 2) Validate POPS_Flow_PI_Init; }
-  { if ( POPS_Srvr == 2) Validate POPS_Flow_const_Init; }
-}
-
-State POPS_Flow_const_Init {
-  depending on (Shutdown) { Validate POPS_Flow_Stop; }
-  depending on (Pumps_Over_Temp) { Validate POPS_Flow_PI_OT; }
-  { if (POPS_Srvr != 2) Validate POPS_Flow_Idle; }
-  > MFC POPS Flow SetPoint 800 nccm
-  > Pump POPS On
-}
-
-State POPS_Flow_const_OT {
-      depending on (Shutdown) { Validate POPS_Flow_Stop; }
-      > Pump POPS Off
-  +1  > MFC POPS Flow SetPoint 0 nccm
-      depending on (Pumps_Watch) { Validate POPS_Flow_const_Init; }
+  { if ( POPS_Srvr == 2) Validate POPS_Flow_PI_Init; }
 }
 
 State POPS_Flow_PI_Init {
