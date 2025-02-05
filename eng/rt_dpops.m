@@ -4,7 +4,7 @@ function dfs_out = rt_dpops(dfs)
 %   plots
 % dfs_out = rt_dpops(dfs)
 %   Use the data_fields object and setup all the buttons for realtime plots
-if nargin < 1
+if nargin < 1 || isempty(dfs)
   dfs = data_fields('title', 'DCOTSS POPS', ...
     'Color', [.8 .8 1], ...
     'h_leading', 8, 'v_leading', 2, ...
@@ -76,13 +76,13 @@ dfs.plot('tmram','label','RAM','vars',{'memused'});
 dfs.plot('tmd','label','Disk','vars',{'Disk'});
 dfs.end_col;
 dfs.start_col;
-dfs.plot('ahk', 'label', 'Alicat HK', 'plots', {'ahks','ahkstale','ahkt','ahkmbar'});
+dfs.plot('ahk', 'label', 'Alicat HK', 'plots', {'ahks','ahkstale','ahkmbar','ahkt'});
 dfs.plot('ahks','label','Status','vars',{'BMFC_Status','PMFC_Status','MMFC_Status'});
 dfs.plot('ahkstale','label','Stale','vars',{'BMFC_Stale','PMFC_Stale','MMFC_Stale','Alicat_Stale'});
-dfs.plot('ahkt','label','T','vars',{'BMFC_T','PMFC_T','MMFC_T'});
 dfs.plot('ahkmbar','label','mbar','vars',{'BMFC_P','PMFC_P','MMFC_P'});
+dfs.plot('ahkt','label','T','vars',{'BMFC_T','PMFC_T','MMFC_T'});
 dfs.plot('alicat', 'label', 'Alicat', 'plots', {'alicatnccm','alicatccm'});
-dfs.plot('alicatnccm','label','nccm','vars',{'BMFC_Set','BMFC_MassFlow','PMFC_Set','PMFC_MassFlow','MMFC_Set','MMFC_MassFlow'});
+dfs.plot('alicatnccm','label','nccm','vars',{'BMFC_MassFlow','BMFC_Set','PMFC_MassFlow','PMFC_Set','MMFC_MassFlow','MMFC_Set'});
 dfs.plot('alicatccm','label','ccm','vars',{'BMFC_VolFlow','PMFC_VolFlow','MMFC_VolFlow'});
 dfs.plot('popshk', 'label', 'POPS HK', 'plots', {'popshkstd','popshkldt','popshkldm','popshkb','popshks','popshkstale'});
 dfs.plot('popshkstd','label','STD','vars',{'POPS_STD'});
@@ -123,8 +123,9 @@ dfs.plot('iwg1_statcp','label','Cabin Press','vars',{'Cabin_Press'});
 dfs.plot('iwg1_stattd','label','T Drift','vars',{'TDDrift','TDrift'});
 dfs.plot('iwg1_stats','label','Stale','vars',{'IWG1_Stale'});
 dfs.end_col;
-dfs.resize(context_level);
-dfs.set_connection('127.0.0.1', 1080);
+dfs.set_connection('127.0.0.1', 1356);
 if nargout > 0
   dfs_out = dfs;
+else
+  dfs.resize(context_level);
 end

@@ -38,6 +38,7 @@ uDACSdisp : uDACS.tbl
 IWG1disp : IWG1.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
 UDPext : UDP.tmc UDP.cc UDPext.oui
+DPOPSjsonext : $extbase $genuibase
 doit : DPOPS.doit
 %%
 # This matches the current definitions in monarch dasio

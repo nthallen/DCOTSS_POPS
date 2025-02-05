@@ -1,5 +1,6 @@
 display DPOPSdisp
 display IWG1disp
 client DPOPSclt
+extraction [!SI] DPOPSjsonext -n json
 memo
 batchfile interact

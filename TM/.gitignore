@@ -44,6 +44,13 @@ UDPextoui.cc
 UDPext.o
 UDP.o
 UDPextoui.o
+DPOPSjsonext.cdf
+DPOPSjsonextcdf.oui
+DPOPSjsonextcdf.tmc
+DPOPSjsonext.cc
+DPOPSjsonextoui.cc
+DPOPSjsonext.o
+DPOPSjsonextoui.o
 doit.dep
 DPOPScltnc.o
 DPOPScltncoui.cc
@@ -77,6 +84,7 @@ uDACSdispnc
 IWG1dispnc
 DPOPSalgo
 UDPext
+DPOPSjsonext
 doit
 DPOPScltnc
 DPOPSengext
