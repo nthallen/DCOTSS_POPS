@@ -1,5 +1,5 @@
-host dpops dpi3 spi3 10.245.83.87
-hostname 10.245.83.87
+host dpops dpi3 spi3 10.11.96.135
+hostname 10.11.96.135
 user pi
 ForwardAgent yes
 
