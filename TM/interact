@@ -25,7 +25,7 @@ fi
   Launch      cmd      DPOPSsrvr -H srvr: -S:
   Launch      -        tmdf
   Launch      -        IWG1
-# Launch      -        UDPext
+  Launch      -        UDPext
 
 if [ -n "$RS485_port" ]; then
   Launch      -        alicat -a 1:BMFC,2:PMFC,3:MMFC -p $RS485_port

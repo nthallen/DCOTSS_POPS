@@ -6,8 +6,7 @@
   int status_stale = -1;
   double clo_mr = 0.;
   
-  UDPcsv_file UDPcsv_user(37-1, "");
-  UDPcsv_file UDPcsv_status(16-1, "");
+  UDPcsv_file UDPcsv_status(12-1, "");
   bool UDPext_debug = false;
   bool gettime_error = false;
   
@@ -27,9 +26,10 @@
 
   void UDPinit() {
     UDPbcast *UDPstatus =
-      new UDPbcast("10.6.1.255", "5100",1000); // ER-2 LAN
-//    UDPbcast UDP("10.245.83.127", "5100"); // Link LAN
-//    UDPbcast UDP("192.168.237.255", "5100"); // VMware private LAN
+      new UDPbcast("10.6.96.131", "7072",1000); // WB-57 LAN
+//    new UDPbcast("192.168.7.255", "7072",1000); // Home LAN
+//    new UDPbcast("10.245.83.127", "5100"); // Link LAN
+//    new UDPbcast("192.168.237.255", "5100"); // VMware private LAN
 
 
     // column numbers are offset by 2 to account for:
@@ -39,69 +39,18 @@
     UDPcsv_status.init(UDPstatus, 1000);
     UDPcsv_status.init_col(3-2,"Status","%.0lf");
     UDPcsv_status.init_col(4-2,"POPS_num_cc");
-    UDPcsv_status.init_col(5-2,"POPS_area");
-    UDPcsv_status.init_col(6-2,"Eff_diameter");
-    UDPcsv_status.init_col(7-2, "POPS_Bin01");
-    UDPcsv_status.init_col(8-2, "POPS_Bin02");
-    UDPcsv_status.init_col(9-2, "POPS_Bin03");
-    UDPcsv_status.init_col(10-2, "POPS_Bin04");
-    UDPcsv_status.init_col(11-2, "POPS_Bin05");
-    UDPcsv_status.init_col(12-2, "POPS_Bin06");
-    UDPcsv_status.init_col(13-2, "POPS_Bin07");
-    UDPcsv_status.init_col(14-2, "POPS_Bin08");
-    UDPcsv_status.init_col(15-2, "POPS_Bin09");
-    UDPcsv_status.init_col(16-2, "POPS_Bin10");
-
-    UDPbcast *UDPuser =
-      // DPOPS is assigned 10.6.1.130
-      // Inmarsat user packets go to 10.6.1.10 19001+130
-      new UDPbcast("10.6.1.10", "16131",1000); // ER-2 LAN
-    UDPcsv_user.init(UDPuser, 1000);
-    UDPcsv_user.init_col(3-2,"Status","%.0lf");
-    UDPcsv_user.init_col(4-2,"POPS_Part_num");
-    UDPcsv_user.init_col(5-2,"POPS_num_cc");
-    UDPcsv_user.init_col(6-2,"POPS_area");
-    UDPcsv_user.init_col(7-2,"POPS_Flow");
-    UDPcsv_user.init_col(8-2,"PMFC_MassFlow");
-    UDPcsv_user.init_col(9-2,"BMFC_MassFlow");
-    UDPcsv_user.init_col(10-2,"PMFC_P");
-    UDPcsv_user.init_col(11-2,"BMFC_P");
-    UDPcsv_user.init_col(12-2, "BPmpV");
-    UDPcsv_user.init_col(13-2, "BPmpT");
-    UDPcsv_user.init_col(14-2, "PPmpT");
-    UDPcsv_user.init_col(15-2, "POPST");
-    UDPcsv_user.init_col(16-2, "RPi_T");
-    UDPcsv_user.init_col(17-2, "Amb_T");
-    UDPcsv_user.init_col(18-2, "Rov3T");
-    UDPcsv_user.init_col(19-2, "RingT");
-    UDPcsv_user.init_col(20-2, "PD_Vel");
-    UDPcsv_user.init_col(21-2, "PD_nccm");
-    UDPcsv_user.init_col(22-2, "POPS_Bin01");
-    UDPcsv_user.init_col(23-2, "POPS_Bin02");
-    UDPcsv_user.init_col(24-2, "POPS_Bin03");
-    UDPcsv_user.init_col(25-2, "POPS_Bin04");
-    UDPcsv_user.init_col(26-2, "POPS_Bin05");
-    UDPcsv_user.init_col(27-2, "POPS_Bin06");
-    UDPcsv_user.init_col(28-2, "POPS_Bin07");
-    UDPcsv_user.init_col(29-2, "POPS_Bin08");
-    UDPcsv_user.init_col(30-2, "POPS_Bin09");
-    UDPcsv_user.init_col(31-2, "POPS_Bin10");
-    UDPcsv_user.init_col(32-2, "POPS_Bin11");
-    UDPcsv_user.init_col(33-2, "POPS_Bin12");
-    UDPcsv_user.init_col(34-2, "POPS_Bin13");
-    UDPcsv_user.init_col(35-2, "POPS_Bin14");
-    UDPcsv_user.init_col(36-2, "POPS_Bin15");
-    UDPcsv_user.init_col(37-2, "POPS_Bin16");
+    UDPcsv_status.init_col(5-2,"POPS_Surf_Area");
+    UDPcsv_status.init_col(6-2,"POPS_ccm");
+    UDPcsv_status.init_col(7-2, "POPS_T");
+    UDPcsv_status.init_col(8-2, "POPS_P");
+    UDPcsv_status.init_col(9-2, "HPS_P");
+    UDPcsv_status.init_col(10-2, "MS5607_P");
+    UDPcsv_status.init_col(11-2, "Amb_T");
+    UDPcsv_status.init_col(12-2, "PPmpT");
   }
 %}
 
 TM INITFUNC UDPinit();
-/*
-depending on (h2o_lya_ppm) {
-  lya_stale = 0;
-  cur_h2o_lya_ppm = h2o_lya_ppm;
-}
-*/
 
 /* DPOPS,ISO8601,Status,
  * status:
@@ -120,54 +69,12 @@ depending on (1 Hz) {
   UDPcsv_status.set_col(3-2,status);
   UDPcsv_status.set_col(4-2, text(POPS_num_cc));
   UDPcsv_status.set_col(5-2, text(POPS_Surf_Area));
-  UDPcsv_status.set_col(6-2, "");
-  UDPcsv_status.set_col(7-2, text(POPS_Bin01));
-  UDPcsv_status.set_col(8-2, text(POPS_Bin02));
-  UDPcsv_status.set_col(9-2, text(POPS_Bin03));
-  UDPcsv_status.set_col(10-2, text(POPS_Bin04));
-  UDPcsv_status.set_col(11-2, text(POPS_Bin05));
-  UDPcsv_status.set_col(12-2, text(POPS_Bin06));
-  UDPcsv_status.set_col(13-2, text(POPS_Bin07));
-  UDPcsv_status.set_col(14-2, text(POPS_Bin08));
-  UDPcsv_status.set_col(15-2, text(POPS_Bin09));
-  UDPcsv_status.set_col(16-2, text(POPS_Bin10));
+  UDPcsv_status.set_col(6-2, text(POPS_ccm));
+  UDPcsv_status.set_col(7-2, text(POPS_Temp));
+  UDPcsv_status.set_col(8-2, text(POPS_P_mbar));
+  UDPcsv_status.set_col(9-2, text(HPS_P));
+  UDPcsv_status.set_col(10-2, text(MS5607_P));
+  UDPcsv_status.set_col(11-2, text(Amb_T));
+  UDPcsv_status.set_col(12-2, text(PPmpT));
   UDPcsv_status.transmit("DPOPS", systime); /* dtime() */
-
-
-  UDPcsv_user.set_col(3-2, status);
-  UDPcsv_user.set_col(4-2, text(POPS_Part_num));
-  UDPcsv_user.set_col(5-2, text(MMFC_VolFlow)); // Was POPS_Num_cc
-  UDPcsv_user.set_col(6-2, text(POPS_Surf_Area));
-  UDPcsv_user.set_col(7-2, text(POPS_ccm));
-  UDPcsv_user.set_col(8-2, text(PMFC_MassFlow));
-  UDPcsv_user.set_col(9-2, text(BMFC_MassFlow));
-  UDPcsv_user.set_col(10-2, text(PMFC_P));
-  UDPcsv_user.set_col(11-2, text(BMFC_P));
-  UDPcsv_user.set_col(12-2, text(BPmpV));
-  UDPcsv_user.set_col(13-2, text(BPmpT));
-  UDPcsv_user.set_col(14-2, text(PPmpT));
-  UDPcsv_user.set_col(15-2, text(POPST));
-  UDPcsv_user.set_col(16-2, text(RPi_T));
-  UDPcsv_user.set_col(17-2, text(Amb_T));
-  UDPcsv_user.set_col(18-2, text(Rov3T));
-  UDPcsv_user.set_col(19-2, text(RingT));
-  UDPcsv_user.set_col(20-2, text(PD_Vel));
-  UDPcsv_user.set_col(21-2, text(PD_nccm));
-  UDPcsv_user.set_col(22-2, text(POPS_Bin01));
-  UDPcsv_user.set_col(23-2, text(POPS_Bin02));
-  UDPcsv_user.set_col(24-2, text(POPS_Bin03));
-  UDPcsv_user.set_col(25-2, text(POPS_Bin04));
-  UDPcsv_user.set_col(26-2, text(POPS_Bin05));
-  UDPcsv_user.set_col(27-2, text(POPS_Bin06));
-  UDPcsv_user.set_col(28-2, text(POPS_Bin07));
-  UDPcsv_user.set_col(29-2, text(POPS_Bin08));
-  UDPcsv_user.set_col(30-2, text(POPS_Bin09));
-  UDPcsv_user.set_col(31-2, text(POPS_Bin10));
-  UDPcsv_user.set_col(32-2, text(POPS_Bin11));
-  UDPcsv_user.set_col(33-2, text(POPS_Bin12));
-  UDPcsv_user.set_col(34-2, text(POPS_Bin13));
-  UDPcsv_user.set_col(35-2, text(POPS_Bin14));
-  UDPcsv_user.set_col(36-2, text(POPS_Bin15));
-  UDPcsv_user.set_col(37-2, text(POPS_Bin16));
-  UDPcsv_user.transmit("DPOPSU", systime); /* dtime() */
 }
