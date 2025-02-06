@@ -1,0 +1,18 @@
+DPOPS {
+  HBox { +-; Title: DPOPS; -+ };
+  InstS: (InstS,3);
+  Drift: (UDPdrift,6);
+  Stale: (UDPtxin_Stale,3);
+}
+POPS {
+  HBox { +-; Title: POPS; -+ };
+  N:      (POPS_num_cc,8)   "/cc";
+  Area:   (POPS_Surf_Area,8);
+  Flow:   (POPS_ccm,8)      ccm;
+  Temp:   (POPS_Temp,8)     C;
+  Pres:   (POPS_P_mbar,8)   mbar;
+  HPS:    (HPS_P,8)         mbar;
+  MS5607: (MS5607_P,8)      mbar;
+  Amb_T:  (Amb_T,7)         C;
+  PPmpT:  (PPmpT,7)         C;
+}

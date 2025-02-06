@@ -4,6 +4,7 @@ Alicat.cmd
 Alicat.genui
 Alicat.tbl
 POPS.tbl
+POPS.cmd
 POPS
 DPOPScol.cc
 tm.dac
@@ -17,6 +18,9 @@ DPOPScmd.h
 DPOPSsrvr.o
 DPOPSsrvroui.cc
 DPOPSsrvroui.o
+DPOPStxsrvr.o
+DPOPStxsrvroui.cc
+DPOPStxsrvroui.o
 DPOPStblnc.tmc
 POPStblnc.tmc
 uDACStblnc.tmc
@@ -73,12 +77,14 @@ Alicat.cmd
 Alicat.genui
 Alicat.tbl
 POPS.tbl
+POPS.cmd
 *.o
 *.exe
 *.stackdump
 Makefile
 DPOPScol
 DPOPSsrvr
+DPOPStxsrvr
 DPOPSdispnc
 uDACSdispnc
 IWG1dispnc

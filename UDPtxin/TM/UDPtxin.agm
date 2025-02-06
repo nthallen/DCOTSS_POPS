@@ -1,0 +1,22 @@
+ModuleDef UDPtxin [ ] {
+  Provide UDPtxin driver for GSE operations
+}
+
+mode (default) {
+  tmcbase = UDPtxin.tmc
+  colbase = UDPtxin_col.tmc
+  genuibase = UDPtxin.genui:UDPtxin.genui.in
+  - : UDPtxin.tbl:UDPtxin.tbl.in
+  DISTRIB = @MODDIR@/../UDPtxin
+  CPPFLAGS = -I @MODDIR@/..
+  IGNORE = UDPtxin.tbl UDPtxin.genui
+  OBJ = UDPtxin.tbl UDPtxin.genui
+}
+
+%%
+.PHONY : clean-UDPtxin @MODDIR@/../UDPtxin
+@MODDIR@/../UDPtxin :
+	$(MAKE) --directory=@MODDIR@/..
+clean-dist : clean-UDPtxin
+clean-UDPtxin :
+	$(MAKE) --directory=@MODDIR@/.. clean

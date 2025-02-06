@@ -1,0 +1,4 @@
+display PGSdisp
+client DPOPSclt
+extraction [!SI] PGSjsonext -n json
+memo

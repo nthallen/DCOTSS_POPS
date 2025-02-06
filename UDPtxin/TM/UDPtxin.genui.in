@@ -1,0 +1,17 @@
+ 1 UDPtxin_Stale Status Stale
+ 1 UDPdrift Status Drift
+ 1 InstS    Status Status
+
+ 1 POPS_num_cc    POPS N
+ 1 POPS_Surf_Area POPS Area
+ 1 POPS_ccm       POPS Flow
+ 1 POPS_Temp      POPS Temp
+ 1 POPS_P_mbar    POPS Pres
+
+ 1 POPS_P_mbar    HK   Pres
+ 1 HPS_P          HK   Pres
+ 1 MS5607_P       HK   Pres
+
+ 1 POPS_Temp      HK   Temp
+ 1 Amb_T          HK   Temp
+ 1 PPmpT          HK   Temp

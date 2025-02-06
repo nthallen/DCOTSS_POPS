@@ -13,6 +13,7 @@ colbase = uDACS_B_col.tmc
 genuibase = DPOPS.genui
 genuibase = uDACS.genui
 
+cmdbase = DPOPS.cmd
 cmdbase = playback.cmd
 cmdbase = uDACS.cmd
 cmdbase = LFE.cmd
@@ -20,9 +21,9 @@ cmdbase = LFE.cmd
 swsbase = DPOPS.sws
 
 Module TMbase
-Module alicat mode=ignore src=alicat.txt
+Module alicat TX=^ mode=ignore src=alicat.txt
 tmcbase = Alicat_conv.tmc LowPass.cc
-Module POPS
+Module POPS TX=^
 Module IWG1
 
 TGTDIR = /home/DPOPS
@@ -33,6 +34,7 @@ IDISTRIB = doit POPSdata
 
 DPOPScol : -lsubbuspp
 DPOPSsrvr : -lsubbuspp uDACS_cmd.oui
+DPOPStxsrvr :
 DPOPSdisp : DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS.tbl
 IWG1disp : IWG1.tbl

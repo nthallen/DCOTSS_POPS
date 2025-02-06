@@ -1,0 +1,42 @@
+TM "Receive" UDPtxin 0;
+
+%{
+  #define uDACS_on_off_text(x) ((x) ? " on" : "off")
+%}
+
+TM typedef double UDPdrift_t { text "%6.1lf"; }
+TM 1 Hz UDPdrift_t UDPdrift;
+TM typedef uint8_t UDPuchar { text "%3u"; }
+TM 1 Hz UDPuchar InstS;
+TM typedef float POPS_float_t { text "%8.3f"; }
+TM 1 Hz POPS_float_t POPS_num_cc;
+TM typedef float POPS_Area_Density_t { text "%8.3lf"; }
+TM 1 Hz POPS_Area_Density_t POPS_Surf_Area;
+TM 1 Hz POPS_float_t POPS_ccm;
+TM 1 Hz POPS_float_t POPS_Temp;
+TM 1 Hz POPS_float_t POPS_P_mbar;
+TM typedef float HPS_P_mbar_t { text "%7.2f"; }
+TM 1 Hz HPS_P_mbar_t HPS_P;
+TM typedef float MS5607_P_t { text "%8.3lf"; } /* mbar */
+TM 1 Hz MS5607_P_t MS5607_P;
+TM typedef float UDP_T_t { text "%7.3lf"; }
+TM 1 Hz UDP_T_t Amb_T;
+TM 1 Hz UDP_T_t PPmpT;
+
+TM 1 Hz UDPuchar UDPtxin_Stale;
+
+Group UDPtxin (UDPdrift, InstS, POPS_num_cc, POPS_Surf_Area, POPS_ccm,
+  POPS_Temp, POPS_P_mbar, HPS_P, MS5607_P, Amb_T, PPmpT, UDPtxin_stale) {
+  UDPdrift = UDPtxin.Time - dtime();
+  InstS = UDPtxin.InstS;
+  POPS_num_cc = UDPtxin.POPS_num_cc;
+  POPS_Surf_Area = UDPtxin.POPS_Surf_Area;
+  POPS_ccm = UDPtxin.POPS_ccm;
+  POPS_Temp = UDPtxin.POPS_Temp;
+  POPS_P_mbar = UDPtxin.POPS_P_mbar;
+  HPS_P = UDPtxin.HPS_P;
+  MS5607_P = UDPtxin.MS5607_P;
+  Amb_T = UDPtxin.Amb_T;
+  PPmpT = UDPtxin.PPmpT;
+  UDPtxin_Stale = UDPtxin_obj->Stale(255);
+}

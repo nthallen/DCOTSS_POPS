@@ -1,6 +1,6 @@
 %INTERFACE <POPS>
 
-&command
+&@TX@command
   : POPS Start * { if_POPS.Turf("B\n"); }
 # : POPS Shutdown * { if_POPS.Turf("S\n"); }
   : POPS Shutdown * { if_POPS.Turf("E\n"); }

@@ -1,0 +1,14 @@
+Input "TMbase.tbl";
+Input "UDPtxin.tbl";
+
+{ HBox {
+    |+;
+    { [POPS];
+    }; |+; {
+      [DPOPS];
+      [TMbaseB];
+    };
+    |+;
+  };
+  -
+}
