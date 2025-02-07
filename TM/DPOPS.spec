@@ -39,7 +39,7 @@ DPOPSdisp : DPOPS.tbl POPS.tbl uDACS.tbl
 uDACSdisp : uDACS.tbl
 IWG1disp : IWG1.tbl
 DPOPSalgo : DPOPS.tma DPOPS.sws
-UDPext : UDP.tmc UDP.cc UDPext.oui
+UDPrxext : UDP.tmc UDP.cc UDPrx.cc UDPext.oui
 DPOPSjsonext : $extbase $genuibase
 doit : DPOPS.doit
 %%
