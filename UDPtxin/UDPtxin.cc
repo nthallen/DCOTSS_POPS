@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   ELoop.add_child(tm);
   tm->connect();
 
-  UDPrx_TM *UrxTM = new UDPrx_TM(tm, "7075");
+  UDPrx_TM *UrxTM = new UDPrx_TM(tm, "7072");
   ELoop.add_child(UrxTM);
   
   msg(0, "Started");
