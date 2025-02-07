@@ -9,6 +9,21 @@
 #include "oui.h"
 #include "nl.h"
 
+  // To compile for test configuration:
+  //   $ make clean
+  //   $ make CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
+  // To switch back to flight configuration:
+  //   $ make clean
+  //   $ make
+  #if defined(TEST_SABRE_HOUSTON)
+    #define TM_BROADCAST_PORT "7072"
+    #define CMD_TRANSMIT_IP "10.11.96.135"
+    #define CMD_TRANSMIT_PORT "9090"
+  #else
+    #define TM_BROADCAST_PORT "7072"
+    #define CMD_TRANSMIT_IP "10.15.101.131"
+    #define CMD_TRANSMIT_PORT "9090"
+  #endif
 
 using namespace DAS_IO;
 
@@ -19,20 +34,12 @@ int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   Loop ELoop;
   CR_UDPtx *CRxUtx =
+    new CR_UDPtx(CMD_TRANSMIT_IP, CMD_TRANSMIT_PORT);
     // This is the IP to send commands to the instrument
     // Instrument will receive via broadcast, but broadcasting
     // doesn't work well when we are trying to receive on the
     // same port number, so go with fixed IP.
-#ifdef LAB_TEST_CAMBRIDGE
-    // Direct to moudi Cambridge lab IP
-    new CR_UDPtx("10.245.83.73", "9090");
-#elif LAB_TEST_FIELD
-    // Direct to DPOPS flight IP
-    new CR_UDPtx("10.11.96.135", "9090");
-#else
-    // PGSS uplink system
-    new CR_UDPtx("10.15.101.131", "9090");
-#endif
+
   CRxUtx->connect();
   ELoop.add_child(CRxUtx);
   
