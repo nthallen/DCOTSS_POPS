@@ -33,6 +33,8 @@ UDPtxin_t UDPtxin;
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   Loop ELoop;
+  msg(0, "Transmitting commands to %s:%s",
+    CMD_TRANSMIT_IP, CMD_TRANSMIT_PORT);
   CR_UDPtx *CRxUtx =
     new CR_UDPtx(CMD_TRANSMIT_IP, CMD_TRANSMIT_PORT);
     // This is the IP to send commands to the instrument
@@ -48,7 +50,8 @@ int main(int argc, char **argv) {
   ELoop.add_child(tm);
   tm->connect();
 
-  UDPrx_TM *UrxTM = new UDPrx_TM(tm, "7072");
+  msg(0, "Listening for UDP data on port %s", TM_BROADCAST_PORT);
+  UDPrx_TM *UrxTM = new UDPrx_TM(tm, TM_BROADCAST_PORT);
   ELoop.add_child(UrxTM);
   
   msg(0, "Started");

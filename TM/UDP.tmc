@@ -46,6 +46,7 @@
   }
 
   void UDPinit() {
+    msg(0, "Sending UDP data to %s:%s", TM_BROADCAST_IP, TM_BROADCAST_PORT);
     UDPbcast *UDPstatus =
       new UDPbcast(TM_BROADCAST_IP, TM_BROADCAST_PORT, 1000);
 
