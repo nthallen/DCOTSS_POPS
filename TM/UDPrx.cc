@@ -1,3 +1,4 @@
+#include "UDP_address.h"
 #include "UDPrx.h"
 #include "dasio/cmd_writer.h"
 #include "nl.h"
@@ -9,7 +10,7 @@
 UDPrx::UDPrx()
     : Interface("UDPrx", 600 ) {
   // Set up UDP listener
-  Bind(9090); // As assigned for SABRE Mission
+  Bind(CMD_TRANSMIT_PORT); // As assigned for SABRE Mission
   flags = Fl_Read;
   // setenv("TZ", "UTC0", 1); // Force UTC for mktime()
   if (cic_init())
@@ -26,14 +27,12 @@ bool UDPrx::protocol_input() {
   return false;
 }
 
-void UDPrx::Bind(int port) {
-	char service[10];
+void UDPrx::Bind(const char *port) {
 	struct addrinfo hints,*results, *p;
   int err, ioflags;
 
 	if (port == 0)
     msg(MSG_FATAL, "Invalid port in UDPrx: 0" );
-	snprintf(service, 10, "%d", port);
 
 	memset(&hints, 0, sizeof(hints));	
 	hints.ai_family = AF_UNSPEC;		// don't care IPv4 or v6
@@ -41,7 +40,7 @@ void UDPrx::Bind(int port) {
 	hints.ai_flags = AI_PASSIVE;
 	
 	err = getaddrinfo(NULL,
-						service,
+						port,
 						&hints,
 						&results);
 	if (err)
@@ -63,6 +62,7 @@ void UDPrx::Bind(int port) {
   if (ioflags == -1)
     msg(MSG_FATAL, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
+  msg(MSG, "Listening for commands on port %s", port);
 }
 
 int UDPrx::fillbuf() {

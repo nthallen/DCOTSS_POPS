@@ -4,26 +4,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "dasio/loop.h"
+#include "UDP_address.h"
 #include "UDPtxin_int.h"
 #include "UDPtxin.h"
 #include "oui.h"
 #include "nl.h"
-
-  // To compile for test configuration:
-  //   $ make clean
-  //   $ make CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
-  // To switch back to flight configuration:
-  //   $ make clean
-  //   $ make
-  #if defined(TEST_SABRE_HOUSTON)
-    #define TM_BROADCAST_PORT "7072"
-    #define CMD_TRANSMIT_IP "10.11.96.135"
-    #define CMD_TRANSMIT_PORT "9090"
-  #else
-    #define TM_BROADCAST_PORT "7072"
-    #define CMD_TRANSMIT_IP "10.15.101.131"
-    #define CMD_TRANSMIT_PORT "9090"
-  #endif
 
 using namespace DAS_IO;
 

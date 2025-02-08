@@ -14,7 +14,7 @@ class UDPrx : public Interface {
      * Binds fd to listen on the specified UDP port
      * @param port UDP port to listen on
      */
-    void Bind(int port);
+    void Bind(const char *port);
     int fillbuf();
     // int not_ndigits(int n, int &value);
     // int not_ISO8601(double *Time);
