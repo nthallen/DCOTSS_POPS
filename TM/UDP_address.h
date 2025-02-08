@@ -1,6 +1,9 @@
 #ifndef UDP_ADDRESS_H_INCLUDED
 #define UDP_ADDRESS_H_INCLUDED
 
+/* REMOVE BEFORE FLIGHT */
+#define TEST_SABRE_HOUSTON
+
 /* To compile for test configuration:
      $ make clean-dist
      $ make all-dist CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
@@ -13,6 +16,11 @@
   #define TM_BROADCAST_IP "10.6.96.136"
   #define TM_BROADCAST_PORT "7072"
   #define CMD_TRANSMIT_IP "10.11.96.135"
+  #define CMD_TRANSMIT_PORT "9090"
+#elif defined(TEST_LOCALHOST)
+  #define TM_BROADCAST_IP "127.0.0.1"
+  #define TM_BROADCAST_PORT "7072"
+  #define CMD_TRANSMIT_IP "127.0.0.1"
   #define CMD_TRANSMIT_PORT "9090"
 #else
   #define TM_BROADCAST_IP "10.6.96.131"

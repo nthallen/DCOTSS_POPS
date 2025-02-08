@@ -87,7 +87,7 @@ UDPrx_TM::UDPrx_TM(TM_data_sndr *tm, const char *port)
 }
 
 bool UDPrx_TM::protocol_input() {
-  if (not_str( "MOUDI," ) ||
+  if (not_str( "DPOPS," ) ||
       not_ISO8601(UDPtxin.Time) || not_str( ",", 1) ||
 
       not_uint8(UDPtxin.InstS) || not_str(",", 1) ||
