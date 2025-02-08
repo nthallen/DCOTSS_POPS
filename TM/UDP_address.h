@@ -2,11 +2,11 @@
 #define UDP_ADDRESS_H_INCLUDED
 
 /* To compile for test configuration:
-     $ make clean
-     $ make CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
+     $ make clean-dist
+     $ make all-dist CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
    To switch back to flight configuration:
-     $ make clean
-     $ make
+     $ make clean-dist
+     $ make all-dist
 */
 
 #if defined(TEST_SABRE_HOUSTON)
