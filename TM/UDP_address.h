@@ -2,7 +2,7 @@
 #define UDP_ADDRESS_H_INCLUDED
 
 /* REMOVE BEFORE FLIGHT */
-#define TEST_SABRE_HOUSTON
+#define TEST_VALENTINE
 
 /* To compile for test configuration:
      $ make clean-dist
@@ -21,6 +21,12 @@
   #define TM_BROADCAST_IP "127.0.0.1"
   #define TM_BROADCAST_PORT "7072"
   #define CMD_TRANSMIT_IP "127.0.0.1"
+  #define CMD_TRANSMIT_PORT "9090"
+#elif defined(TEST_VALENTINE)
+  /* FortNort as PGS, EAS-NALLEN1L as flight */
+  #define TM_BROADCAST_IP "192.168.7.107"
+  #define TM_BROADCAST_PORT "7072"
+  #define CMD_TRANSMIT_IP "192.168.7.136"
   #define CMD_TRANSMIT_PORT "9090"
 #else
   #define TM_BROADCAST_IP "10.6.96.131"
