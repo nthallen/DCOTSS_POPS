@@ -178,7 +178,7 @@ void UserPkts_UDP::Bind(int port) {
   snprintf(service, 10, "%d", port);
 
   memset(&hints, 0, sizeof(hints));	
-  hints.ai_family = AF_UNSPEC;		// don't care IPv4 of v6
+  hints.ai_family = AF_INET;		// IPv4
   hints.ai_socktype = SOCK_DGRAM;
   hints.ai_flags = AI_PASSIVE;
     
