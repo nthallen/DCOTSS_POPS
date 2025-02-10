@@ -35,7 +35,6 @@ int main(int argc, char **argv) {
   ELoop.add_child(tm);
   tm->connect();
 
-  msg(0, "Listening for UDP data on port %s", TM_BROADCAST_PORT);
   UDPrx_TM *UrxTM = new UDPrx_TM(tm, TM_BROADCAST_PORT);
   ELoop.add_child(UrxTM);
   
@@ -145,6 +144,7 @@ void UDPrx_TM::Bind(const char *port) {
   if (ioflags == -1)
     msg(MSG_FATAL, "Error setting O_NONBLOCK on UDP socket: %s",
       strerror(errno));
+  msg(0, "Listening for UDP data on port %s", port);
 }
 
 int UDPrx_TM::fillbuf() {

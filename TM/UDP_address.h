@@ -2,7 +2,7 @@
 #define UDP_ADDRESS_H_INCLUDED
 
 /* REMOVE BEFORE FLIGHT */
-#define TEST_OXFORD_STREET
+#define TEST_OXFORD_STREET_2
 
 /* To compile for test configuration:
      $ make clean-dist
@@ -32,6 +32,12 @@
   /* spi1 as flight, EAS-NALLEN1L as PGS */
   #define TM_BROADCAST_IP "10.245.83.21"
   #define TM_BROADCAST_PORT "7072"
+  #define CMD_TRANSMIT_IP "10.245.83.83"
+  #define CMD_TRANSMIT_PORT "9090"
+#elif defined(TEST_OXFORD_STREET_2)
+  /* spi1 as flight, EAS-NALLEN1L as PGS */
+  #define TM_BROADCAST_IP "10.245.83.21"
+  #define TM_BROADCAST_PORT "17072"
   #define CMD_TRANSMIT_IP "10.245.83.83"
   #define CMD_TRANSMIT_PORT "9090"
 #else
