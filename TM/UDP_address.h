@@ -2,7 +2,7 @@
 #define UDP_ADDRESS_H_INCLUDED
 
 /* REMOVE BEFORE FLIGHT */
-#define TEST_OXFORD_STREET_2
+#define TEST_SABRE_HOUSTON
 
 /* To compile for test configuration:
      $ make clean-dist
