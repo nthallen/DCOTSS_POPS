@@ -1,9 +1,6 @@
 #ifndef UDP_ADDRESS_H_INCLUDED
 #define UDP_ADDRESS_H_INCLUDED
 
-/* REMOVE BEFORE FLIGHT */
-#define TEST_SABRE_HOUSTON
-
 /* To compile for test configuration:
      $ make clean-dist
      $ make all-dist CL_CPPFLAGS=-DTEST_SABRE_HOUSTON
