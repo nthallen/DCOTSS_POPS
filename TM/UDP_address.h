@@ -10,7 +10,7 @@
 */
 
 #if defined(TEST_SABRE_HOUSTON)
-  #define TM_BROADCAST_IP "10.6.96.136"
+  #define TM_BROADCAST_IP "10.11.96.136"
   #define TM_BROADCAST_PORT "7072"
   #define CMD_TRANSMIT_IP "10.11.96.135"
   #define CMD_TRANSMIT_PORT "9090"
@@ -38,7 +38,7 @@
   #define CMD_TRANSMIT_IP "10.245.83.83"
   #define CMD_TRANSMIT_PORT "9090"
 #else
-  #define TM_BROADCAST_IP "10.6.96.131"
+  #define TM_BROADCAST_IP "10.11.96.131"
   #define TM_BROADCAST_PORT "7072"
   #define CMD_TRANSMIT_IP "10.15.101.131"
   #define CMD_TRANSMIT_PORT "9090"
