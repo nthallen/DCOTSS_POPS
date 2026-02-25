@@ -52,6 +52,8 @@ function wrap_path {
 }
 
 exp_option='DPOPS:nthallen/DCOTSS_POPS.git'
+base_debian_pkgs='cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen'
+exp_debian_pkgs=''
 exp_base=''
 exp_url=''
 testmode=no
@@ -322,7 +324,8 @@ if [ $machine = Linux ]; then
   esac
   if [ $distro = Debian ]; then
     echo "monarch-DPOPS-install.sh: Checking prerequisites"
-    sudo apt install cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen
+    # cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen
+    sudo apt install $base_debian_pkgs$exp_debian_pkgs
   else
     echo "monarch-DPOPS-install.sh: Not specifically configured for release '$release'."
     echo "Need to determine how to add packages to meet build prerequisites."

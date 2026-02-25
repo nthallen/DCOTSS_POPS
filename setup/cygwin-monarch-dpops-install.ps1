@@ -143,8 +143,11 @@ if ($setup_cygwin) {
 
   if (Test-Path -Path setup-x86_64.exe -PathType Leaf)
   {
+    $base_pkgs = "bzip2,cygwin-doc,file,less,openssh,git,chere,cmake,doxygen,graphviz,gcc-core,gcc-g++,gdb,make,bison,flex,perl,libncurses-devel,screen"
+    $exp_pkgs = ''
+    $all_pkgs = "$base_pkgs$exp_pkgs"
     Write-Output "`nInvoking Cygwin Setup`n"
-    start-process setup-x86_64.exe  -Wait -argumentlist "--packages bzip2,cygwin-doc,file,less,openssh,git,chere,cmake,doxygen,graphviz,gcc-core,gcc-g++,gdb,make,bison,flex,perl,libncurses-devel,screen --upgrade-also --no-desktop"
+    start-process setup-x86_64.exe  -Wait -argumentlist "--packages $all_pkgs --upgrade-also --no-desktop"
   }
   else
   {
@@ -219,6 +222,8 @@ function wrap_path {
 }
 
 exp_option='DPOPS:nthallen/DCOTSS_POPS.git'
+base_debian_pkgs='cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen'
+exp_debian_pkgs=''
 exp_base=''
 exp_url=''
 testmode=no
@@ -489,7 +494,8 @@ if [ $machine = Linux ]; then
   esac
   if [ $distro = Debian ]; then
     echo "monarch-DPOPS-install.sh: Checking prerequisites"
-    sudo apt install cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen socat
+    # cmake doxygen gawk graphviz gdb gcc g++ git bison flex libncurses-dev openssh-server screen
+    sudo apt install $base_debian_pkgs$exp_debian_pkgs
   else
     echo "monarch-DPOPS-install.sh: Not specifically configured for release '$release'."
     echo "Need to determine how to add packages to meet build prerequisites."
