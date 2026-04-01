@@ -21,7 +21,7 @@ State Startup {
   depending on (ON_GROUND) { Validate Shutdown; }
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active) or 4:00;
-# Validate Bypass_Flow_Iso_Init;
+  Validate Bypass_Flow_Iso_Init;
 # Validate POPS_Flow_Sim_Init;
 # Validate POPS_Flow_PI_Init does not go here. It is automatically started
 #   when POPS comes up.
@@ -309,7 +309,7 @@ Partition
 
 State Bypass_Flow_Idle {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
-  > MFC Bypass Flow SetPoint 0 nccm
+  > MFC Bypass Flow SetPoint 5000 nccm
   > Set Bypass Pump Speed 0 Volts
 }
 
