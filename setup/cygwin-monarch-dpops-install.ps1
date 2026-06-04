@@ -8,6 +8,9 @@
 # This script can be run from a Windows Cmd shell as:
 # > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-DPOPS-install.ps1
 #
+# If you want to update your Cygwin installation, add the -setup_cygwin option:
+# > PowerShell -ExecutionPolicy Bypass ./cygwin-monarch-DPOPS-install.ps1 -setup_cygwin
+#
 # ---------
 # Uninstall:
 # ---------
@@ -130,6 +133,14 @@ if ($setup_cygwin) {
   # Run Cygwin Setup
   $curloc = Get-Location
   Set-Location $env:USERPROFILE\Downloads
+
+  # I want to force a download to make sure we are running the latest setup.
+  # GSEs are generally poorly maintained.
+  if (Test-Path -Path setup-x86_64.exe -PathType Leaf)
+  {
+    Remove-Item -Path setup-x86_64.exe
+  }
+
   if (-not (Test-Path -Path setup-x86_64.exe -PathType Leaf))
   { # need to download the program
     $url = "https://cygwin.com/setup-x86_64.exe"
@@ -148,6 +159,7 @@ if ($setup_cygwin) {
     $all_pkgs = "$base_pkgs$exp_pkgs"
     Write-Output "`nInvoking Cygwin Setup`n"
     start-process setup-x86_64.exe  -Wait -argumentlist "--packages $all_pkgs --upgrade-also --no-desktop"
+    Remove-Item -Path setup-x86_64.exe
   }
   else
   {
@@ -156,17 +168,14 @@ if ($setup_cygwin) {
   }
 }
 
-if (Test-Path -Path "c:\cygwin64\usr\local" -PathType container) {
-  if (-NOT (Test-Path -Path "c:\cygwin64\usr\local\src" -PathType container)) {
-    mkdir "c:\cygwin64\usr\local\src"
-  }
-  Set-Location c:\cygwin64\usr\local\src
-} else {
+if (-NOT (Test-Path -Path "c:\cygwin64" -PathType container)) {
   Write-Error "Unable to locate the Cygwin installation"
   Return
 }
 
 # Create the bash install script
+Set-Location $env:USERPROFILE\Downloads
+Remove-Item -Path monarch-DPOPS-install.sh -ErrorAction Ignore
 $setup_script = @'
 #! /bin/bash
 
@@ -656,10 +665,10 @@ EOF
   ssh_cfg=$exp_src/setup/ssh_config
   cfg_dir=/etc/monarch/$exp_base
   if [ -f $ssh_cfg ]; then
-    $sudo mkdir -p $cfg_dir
-    [ -d $cfg_dir ] || nl_error "Unable to create $cfg_dir"
-    $sudo cp $ssh_cfg $cfg_dir
-    $sudo chmod g-w $cfg_dir/ssh_config
+    echo "Warning: Use of ssh_config has been deprecated"
+  fi
+  if [ -d $cfg_dir ]; then
+    echo "Warning: Use of $cfg_dir is deprecated: consider deleting"
   fi
   if [ -f $ins_file ]; then
     umask 023 # Make sure not to add g+w to ~/.ssh/config
@@ -724,7 +733,7 @@ fi
 '@
 $setup_script | Out-File -FilePath "./monarch-DPOPS-install.sh" -NoNewLine -Encoding ASCII
 
-Write-Output "`nStarting standard install script: /usr/local/src/monarch-DPOPS-install.sh`n"
+Write-Output "`nStarting standard install script: $env:USERPROFILE\Downloads\monarch-DPOPS-install.sh`n"
 
 # -Wait won't work here, because mintty.exe doesn't really exit until ssh-agent does
-start-process C:\cygwin64\bin\mintty.exe -argumentlist "-h always /bin/bash --login /usr/local/src/monarch-DPOPS-install.sh -S $exp_option"
+start-process C:\cygwin64\bin\mintty.exe -argumentlist "-h always --dir $env:USERPROFILE\Downloads /bin/bash --login ./monarch-DPOPS-install.sh -S $exp_option"

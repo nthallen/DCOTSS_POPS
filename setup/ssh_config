@@ -1,9 +1,0 @@
-host dpops dpi3 spi3 10.11.96.135
-hostname 10.11.96.135
-user pi
-ForwardAgent yes
-
-host dpi2 10.245.83.69
-hostname 10.245.83.69
-user pi
-ForwardAgent yes
