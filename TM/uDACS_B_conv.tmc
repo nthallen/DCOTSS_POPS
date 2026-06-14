@@ -139,3 +139,6 @@ uDACS_on_off BPmpCmd; Invalidate BPmpCmd;
 { BPmpCmd = (PumpsStat>>2) & 1; Validate BPmpCmd; }
 uDACS_on_off BPmpS; Invalidate BPmpS;
 { BPmpS = (PumpsStat>>3) & 1; Validate BPmpS; }
+
+MS5607_P_t P_eff; Invalidate P_eff;
+{ P_eff = Sim_P ? Sim_P : convert(HPS_P); Validate P_eff; }

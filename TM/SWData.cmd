@@ -21,6 +21,8 @@
   : Set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
   : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
   : Set Simulated Altitude &Sim_Alt { SWData.Sim_Alt = $4; }
+  : SW MOUDI &MoudiMode { SWData.MoudiMode = $3; }
+  : Set Simulated Pressure &Sim_P { SWData.Sim_P = $4; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -63,4 +65,13 @@
   ;
 &Sim_Alt <uint16_t>
   : %ld (Enter altitude in ft) { $0 = $1; }
+  ;
+&MoudiMode <unsigned char>
+  : Pressure Control { $0 = SWS_MOUDI_P_CTRL; }
+  : Set %d { $0 = $2; }
+  : Open { $0 = SWS_MOUDI_I_OPEN; }
+  : Close { $0 = SWS_MOUDI_I_CLOSE; }
+  ;
+&Sim_P <uint16_t>
+  : %d (Enter pressure in mbar) mbar { $0 = $1 < 0 ? 0 : $1; }
   ;

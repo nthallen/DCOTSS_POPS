@@ -13,6 +13,8 @@ typedef struct __attribute__((__packed__)) {
   uint8_t BPmp_Per;
   uint8_t IsoKin_pct;
   uint16_t Sim_Alt;
+  unsigned char MoudiMode;
+  uint16_t Sim_P;
 } SWData_t;
 extern SWData_t SWData;
 
@@ -28,5 +30,8 @@ extern SWData_t SWData;
 #define SWS_BYPASS_FLOW_ISO 35
 #define SWS_TIME_WARP 253
 #define SWS_SHUTDOWN 255
+#define SWS_MOUDI_P_CTRL 0
+#define SWS_MOUDI_I_OPEN 1
+#define SWS_MOUDI_I_CLOSE 2
 
 #endif

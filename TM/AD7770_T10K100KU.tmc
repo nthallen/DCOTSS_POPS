@@ -9,7 +9,7 @@
  * post processing to normalize extrapolations
  */
 /* 10K TE 44031 Thermistor pulled up by 100K */
-Calibration ( AD7770_T10K100KU, CELCIUS ) {
+Calibration ( AD7770_T10K100KU, uDACS_CELCIUS ) {
   20478, 9999.00000,
   20479, 9999.00000,
   20480, 148.55669,

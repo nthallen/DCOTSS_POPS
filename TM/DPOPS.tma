@@ -53,7 +53,8 @@ Partition
 # so high that it will be triggered during a mid-flight
 # altitude scan. 
 
-# convert(HPS_P) is a float value in mbar
+# P_eff is a float value in mbar derived from convert(HPS_P)
+# or Sim_P in uDACS_B_conv.tmc
 #
 #
 # REF: 650 torr ~867 mbar ~5000 ft
@@ -68,13 +69,13 @@ Partition
 
 State ON_GROUND {
   { using_swp = 0; }
-  { if (using_swp || (convert(HPS_P) > 0 && convert(HPS_P) < P_ground_up))
+  { if (using_swp || (P_eff > 0 && P_eff < P_ground_up))
       Validate OFF_GROUND;
   }
 }
 
 State OFF_GROUND {
-  { if ((using_swp == SWS_LAND) || (!using_swp && convert(HPS_P) > P_ground_dn)) {
+  { if ((using_swp == SWS_LAND) || (!using_swp && P_eff > P_ground_dn)) {
       Validate ON_GROUND;
     }
   }
@@ -226,7 +227,7 @@ State POPS_Flow_PI {
       LFE_I = 0;
     }
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
-      (T0/(RingT+273.15))*(convert(HPS_P)/P0);
+      (T0/(RingT+273.15))*(P_eff/P0);
     if (LFE_MFset < 10) {
       if (PPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
@@ -329,7 +330,7 @@ State Bypass_Flow_Iso {
   depending on (Shutdown) { Validate Bypass_Flow_Stop; }
   depending on (Pumps_Over_Temp) { Validate Bypass_Flow_Iso_OT; }
   { double Fm_SPX, Fm_BMFC, Fv_err_BMFC, Vset;
-    Fm_SPX = SPX_ccm*(T0/(RingT+273.15))*(convert(HPS_P)/P0);
+    Fm_SPX = SPX_ccm*(T0/(RingT+273.15))*(P_eff/P0);
     Fm_BMFC = PD_nccm*(IsoKin_pct/100.) - PMFC_MassFlow - Fm_SPX;
     if (Fm_BMFC < 0) Fm_BMFC = 0;
     else if (Fm_BMFC > 5000) Fm_BMFC = 5000;
@@ -340,7 +341,7 @@ State Bypass_Flow_Iso {
        BP_Gp is in V/ccm
      */
     Fv_err_BMFC = (Fm_BMFC - BMFC_MF_LP)*
-        ((RingT+273.15)/T0)*(P0/convert(HPS_P));
+        ((RingT+273.15)/T0)*(P0/P_eff);
     BP_I = BP_I + Fv_err_BMFC;
     if (BP_Gi*BP_I >= 5) {
       BP_I = 5/BP_Gi;
@@ -368,9 +369,9 @@ State Bypass_Flow_ISO_OT {
 }
 
 State Bypass_Flow_Stop {
-      > Pump Bypass Off
-      > Set Bypass Pump Speed 0 Volts
-  +1  > MFC Bypass Flow SetPoint 0 nccm
+#     > Pump Bypass Off
+#     > Set Bypass Pump Speed 0 Volts
+# +1  > MFC Bypass Flow SetPoint 0 nccm
       Validate Bypass_Flow_Off;
 }
 
@@ -450,6 +451,8 @@ Partition
   */
   #define P_moudi_low_op  140.
   #define P_moudi_low_cl  145.
+  #define P_moudi_failsafe_op 400.
+  #define P_moudi_failsafe_cl 405.
   #define ALT_moudi_op 45000.
   #define ALT_moudi_cl 44500.
   
@@ -473,21 +476,27 @@ Partition
 State Moudi_closed {
   > Moudi Valve off
   > MFC Moudi Flow Setpoint 0 nccm
-  { if (moudi_open(convert(HPS_P))) Validate Moudi_opened; }
-# { if (((IWG1_Stale == 0 && Press_Alt < 99000.) || Sim_Alt > 0) &&
-#       at_level_leg(Press_Alt, Sim_Alt, ALT_moudi_op, ABOVE_LEVEL))
-#     Validate Moudi_opened;
-# }
+  { if ((MoudiMode == SWS_MOUDI_P_CTRL &&
+            moudi_open(P_eff)) ||
+        (MoudiMode == SWS_MOUDI_I_OPEN &&
+            P_eff < P_moudi_failsafe_op)) {
+      Validate Moudi_opened;
+    }
+  }
 }
 
 State Moudi_opened {
   > Moudi Valve On
   > MFC Moudi Flow Setpoint 2000 nccm
-  { if (moudi_close(convert(HPS_P))) Validate Moudi_closed; }
-# { if (((IWG1_Stale == 0 && Press_Alt < 99000.) || Sim_Alt > 0) &&
-#       at_level_leg(Press_Alt, Sim_Alt, ALT_moudi_cl, BELOW_LEVEL))
-#     Validate Moudi_closed;
-# }
+
+  { if ((MoudiMode == SWS_MOUDI_P_CTRL &&
+         moudi_close(P_eff)) ||
+        (MoudiMode == SWS_MOUDI_I_CLOSE) ||
+        (MoudiMode == SWS_MOUDI_I_OPEN &&
+         P_eff > P_moudi_failsafe_cl)) {
+      Validate Moudi_closed;
+    }
+  }
 }
 
 # -----------------------------------------------------------------------------

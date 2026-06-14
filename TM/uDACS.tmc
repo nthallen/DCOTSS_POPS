@@ -11,15 +11,18 @@
    * DPOPS during DCOTSS 2021.
    *
    * Created using arp-das-matlab/Therm/T10K_TE_55016.m
+   *
+   * Updated for TE 44031 used in the thermistor ring in
+   * the primary duct for DPOPS during INSPYRE 2026.
    */
   double AD7770_T10K100KU_2_Celcius(int32_t At) {
     double Rpu = 100e3;
     int32_t Aref = 1<<23;
     double logR = log(At * Rpu / (Aref - At));
-    double a0 = 1.1295e-03;
-    double a1 = 2.3410e-04;
-    double a3 = 8.7524e-08;
-    double C = 1/(a0 + a1 * logR + a3*pow(logR,3)) - 273.15;
+    double a0 = 1.0289e-03;
+    double a1 = 2.3917e-04;
+    double a3 = 1.5655e-07;
+    double C = 1/(a0 + a1*logR + a3*pow(logR,3)) - 273.15;
     return C;
   }
 
