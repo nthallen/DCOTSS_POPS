@@ -23,6 +23,7 @@ BMFtma {
 Moudi {
   HBox { +-; Title: "Mini-Moudi"; -+ };
   Command: (MMcmd,5);
+  Mode:    (MoudiMode,3);
   Status:  (MMstat,6);
 }
 
@@ -60,6 +61,7 @@ System {
   HBox{ +-; Title: "System"; -+ };
   [TMbase_data];
   [Gains];
+  Sim_P: (Sim_P,5) mbar;
   POPS: (POPSPwr,3) (POPS_Srvr,4);
   VGlue 0+1;
   [TMbase_times]

@@ -3,6 +3,7 @@ MNEMONIC dpops
 HOMEDIR DPOPS_DATA_DIR
 
  1 SWStat        Algo SWStat
+ 1 MoudiMode     Algo Mode
  1 LFE_PGain     Algo Gains
  1 LFE_IGain     Algo Gains
  1 BPmp_PGain    Algo Gains
@@ -13,4 +14,5 @@ HOMEDIR DPOPS_DATA_DIR
  1 BPmp_LPFP     Algo LPper
  1 IsoKin_pct    Algo IsoPct
  1 Sim_Alt       Algo Sim_Alt
+ 1 Sim_P         Algo Sim_P
  
