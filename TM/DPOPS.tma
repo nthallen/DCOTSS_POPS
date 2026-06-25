@@ -369,9 +369,9 @@ State Bypass_Flow_ISO_OT {
 }
 
 State Bypass_Flow_Stop {
-#     > Pump Bypass Off
-#     > Set Bypass Pump Speed 0 Volts
-# +1  > MFC Bypass Flow SetPoint 0 nccm
+      > Pump Bypass Off
+      > Set Bypass Pump Speed 0 Volts
+  +1  > MFC Bypass Flow SetPoint 0 nccm
       Validate Bypass_Flow_Off;
 }
 
