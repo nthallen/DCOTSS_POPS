@@ -16,13 +16,13 @@
   : Set LFE IGain &LFE_IGain { SWData.LFE_IGain = $4; }
   : Set Bypass Pump PGain &BPmp_PGain { SWData.BPmp_PGain = $5; }
   : Set Bypass Pump IGain &BPmp_IGain { SWData.BPmp_IGain = $5; }
+  : Set Simulated Altitude &Sim_Alt { SWData.Sim_Alt = $4; }
+  : Set Simulated Pressure &Sim_P { SWData.Sim_P = $4; }
   : Set Bypass Pump Filter Period &BPmp_LPFP { SWData.BPmp_LPFP = $6; }
   : Set Simulated Velocity &Sim_Vel { SWData.Sim_Vel = $4; }
   : Set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
   : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
-  : Set Simulated Altitude &Sim_Alt { SWData.Sim_Alt = $4; }
   : SW MOUDI &MoudiMode { SWData.MoudiMode = $3; }
-  : Set Simulated Pressure &Sim_P { SWData.Sim_P = $4; }
   ;
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
@@ -51,6 +51,12 @@
 &BPmp_IGain <float>
   : &LFE_gain { $0 = $1; }
   ;
+&Sim_Alt <uint16_t>
+  : %ld (Enter altitude in ft) { $0 = $1; }
+  ;
+&Sim_P <uint16_t>
+  : %d (Enter pressure in mbar) mbar { $0 = $1 < 0 ? 0 : $1; }
+  ;
 &BPmp_LPFP <uint8_t>
   : &LPFP { $0 = $1; }
   ;
@@ -63,15 +69,9 @@
 &IsoKin_pct <uint8_t>
   : &IsoPct { $0 = $1; }
   ;
-&Sim_Alt <uint16_t>
-  : %ld (Enter altitude in ft) { $0 = $1; }
-  ;
 &MoudiMode <unsigned char>
   : Pressure Control { $0 = SWS_MOUDI_P_CTRL; }
   : Set %d { $0 = $2; }
   : Open { $0 = SWS_MOUDI_I_OPEN; }
   : Close { $0 = SWS_MOUDI_I_CLOSE; }
-  ;
-&Sim_P <uint16_t>
-  : %d (Enter pressure in mbar) mbar { $0 = $1 < 0 ? 0 : $1; }
   ;

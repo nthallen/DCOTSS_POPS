@@ -8,13 +8,13 @@ typedef struct __attribute__((__packed__)) {
   float LFE_IGain;
   float BPmp_PGain;
   float BPmp_IGain;
+  uint16_t Sim_Alt;
+  uint16_t Sim_P;
   uint8_t BPmp_LPFP;
   uint8_t Sim_Vel;
   uint8_t BPmp_Per;
   uint8_t IsoKin_pct;
-  uint16_t Sim_Alt;
   unsigned char MoudiMode;
-  uint16_t Sim_P;
 } SWData_t;
 extern SWData_t SWData;
 
