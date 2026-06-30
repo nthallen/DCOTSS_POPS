@@ -1,8 +1,21 @@
 ### Begin DPOPS ssh_config_insert ###
 
-host dpops dpi3 spi3 10.11.96.135
-hostname 10.11.96.135
+host dpops dpi3 spi3 10.6.1.110
+hostname 10.6.1.110
 user pi
+ForwardAgent yes
+
+# For POPS from GSE through the Pi:
+host pops
+hostname 10.11.97.50
+user root
+ProxyJump dpops
+ForwardAgent yes
+
+# For POPS from the Pi or from the GSE during calibration
+host popscal
+hostname 10.11.97.50
+user root
 ForwardAgent yes
 
 host dpi2 10.245.83.69

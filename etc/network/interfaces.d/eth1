@@ -1,6 +1,13 @@
 allow-hotplug eth1
 iface eth1 inet static
+# Harvard Lab:
 # address 10.245.83.87/25
 # gateway 10.245.83.1
-  address 10.11.96.135/24
-  gateway 10.11.96.1
+##
+# SABRE 2025:
+# address 10.11.96.135/24
+# gateway 10.11.96.1
+##
+# INSPYRE 2026:
+  address 10.6.1.110/24
+  gateway 10.6.1.255
