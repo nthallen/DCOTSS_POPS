@@ -86,7 +86,7 @@ uDACS_nccm PD_nccm; Invalidate PD_nccm;
    * ccm * (P/P0) * (T0/T) = nccm
    */
   PD_nccm = 7.85E-3 * PD_Vel * 100 * 60 *
-    (convert(HPS_P)/P0) * (T0/(RingT+273.15));
+    (P_eff/P0) * (T0/(RingT+273.15));
   Validate PD_nccm;
 }
 

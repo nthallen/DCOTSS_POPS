@@ -227,7 +227,7 @@ State POPS_Flow_PI {
       LFE_I = 0;
     }
     LFE_MFset = (LFE_Gi*LFE_I + LFE_Gp*LFE_err)*
-      (T0/(RingT+273.15))*(P_eff/P0);
+      (T0/(RingT+273.15))*(convert(HPS_P)/P0);
     if (LFE_MFset < 10) {
       if (PPmpS) {
         ci_sendfcmd(Cmd_Send, "Pump POPS Off\n");
@@ -342,7 +342,7 @@ State Bypass_Flow_Iso {
        BP_Gp is in V/ccm
      */
     Fv_err_BMFC = (Fm_BMFC - BMFC_MF_LP)*
-        ((RingT+273.15)/T0)*(P0/P_eff);
+        ((RingT+273.15)/T0)*(P0/convert(HPS_P));
     BP_I = BP_I + Fv_err_BMFC;
     if (BP_Gi*BP_I >= 5) {
       BP_I = 5/BP_Gi;
