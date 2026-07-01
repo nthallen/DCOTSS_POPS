@@ -14,7 +14,7 @@ typedef struct __attribute__((__packed__)) {
   uint8_t Sim_Vel;
   uint8_t BPmp_Per;
   uint8_t IsoKin_pct;
-  unsigned char MoudiMode;
+  uint8_t MoudiMode;
 } SWData_t;
 extern SWData_t SWData;
 

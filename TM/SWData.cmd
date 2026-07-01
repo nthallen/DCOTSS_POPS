@@ -69,7 +69,7 @@
 &IsoKin_pct <uint8_t>
   : &IsoPct { $0 = $1; }
   ;
-&MoudiMode <unsigned char>
+&MoudiMode <uint8_t>
   : Pressure Control { $0 = SWS_MOUDI_P_CTRL; }
   : Set %d { $0 = $2; }
   : Open { $0 = SWS_MOUDI_I_OPEN; }

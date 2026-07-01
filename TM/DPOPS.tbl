@@ -23,7 +23,7 @@ BMFtma {
 Moudi {
   HBox { +-; Title: "Mini-Moudi"; -+ };
   Command: (MMcmd,5);
-  Mode:    (MoudiMode,3);
+  Mode:    (MoudiMode,5);
   Status:  (MMstat,6);
 }
 

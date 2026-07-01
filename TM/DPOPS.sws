@@ -47,7 +47,7 @@ SW_Variable: <uint8_t,BPLPF_t> BPmp_Per Set Bypass Pump PI Period
 SW_Variable: <uint8_t,BPLPF_t> IsoKin_pct Set Isokinetic Flow Percentage
   : &IsoPct { $0 = $1; }
 
-SW_Variable: MoudiMode SW MOUDI
+SW_Variable: <uint8_t,MoudiMode_t> MoudiMode SW MOUDI
   SWS_MOUDI_P_CTRL    0   Pressure Control: reSet_it = 0; break;
   SWS_MOUDI_I_OPEN    1   Open: reSet_it = 0; break;
   SWS_MOUDI_I_CLOSE   2   Close: reSet_it = 0; break;

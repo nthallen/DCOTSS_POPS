@@ -8,3 +8,15 @@ TM typedef float BP_Gain_T { text "%9.2e"; }
 TM typedef uint8_t BPLPF_t { text "%3u"; }
 TM typedef uint16_t U16Sim_t { text "%5u"; }
 TM typedef uint16_t Sim_P_t { text "%5u"; }
+
+%{
+  const char *MoudiMode_text(uint8_t val) {
+    switch (val) {
+      case 0: return "Pctrl";
+      case 1: return "Open ";
+      case 2: return "Close";
+      default: return "*****";
+    }
+  }
+%}
+TM typedef uint8_t MoudiMode_t { text "%5u" MoudiMode_text(); }

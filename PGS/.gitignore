@@ -39,9 +39,6 @@ PGSengext.o
 PGSengextoui.o
 PGStblnc.tmc.dep
 *.err
-freemem.tmc
-TMbase.genui
-TMbase.tbl
 UDPtxin.tbl
 UDPtxin.genui
 *.o
