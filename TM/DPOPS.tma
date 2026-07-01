@@ -28,9 +28,11 @@ State Startup {
 }
 
 State Shutdown {
-      Hold until valid (POPS_Is_Off, POPS_Flow_Off, Bypass_Flow_Off) or 2:00
+      Hold until valid (POPS_Is_Off, POPS_Flow_Off,
+                        Bypass_Flow_Off, Moudi_shutdown) or 2:00
       else {
-        msg(2, "Timed out waiting for POPS, POPS_Flow and Bypass_Flow to shutdown");
+        msg(2, "Timed out waiting for POPS, POPS_Flow, "
+          "Bypass_Flow and Moudi to shutdown");
       }
   +1  > Fail Light On
       > Quit
@@ -475,6 +477,7 @@ Partition
 %}
 
 State Moudi_closed {
+  depending on (Shutdown) { Validate Moudi_shutdown; }
   > Moudi Valve off
   > MFC Moudi Flow Setpoint 0 nccm
   { if ((MoudiMode == SWS_MOUDI_P_CTRL &&
@@ -487,6 +490,7 @@ State Moudi_closed {
 }
 
 State Moudi_opened {
+  depending on (Shutdown) { Validate Moudi_shutdown; }
   > Moudi Valve On
   > MFC Moudi Flow Setpoint 2000 nccm
 
@@ -498,6 +502,11 @@ State Moudi_opened {
       Validate Moudi_closed;
     }
   }
+}
+
+State Moudi_shutdown {
+  > Moudi Valve off
+  > MFC Moudi Flow Setpoint 0 nccm
 }
 
 # -----------------------------------------------------------------------------
