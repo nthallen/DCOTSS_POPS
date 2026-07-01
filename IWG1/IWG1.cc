@@ -41,7 +41,7 @@ IWG1_UDP::IWG1_UDP(TM_data_sndr *tm)
     : Interface("UDP", 600 ),
       tm(tm) {
   // Set up UDP listener
-  Bind(7071);
+  Bind(7077);
   flags = Fl_Read;
   // flush_input();
   setenv("TZ", "UTC0", 1); // Force UTC for mktime()

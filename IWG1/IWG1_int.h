@@ -27,3 +27,4 @@ class IWG1_UDP : public Interface {
 // Port 7071 is the standard port, but for historical reasons, DC-8 uses 5101 as the primary.
 // Instrument data comes on port 5110 in a format similar to IWG1:
 // InstMnc,TIME,data,data,data,...,\r\n
+// Port 7077 for INSPYRE 2026
