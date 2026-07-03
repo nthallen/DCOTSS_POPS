@@ -86,6 +86,7 @@ else
     if [ -n "$gitmain" ]; then
       git remote add $host "git@$githost:/srv/git/$reponame.git"
       git push $host $gitmain
+      get branch --set-upstream-to=$host/$gitmain
     fi
   done
 fi
