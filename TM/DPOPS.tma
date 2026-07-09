@@ -480,7 +480,7 @@ State Moudi_closed {
   depending on (Shutdown) { Validate Moudi_shutdown; }
   > Moudi Valve off
   > MFC Moudi Flow Setpoint 0 nccm
-  Validate NonIso_Init;
+  Validate NonIso_Idle;
   
   { if ((MoudiMode == SWS_MOUDI_P_CTRL &&
             moudi_open(P_eff)) ||
@@ -495,7 +495,7 @@ State Moudi_opened {
   depending on (Shutdown) { Validate Moudi_shutdown; }
   > Moudi Valve On
   > MFC Moudi Flow Setpoint 2000 nccm
-  Validate NonIso_Monitor;
+  Validate NonIso_Init;
 
   { if ((MoudiMode == SWS_MOUDI_P_CTRL &&
          moudi_close(P_eff)) ||
