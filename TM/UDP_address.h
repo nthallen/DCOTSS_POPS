@@ -38,10 +38,11 @@
   #define CMD_TRANSMIT_IP "10.245.83.83"
   #define CMD_TRANSMIT_PORT "9090"
 #else
-  #define TM_BROADCAST_IP "10.11.96.131"
-  #define TM_BROADCAST_PORT "7072"
+  /* IPs and Ports updated for INSPYRE 2026 */
+  #define TM_BROADCAST_IP "10.11.1.255"
+  #define TM_BROADCAST_PORT "16110"
   #define CMD_TRANSMIT_IP "10.15.101.131"
-  #define CMD_TRANSMIT_PORT "9090"
+  #define CMD_TRANSMIT_PORT "16111"
 #endif
 
 /* Old alternative test configurations:
