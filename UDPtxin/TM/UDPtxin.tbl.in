@@ -16,3 +16,13 @@ POPS {
   Amb_T:  (Amb_T,7)         C;
   PPmpT:  (PPmpT,7)         C;
 }
+Moudi {
+  HBox { +-; Title: Moudi; -+ };
+  Mode: (MoudiMode,5);
+  Cmd:  (MMcmd,5);
+  Status: (MMstat,6);
+  RingT:  (RingT,7)    C;
+  PD_Vel: (PD_Vel,5)  "m/s";
+  MMFC:   (MMFC_ccm,7) ccm;
+}
+
