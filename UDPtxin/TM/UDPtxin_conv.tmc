@@ -1,0 +1,46 @@
+%{
+  const char *MMcmd_text(uint8_t x) {
+    switch (x) {
+      case 0:  return "-----";
+      case 1:  return "Open2";
+      case 2:  return "Open ";
+      case 3:  return "Close";
+      default: return "*****";
+    }
+  }
+  const char *MMstat_text(uint8_t x) {
+    switch (x) {
+      case 0:  return "------";
+      case 1:  return "Opened";
+      case 2:  return "Opend2";
+      case 3:  return "Closed";
+      default: return "******";
+    }
+  }
+  const char *MoudiMode_text(uint8_t val) {
+    switch (val) {
+      case 0: return "Pctrl";
+      case 1: return "Open ";
+      case 2: return "Close";
+      default: return "*****";
+    }
+  }
+%}
+
+TM typedef uint8_t MoudiMode_t { text "%5u" MoudiMode_text(); }
+TM typedef uint8_t MMcmd_t { text "%5u" MMcmd_text(); }
+TM typedef uint8_t MMstat_t { text "%6u" MMstat_text(); }
+
+MoudiMode_t MoudiMode; Invalidate MoudiMode;
+MMcmd_t MMcmd; Invalidate MMcmd;
+MMstat_t MMstat; Invalidate MMstat;
+{ uint8_t tmp;
+  tmp = MM_status;
+  MMstat = tmp % 10;
+  tmp = tmp/10;
+  MMcmd = tmp % 10;
+  MoudiMode = tmp/10;
+  Validate MoudiMode;
+  Validate MMcmd;
+  Validate MMstat;
+}

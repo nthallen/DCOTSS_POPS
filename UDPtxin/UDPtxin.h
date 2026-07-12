@@ -13,7 +13,11 @@ typedef struct {
   float MS5607_P;
   float Amb_T;
   float PPmpT;
+  float RingT;
+  float PD_Vel;
+  float MMFC_ccm;
   uint8_t InstS;
+  uint8_t MM_status;
 } UDPtxin_t;
 
 extern UDPtxin_t UDPtxin;

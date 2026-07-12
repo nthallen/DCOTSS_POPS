@@ -5,6 +5,7 @@ ModuleDef UDPtxin [ ] {
 mode (default) {
   tmcbase = UDPtxin.tmc
   colbase = UDPtxin_col.tmc
+  extbase = UDPtxin_conv.tmc
   genuibase = UDPtxin.genui:UDPtxin.genui.in
   - : UDPtxin.tbl:UDPtxin.tbl.in
   DISTRIB = @MODDIR@/../UDPtxin

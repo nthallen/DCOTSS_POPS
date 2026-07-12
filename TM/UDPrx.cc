@@ -48,7 +48,7 @@ void UDPrx::Bind(const char *port) {
 	for(p=results; p!= NULL; p=p->ai_next) {
 		fd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
 		if (fd < 0)
-      msg(MSG_ERROR, "IWG1_UPD::Bind: socket error: %s", strerror(errno) );
+      msg(MSG_ERROR, "UDPrx::Bind: socket error: %s", strerror(errno) );
 		else if ( bind(fd, p->ai_addr, p->ai_addrlen) < 0 )
       msg(MSG_ERROR, "UDPrx::Bind: bind error: %s", strerror(errno) );
 		else break;

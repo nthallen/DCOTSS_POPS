@@ -15,3 +15,11 @@
  1 POPS_Temp      HK   Temp
  1 Amb_T          HK   Temp
  1 PPmpT          HK   Temp
+
+ 1 MoudiMode      MM   mode %.0lf
+ 1 MMcmd          MM   cmd %.0lf
+ 1 MMstat         MM   status %.0lf
+ 1 RingT          MM   RingT
+ 1 PD_Vel         MM   Vel
+ 1 MMFC_ccm       MM   Flow
+ 

@@ -34,6 +34,15 @@ dfs.plot('hk', 'label', 'HK', 'plots', {'hkp','hkt'});
 dfs.plot('hkp','label','Pres','vars',{'POPS_P_mbar','HPS_P','MS5607_P'});
 dfs.plot('hkt','label','Temp','vars',{'POPS_Temp','Amb_T','PPmpT'});
 dfs.end_col;
+dfs.start_col;
+dfs.plot('mm', 'label', 'MM', 'plots', {'mmmode','mmcmd','mmstatus','mmrt','mmv','mmf'});
+dfs.plot('mmmode','label','mode','vars',{'MoudiMode'});
+dfs.plot('mmcmd','label','cmd','vars',{'MMcmd'});
+dfs.plot('mmstatus','label','status','vars',{'MMstat'});
+dfs.plot('mmrt','label','Ring T','vars',{'RingT'});
+dfs.plot('mmv','label','Vel','vars',{'PD_Vel'});
+dfs.plot('mmf','label','Flow','vars',{'MMFC_ccm'});
+dfs.end_col;
 dfs.set_connection('127.0.0.1', 1376);
 if nargout > 0
   dfs_out = dfs;

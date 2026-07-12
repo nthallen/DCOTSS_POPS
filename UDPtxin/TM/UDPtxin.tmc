@@ -22,11 +22,19 @@ TM 1 Hz MS5607_P_t MS5607_P;
 TM typedef float UDP_T_t { text "%7.3lf"; }
 TM 1 Hz UDP_T_t Amb_T;
 TM 1 Hz UDP_T_t PPmpT;
+TM 1 Hz UDP_T_t RingT;
+TM typedef uint8_t MMstats_t { text "%3u"; }
+TM 1 Hz MMstats_t MM_status;
+TM typedef float PD_Vel_t { text "%5.1f"; }
+TM 1 Hz PD_Vel_t PD_Vel;
+TM typedef float Alicat_Flow1_t { text "%7.1f"; }
+TM 1 Hz Alicat_Flow1_t MMFC_ccm;
 
 TM 1 Hz UDPuchar UDPtxin_Stale;
 
 Group UDPtxin (UDPdrift, InstS, POPS_num_cc, POPS_Surf_Area, POPS_ccm,
-  POPS_Temp, POPS_P_mbar, HPS_P, MS5607_P, Amb_T, PPmpT, UDPtxin_stale) {
+  POPS_Temp, POPS_P_mbar, HPS_P, MS5607_P, Amb_T, PPmpT,
+  RingT, MM_status, PD_Vel, MMFC_ccm, UDPtxin_stale) {
   UDPdrift = UDPtxin.Time - dtime();
   InstS = UDPtxin.InstS;
   POPS_num_cc = UDPtxin.POPS_num_cc;
@@ -38,5 +46,9 @@ Group UDPtxin (UDPdrift, InstS, POPS_num_cc, POPS_Surf_Area, POPS_ccm,
   MS5607_P = UDPtxin.MS5607_P;
   Amb_T = UDPtxin.Amb_T;
   PPmpT = UDPtxin.PPmpT;
+  RingT = UDPtxin.RingT;
+  MM_status = UDPtxin.MM_status;
+  PD_Vel = UDPtxin.PD_Vel;
+  MMFC_ccm = UDPtxin.MMFC_ccm;
   UDPtxin_Stale = UDPtxin_obj->Stale(255);
 }

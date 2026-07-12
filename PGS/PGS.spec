@@ -9,7 +9,7 @@ IGNORE = "*.o" "*.exe" "*.stackdump" Makefile
 DISTRIB = services interact
 DISTRIB = ../TM/DPOPStxsrvr ../TM/DPOPScltnc
 
-PGSdisp : PGS.tbl
+PGSdisp : $extbase PGS.tbl
 PGSjsonext : $extbase $genuibase
 doit : PGS.doit
 
