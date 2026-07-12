@@ -4,7 +4,7 @@ do_nothing :
 	@echo "Specify 'make install_flight' or 'make install_cal'"
 
 install_cal :
-	ssh POPS_BBB.cfg.cal popscal:/media/uSD/POPS_BBB.cfg
+	scp POPS_BBB.cfg.cal popscal:/media/uSD/POPS_BBB.cfg
 
 install_flight :
-	ssh POPS_BBB.cfg popscal:/media/uSD/POPS_BBB.cfg
+	scp POPS_BBB.cfg popscal:/media/uSD/POPS_BBB.cfg
