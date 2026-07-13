@@ -567,7 +567,7 @@ State NonIso_Monitor NoLog {
         NI_flow_count++;
       }
   +60 { NI_flow_mean = NI_flow_sum/NI_flow_count;
-        if (NI_flow_mean < 1800. && convert(BPmpV) < 4.9 && IsoKin_pct < 235) {
+        if (NI_flow_mean < 1800. && convert(BPmpV) < 4.9 && IsoKin_pct < 500) {
           uint8_t new_set;
           new_set = IsoKin_pct + 20;
           msg(0, "Mean flow is %.1lf ccm: Increasing IsoKin_pct to %u",
