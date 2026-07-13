@@ -18,10 +18,10 @@
   : Set Bypass Pump IGain &BPmp_IGain { SWData.BPmp_IGain = $5; }
   : Set Simulated Altitude &Sim_Alt { SWData.Sim_Alt = $4; }
   : Set Simulated Pressure &Sim_P { SWData.Sim_P = $4; }
+  : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
   : Set Bypass Pump Filter Period &BPmp_LPFP { SWData.BPmp_LPFP = $6; }
   : Set Simulated Velocity &Sim_Vel { SWData.Sim_Vel = $4; }
   : Set Bypass Pump PI Period &BPmp_Per { SWData.BPmp_Per = $6; }
-  : Set Isokinetic Flow Percentage &IsoKin_pct { SWData.IsoKin_pct = $5; }
   : SW MOUDI &MoudiMode { SWData.MoudiMode = $3; }
   ;
 &SWStat <unsigned char>
@@ -57,6 +57,9 @@
 &Sim_P <uint16_t>
   : %d (Enter pressure in mbar) mbar { $0 = $1 < 0 ? 0 : $1; }
   ;
+&IsoKin_pct <uint16_t>
+  : &IsoPct { $0 = $1; }
+  ;
 &BPmp_LPFP <uint8_t>
   : &LPFP { $0 = $1; }
   ;
@@ -65,9 +68,6 @@
   ;
 &BPmp_Per <uint8_t>
   : &BPPer { $0 = $1; }
-  ;
-&IsoKin_pct <uint8_t>
-  : &IsoPct { $0 = $1; }
   ;
 &MoudiMode <uint8_t>
   : Pressure Control { $0 = SWS_MOUDI_P_CTRL; }

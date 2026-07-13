@@ -53,7 +53,7 @@ Pumps {
 Gains {
   LFE_Gp:  (LFE_PGain,9);
   LFE_Gi:  (LFE_IGain,9);
-  IsoPct:  (IsoKin_pct,3);
+  IsoPct:  (IsoKin_pct,5);
   Sim_Alt: (Sim_Alt,5);
 }
 
