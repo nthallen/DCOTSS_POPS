@@ -10,10 +10,10 @@ typedef struct __attribute__((__packed__)) {
   float BPmp_IGain;
   uint16_t Sim_Alt;
   uint16_t Sim_P;
+  uint16_t IsoKin_pct;
   uint8_t BPmp_LPFP;
   uint8_t Sim_Vel;
   uint8_t BPmp_Per;
-  uint8_t IsoKin_pct;
   uint8_t MoudiMode;
 } SWData_t;
 extern SWData_t SWData;

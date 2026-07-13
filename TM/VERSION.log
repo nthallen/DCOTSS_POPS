@@ -9,3 +9,4 @@
 1.8.1 5/11/2022 Add IsoKin_pct to adjust flow away from isokinetic for model validation
 1.8.2 5/14/2022 Add Sim_Alt to test noniso algorithm
 1.8.3 6/14/2026 Add MoudiMode, Sim_P for INSPYRE 2026
+1.8.4 7/13/2026 Increase MAX_COLS, convert IsoKin_pct to uint16_t
