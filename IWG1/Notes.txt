@@ -1,3 +1,10 @@
+The time field is sometimes written with a trailing 'Z'. This is accommodated
+manually by modifying IWG1.cc, changing the line:
+      not_ISO8601(&IWG1.Time) || not_str( ",", 1) ||
+to
+      not_ISO8601(&IWG1.Time) || not_str( "Z,", 2) ||
+or back again as necessary.
+
 These are the data definitions copied directly from the experimenter's handbook.
 I will use the same variable names, except for TDrift. For TDrift, I will
 perform the standard NAV calculation, converting the time to unix time, then
