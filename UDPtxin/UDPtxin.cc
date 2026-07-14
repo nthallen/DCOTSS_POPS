@@ -99,7 +99,7 @@ bool UDPrx_TM::protocol_input() {
       not_nfloat(&UDPtxin.Amb_T) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.PPmpT) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.RingT) || not_str(",", 1) ||
-      not_uint8(&UDPtxin.MM_status) || not_str(",", 1) ||
+      not_uint8(UDPtxin.MM_status) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.PD_Vel) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.MMFC_ccm)) {
     if (cp < nc) {
