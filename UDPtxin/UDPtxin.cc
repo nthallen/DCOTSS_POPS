@@ -86,9 +86,10 @@ UDPrx_TM::UDPrx_TM(TM_data_sndr *tm, const char *port)
 }
 
 bool UDPrx_TM::protocol_input() {
+  float InstS, MM_status;
   if (not_str( "DPOPS," ) ||
       not_ISO8601(UDPtxin.Time) || not_str( ",", 1) ||
-      not_uint8(UDPtxin.InstS) || not_str(",", 1) ||
+      not_nfloat(&InstS) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.POPS_num_cc) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.POPS_Surf_Area) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.POPS_ccm) || not_str(",", 1) ||
@@ -99,12 +100,14 @@ bool UDPrx_TM::protocol_input() {
       not_nfloat(&UDPtxin.Amb_T) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.PPmpT) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.RingT) || not_str(",", 1) ||
-      not_uint8(UDPtxin.MM_status) || not_str(",", 1) ||
+      not_nfloat(&MM_status) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.PD_Vel) || not_str(",", 1) ||
       not_nfloat(&UDPtxin.MMFC_ccm)) {
     if (cp < nc) {
       consume(nc); // syntax error (already reported). Empty
     } // else cp == nc, so it was a partial record. See if we will get more.
+    UDPtxin.InstS = (uint8_t)InstS;
+    UDPtxin.MM_status = (uint8_t)MM_status;
     return 0;
   }
   tm->Send();

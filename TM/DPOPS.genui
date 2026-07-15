@@ -3,7 +3,7 @@ MNEMONIC dpops
 HOMEDIR DPOPS_DATA_DIR
 
  1 SWStat        Algo SWStat
- 1 MoudiMode     Moudi Mode
+ 1 MoudiMode     Moudi Mode %.0lf
  1 LFE_PGain     Algo Gains
  1 LFE_IGain     Algo Gains
  1 BPmp_PGain    Algo Gains
