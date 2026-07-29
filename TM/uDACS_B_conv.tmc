@@ -67,11 +67,19 @@ uDACS_CELCIUS RingT; Invalidate RingT;
 }
 
 TM typedef double uDACS_Velocity { text "%5.1lf"; }
+uDACS_Velocity Pitot_Vel; Invalidate Pitot_Vel;
 uDACS_Velocity PD_Vel; Invalidate PD_Vel;
 { double r;
   r = convert(HPS_P)/(287.058*(RingT+273.15));
-  PD_Vel = Sim_Vel > 0 ? Sim_Vel :
-    (HPS_dP > 0 ? sqrt(2*convert(HPS_dP)/r) : 0);
+  Pitot_Vel =
+    HPS_dP > 0 ? sqrt(2*convert(HPS_dP)/r) : 0;
+
+  PD_Vel =
+    Sim_Vel > 0 ? Sim_Vel :
+    Pitot_Vel > 90 || MS5607_P > 800 ? Pitot_Vel :
+    120;
+
+  Validate Pitot_Vel;
   Validate PD_Vel;
 }
 

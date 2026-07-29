@@ -64,7 +64,7 @@ dfs.plot('dacsbai','label','AI errs','vars',{'uDACS_B_errors'});
 dfs.plot('dacsbr','label','Raw','vars',{'uDACS_B_Raw1','uDACS_B_Raw2','uDACS_B_Raw3'});
 dfs.plot('i', 'label', 'Inlet', 'plots', {'irt','iv','inccm'});
 dfs.plot('irt','label','Ring T','vars',{'Ring1T','Ring2T','Ring3T','RingT'});
-dfs.plot('iv','label','Velocity','vars',{'PD_Vel'});
+dfs.plot('iv','label','Velocity','vars',{'PD_Vel','Pitot_Vel'});
 dfs.plot('inccm','label','NCCM','vars',{'PD_nccm'});
 dfs.plot('h', 'label', 'Honeywell', 'plots', {'hs','hhpst','hhpsp','hhps_dp','hsv'});
 dfs.plot('hs','label','Status','vars',{{'name','PS1_Init','var_name','HPS_Stat','bit_number',0},{'name','PS1_CRC_OK','var_name','HPS_Stat','bit_number',1},{'name','PS2_Init','var_name','HPS_Stat','bit_number',2},{'name','PS2_CRC_OK','var_name','HPS_Stat','bit_number',3},{'name','PS3_Init','var_name','HPS_Stat','bit_number',4},{'name','PS3_CRC_OK','var_name','HPS_Stat','bit_number',5}});
