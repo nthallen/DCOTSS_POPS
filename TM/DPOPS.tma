@@ -60,12 +60,15 @@ Partition
 #
 #
 # REF: 650 torr ~867 mbar ~5000 ft
+# REF:           571 mbar ~15000 ft
+# REF:           466 mbar ~20000 ft
 # Palmdale, CA is at elevation 2657'
 # Salina, KS is at elevation 1227'
+# MT is at ~ 888 mbar
 
 %{ /* Altitude definitions */
-    double P_ground_up = 800.;
-    double P_ground_dn = 850.;
+    double P_ground_up = 416.;
+    double P_ground_dn = 466.;
     int using_swp = 0;
 %}
 
