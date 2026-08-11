@@ -67,8 +67,8 @@ Partition
 # MT is at ~ 888 mbar
 
 %{ /* Altitude definitions */
-    double P_ground_up = 416.;
-    double P_ground_dn = 466.;
+    double P_ground_up = 750.;
+    double P_ground_dn = 800.;
     int using_swp = 0;
 %}
 
