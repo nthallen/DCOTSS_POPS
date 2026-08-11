@@ -39,6 +39,7 @@ f = ne_dialg(f, 'add', 1, 0, 'pdpgsmmstatus', 'status' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpgsmmrt', 'Ring T' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpgsmmv', 'Vel' );
 f = ne_dialg(f, 'add', 1, 0, 'pdpgsmmf', 'Flow' );
+f = ne_dialg(f, 'add', 1, 0, 'pdpgsmmr', 'Raw' );
 f = ne_listdirs(f, dirfunc, 15);
 f = ne_dialg(f, 'newcol');
 ne_dialg(f, 'resize');
