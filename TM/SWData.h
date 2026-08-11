@@ -19,6 +19,8 @@ typedef struct __attribute__((__packed__)) {
 extern SWData_t SWData;
 
 #define SWS_TAKEOFF 1
+#define SWS_TURNON 2
+#define SWS_CLIMB 3
 #define SWS_LAND 4
 #define SWS_POPS_POWER_ON 36
 #define SWS_POPS_STARTUP 30

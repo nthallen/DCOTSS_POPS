@@ -27,6 +27,8 @@
 &SWStat <unsigned char>
   : Altitude Takeoff { $0 = SWS_TAKEOFF; }
   : Set %d { $0 = $2; }
+  : Altitude Turnon { $0 = SWS_TURNON; }
+  : Altitude Climb { $0 = SWS_CLIMB; }
   : Altitude Land { $0 = SWS_LAND; }
   : POPS Power Up Only { $0 = SWS_POPS_POWER_ON; }
   : POPS Startup { $0 = SWS_POPS_STARTUP; }

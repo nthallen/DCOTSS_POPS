@@ -14,11 +14,20 @@ State Init {
  +1 > Set LFE IGain 0.131
  +1 > Set Bypass Pump PGain 8.744e-5
  +1 > Set Bypass Pump IGain 9.000e-5
-    depending on (OFF_GROUND) { Validate Startup; }
+    Validate InitDelay;
+}
+
+State InitDelay
+{
+        depending on (OFF_GROUND) { Validate Startup; }
+        depending on (CRUISING) { Validate Startup; }
+        depending on (RUNNING) { Validate Startup; }
+        depending on (LANDING) { Validate Shutdown; }
+  10:00 depending on (ON_GROUND) { Validate RUNNING; }
 }
 
 State Startup {
-  depending on (ON_GROUND) { Validate Shutdown; }
+  depending on (LANDING) { Validate Shutdown; }
   Validate POPS_Startup;
   Hold until valid (POPS_Is_Active) or 4:00;
   Validate Bypass_Flow_Iso_Init;
@@ -44,16 +53,31 @@ State Shutdown {
 Partition
 
 # This partition converts pressure (altitude) into states 
-# (ON_GROUND, OFF_GROUND).
+# (ON_GROUND, RUNNING, OFF_GROUND, CRUISING, LANDING).
 # The threshold pressures each have two values - one for 
 # the flight up and the other for the flight down.
-# This provides hysteresis and prevents bouncing.  
+# This provides hysteresis and prevents bouncing.
 # Of course we need to ensure that P_ground_up < P_ground_dn,
 # which is to say P_ground_up represent a higher altitude.
 # We also want to ensure that P_ground_dn is high enough to
 # allow the system to shutdown before landing while not being
 # so high that it will be triggered during a mid-flight
-# altitude scan. 
+# altitude scan.
+#
+# The normal 3-state altitude partitions are ON_GROUND, OFF_GROUND
+# and CRUISING (or called ABOVE_THE_CLOUDS in previous decades).
+# Here we have added two additional states to facilitate non-symetric
+# instrument startup and shutdown for POPS.
+#
+# State RUNNING can be directly validated in the mainline to initiate
+# instrument operation on the ground after some fixed delay.
+# OFF_GROUND then provides a low-level where the instrument will
+# turn on if not already in RUNNING. OFF_GROUND differs from
+# RUNNING in that it will initiate shutdown if the pressure
+# increases above P_ground_dn. The only way to shutdown from
+# RUNNING is to issue SW Status Altitude Land. This is important
+# in the case of a flight scrub on the runway, where manual
+# intervention is required for an orderly shutdown.
 
 # P_eff is a float value in mbar derived from convert(HPS_P)
 # or Sim_P in uDACS_B_conv.tmc
@@ -67,23 +91,64 @@ Partition
 # MT is at ~ 888 mbar
 
 %{ /* Altitude definitions */
-    double P_ground_up = 416.;
-    double P_ground_dn = 466.;
+    double P_ground_up = 750.;
+    double P_ground_dn = 800.;
+    double P_clouds_up = 416.;
+    double P_clouds_dn = 466.;
     int using_swp = 0;
 %}
 
-State ON_GROUND {
+State ON_GROUND
+{
   { using_swp = 0; }
-  { if (using_swp || (P_eff > 0 && P_eff < P_ground_up))
+  {
+    if (using_swp == SWS_TURNON)
+    {
+      using_swp = 0;
+      Validate RUNNING;
+    }
+    else if (using_swp == SWS_TAKEOFF || (P_eff > 0 && P_eff < P_ground_up))
+    {
       Validate OFF_GROUND;
+    }
   }
 }
 
-State OFF_GROUND {
-  { if ((using_swp == SWS_LAND) || (!using_swp && P_eff > P_ground_dn)) {
-      Validate ON_GROUND;
+State RUNNING
+{
+  {
+    if (using_swp == SWS_TAKEOFF || (!using_swp && (P_eff > 0 && P_eff < P_ground_up)))
+    {
+      Validate OFF_GROUND;
     }
   }
+}
+
+State OFF_GROUND
+{
+  { if ((using_swp == SWS_LAND) || (!using_swp && P_eff > P_ground_dn))
+    {
+      Validate LANDING;
+    }
+    else if ((using_swp == SWS_CLIMB) || (!using_swp && P_eff < P_clouds_up))
+    {
+      Validate CRUISING;
+    }
+  }
+}
+
+State CRUISING
+{
+  {
+    if ((using_swp == SWS_LAND) || (!using_swp && P_eff > P_clouds_dn))
+    {
+      Validate LANDING;
+    }
+  }
+}
+
+State LANDING
+{
 }
 
 # -----------------------------------------------------------------------------

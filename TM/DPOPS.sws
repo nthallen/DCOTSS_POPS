@@ -3,6 +3,10 @@ Transmitting
 SW_Variable: SWStat SW Status
   SWS_TAKEOFF          1 Altitude Takeoff:
     depending on (ON_GROUND) using_swp = SWStat; break;
+  SWS_TURNON           2 Altitude Turnon:
+    depending on (ON_GROUND) using_swp = SWStat; break;
+  SWS_CLIMB            3 Altitude Climb:
+    depending on (OFF_GROUND) using_swp = SWStat; break;
   SWS_LAND             4 Altitude Land:
     depending on (OFF_GROUND) using_swp = SWStat; break;
 
