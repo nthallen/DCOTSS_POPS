@@ -76,7 +76,7 @@ uDACS_Velocity PD_Vel; Invalidate PD_Vel;
 
   PD_Vel =
     Sim_Vel > 0 ? Sim_Vel :
-    Pitot_Vel > 60 || MS5607_P > 800 ? Pitot_Vel :
+    Pitot_Vel > 50 || MS5607_P > 800 ? Pitot_Vel :
     120;
 
   Validate Pitot_Vel;
